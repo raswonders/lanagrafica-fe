@@ -1,10 +1,11 @@
 import "./App.css";
+import { Text } from "@radix-ui/themes";
 
 function App() {
 
   return (
     <>
-      <h1>Hello</h1>
+      <Text>Hello</Text>
     </>
   );
 }
