@@ -4,7 +4,7 @@ import { Container, Text } from "@radix-ui/themes";
 function App() {
 
   return (
-    <Container height="100%">
+    <Container>
       <Text>Hello</Text>
     </Container>
   );
