@@ -1,12 +1,12 @@
 import "./App.css";
-import { Text } from "@radix-ui/themes";
+import { Container, Text } from "@radix-ui/themes";
 
 function App() {
 
   return (
-    <>
+    <Container height="100%">
       <Text>Hello</Text>
-    </>
+    </Container>
   );
 }
 
