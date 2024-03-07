@@ -71,13 +71,21 @@ export function SignIn() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Enter your password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="md:self-end">
+              <Button
+                type="submit"
+                className="md:self-end"
+                disabled={form.formState.isSubmitting}
+              >
                 Submit
               </Button>
             </form>
