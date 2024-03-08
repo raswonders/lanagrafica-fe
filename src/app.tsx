@@ -1,5 +1,5 @@
 import "./App.css";
-import { SignIn } from "./components/SignIn";
+import { SignIn } from "./components/sign-in";
 import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/mode-toggle";
 
