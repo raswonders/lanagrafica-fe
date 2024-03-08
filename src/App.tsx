@@ -1,7 +1,7 @@
 import "./App.css";
 import { SignIn } from "./components/SignIn";
 import { ThemeProvider } from "./components/theme-provider";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "./components/mode-toggle";
 
 function App() {
   return (
