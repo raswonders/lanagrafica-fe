@@ -26,7 +26,7 @@ import {
 
 export function ThemeShowcase() {
   return (
-    <div className="flex flex-col items-start gap-24">
+    <div className="flex flex-col items-start gap-24 p-4">
       <label>
         Muted backgrounds such as TabsList, Skeleton and Switch
         <ul>
