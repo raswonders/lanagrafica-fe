@@ -80,28 +80,20 @@ export function ThemeShowcase() {
           <Input />
         </label>
         <label>
-          Primary colors for Button
+          Buttons 
           <ul>
             <li>--primary</li>
             <li>--primary-foreground</li>
-          </ul>
-          <Button>Primary</Button>
-        </label>
-        <label>
-          Secondary colors for Button
-          <ul>
             <li>--secondary</li>
             <li>--secondary-foreground</li>
-          </ul>
-          <Button variant="secondary">Secondary</Button>
-        </label>
-        <label>
-          Used for destructive actions such as Button variant="destructive"
-          <ul>
             <li>--destructive</li>
             <li>--destructive-foreground</li>
           </ul>
-          <Button variant="destructive">Destrutive</Button>
+          <Button className="mr-2" variant="default">Primary</Button>
+          <Button className="mr-2" variant="secondary">Secondary</Button>
+          <Button className="mr-2" variant="destructive">Destrutive</Button>
+          <Button className="mr-2" variant="outline">Outline</Button>
+          <Button className="mr-2" variant="ghost">Ghost</Button>
         </label>
         <label>
           Used for accents such as hover effects on DropdownMenuItem,
