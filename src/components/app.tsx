@@ -1,23 +1,18 @@
 import { SignIn } from "./sign-in";
 import { ModeToggle } from "./mode-toggle";
-import bgImage from "/public/test-bg.svg";
-import { useTheme } from "./theme-provider";
+import { Background } from "./background";
 
 function App() {
-  const { theme } = useTheme();
-
   return (
-    <div
-      style={
-        theme === "light"
-          ? {}
-          : {
-              backgroundImage: `url(${bgImage})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }
-      }
-    >
+    <div>
+      <Background
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          zIndex: "-9999",
+        }}
+      />
       <div className="absolute m-4">
         <ModeToggle />
       </div>
