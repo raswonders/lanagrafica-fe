@@ -94,6 +94,7 @@ export function ThemeShowcase() {
           <Button className="mr-2" variant="destructive">Destrutive</Button>
           <Button className="mr-2" variant="outline">Outline</Button>
           <Button className="mr-2" variant="ghost">Ghost</Button>
+          <Button className="mr-2" variant="link">Link me somewhere</Button>
         </label>
         <label>
           Used for accents such as hover effects on DropdownMenuItem,
