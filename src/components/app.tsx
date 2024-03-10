@@ -8,7 +8,15 @@ function App() {
 
   return (
     <div
-      style={theme === "light" ? {} : { backgroundImage: `url(${bgImage})` }}
+      style={
+        theme === "light"
+          ? {}
+          : {
+              backgroundImage: `url(${bgImage})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }
+      }
     >
       <div className="absolute m-4">
         <ModeToggle />
