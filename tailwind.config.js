@@ -115,9 +115,14 @@ export default {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        // overwritten because its part of internal component styling
+        // destructive: {
+        //   DEFAULT: "hsl(var(--destructive))",
+        //   foreground: "hsl(var(--destructive-foreground))",
+        // },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "var(--danger-11)",
+          foreground: "var(--neutral-1)",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
