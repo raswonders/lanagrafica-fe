@@ -1,5 +1,5 @@
 import { delay } from "@/lib/utils";
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -22,7 +22,7 @@ interface Credentials {
   password: string;
 }
 
-const AuthProvider = ({ children }: Nodes) => {
+export const AuthProvider = ({ children }: Nodes) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const signIn = async ({ username, password }: Credentials) => {
@@ -44,4 +44,6 @@ const AuthProvider = ({ children }: Nodes) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+export function useAuth() {
+  return useContext(AuthContext);
+}

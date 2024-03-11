@@ -14,8 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
-import { useContext } from "react";
-import { AuthContext } from "./auth-provider";
+import { useAuth } from "./auth-provider";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -27,7 +26,7 @@ const formSchema = z.object({
 });
 
 export function SignIn() {
-  const { isAuthenticated, signIn } = useContext(AuthContext);
+  const { isAuthenticated, signIn } = useAuth();
 
   if (isAuthenticated) {
     // TODO skip sign in
