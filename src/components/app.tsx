@@ -1,11 +1,25 @@
 import { SignIn } from "./sign-in";
-import { ModeToggle } from "./mode-toggle";
-import { Background } from "./background";
 import { AuthProvider } from "./auth-provider";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import { RootLayout } from "./layouts/root-layout";
+import { Background } from "./background";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route path="login" element={<SignIn />} />
+    </Route>,
+  ),
+);
 
 function App() {
   return (
-    <AuthProvider>
+    <>
       <Background
         style={{
           position: "absolute",
@@ -14,11 +28,11 @@ function App() {
           zIndex: "-9999",
         }}
       />
-      <div className="absolute m-4">
-        <ModeToggle />
-      </div>
-      <SignIn />
-    </AuthProvider>
+
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </>
   );
 }
 
