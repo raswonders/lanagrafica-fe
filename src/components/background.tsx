@@ -11,6 +11,7 @@ export function Background({ style }: BackgroundProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{...style, opacity: "0.6"}}
+      preserveAspectRatio="xMidYMid slice"
     >
       <g>
         <path
