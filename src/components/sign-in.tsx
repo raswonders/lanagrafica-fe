@@ -14,6 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
+import { useContext } from "react";
+import { AuthContext } from "./auth-provider";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -25,6 +27,12 @@ const formSchema = z.object({
 });
 
 export function SignIn() {
+  const { isAuthenticated, signIn } = useContext(AuthContext);
+
+  if (isAuthenticated) {
+    // TODO skip sign in
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,8 +42,7 @@ export function SignIn() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log(values);
+    await signIn(values);
     form.reset();
   }
 

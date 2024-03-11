@@ -1,10 +1,11 @@
 import { SignIn } from "./sign-in";
 import { ModeToggle } from "./mode-toggle";
 import { Background } from "./background";
+import { AuthProvider } from "./auth-provider";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Background
         style={{
           position: "absolute",
@@ -17,7 +18,7 @@ function App() {
         <ModeToggle />
       </div>
       <SignIn />
-    </div>
+    </AuthProvider>
   );
 }
 
