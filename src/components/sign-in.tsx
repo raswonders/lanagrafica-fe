@@ -26,11 +26,7 @@ const formSchema = z.object({
 });
 
 export function SignIn() {
-  const { isAuthenticated, signIn } = useAuth();
-
-  if (isAuthenticated) {
-    // TODO skip sign in
-  }
+  const { signIn } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

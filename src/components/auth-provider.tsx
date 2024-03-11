@@ -25,6 +25,8 @@ interface Credentials {
 export const AuthProvider = ({ children }: Nodes) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  console.log(isAuthenticated);
+
   const signIn = async ({ username, password }: Credentials) => {
     await delay(1500); // TODO remove delay and naive login before production
     if (username === "admin" && password === "admin") {

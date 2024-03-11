@@ -8,11 +8,21 @@ import {
 } from "react-router-dom";
 import { RootLayout } from "./layouts/root-layout";
 import { Background } from "./background";
+import { Members } from "./pages/members";
+import { ProtectedRoute } from "./protectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route path="login" element={<SignIn />} />
+      <Route
+        path="members"
+        element={
+          <ProtectedRoute>
+            <Members />
+          </ProtectedRoute>
+        }
+      />
     </Route>,
   ),
 );
