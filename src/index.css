@@ -161,3 +161,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+::selection {
+  background: var(--accent-5);
+  color: var(--neutral-12);
+}
