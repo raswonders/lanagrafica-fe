@@ -1,4 +1,4 @@
-import { SignIn } from "./sign-in";
+import { Login } from "./login";
 import { AuthProvider } from "./auth-provider";
 import {
   Route,
@@ -14,7 +14,7 @@ import { ProtectedRoute } from "./protectedRoute";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-      <Route path="login" element={<SignIn />} />
+      <Route path="login" element={<Login />} />
       <Route
         path="members"
         element={
