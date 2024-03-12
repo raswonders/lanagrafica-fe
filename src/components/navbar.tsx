@@ -54,7 +54,7 @@ export function Navbar() {
         )}
       </nav>
 
-      {user && <AccountDetails user={user} />}
+      {user && <AccountDetails />}
     </div>
   );
 }

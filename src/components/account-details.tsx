@@ -7,8 +7,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
+import { useAuth } from "./auth-provider";
 
-export function AccountDetails({ user }: { user: string }) {
+export function AccountDetails() {
+  const { user, signOut } = useAuth();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -17,7 +19,13 @@ export function AccountDetails({ user }: { user: string }) {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            signOut();
+          }}
+        >
+          Logout
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
