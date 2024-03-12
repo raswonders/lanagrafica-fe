@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { useAuth } from "./auth-provider";
+import { LogOut } from "lucide-react";
 
 export function AccountDetails() {
   const { user, signOut } = useAuth();
@@ -18,13 +19,15 @@ export function AccountDetails() {
         onCloseAutoFocus={(e) => {
           e.preventDefault();
         }}
+        sideOffset={0}
       >
         <DropdownMenuItem
           onClick={() => {
             signOut();
           }}
         >
-          Logout
+          <LogOut className="w-4 h-4 mr-2" />
+          <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
