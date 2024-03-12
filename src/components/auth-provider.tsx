@@ -3,13 +3,13 @@ import { ReactNode, createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
-  isAuthenticated: boolean;
+  user: string | null;
   signIn: (credentials: Credentials) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
-  isAuthenticated: false,
+  user: "",
   signIn: async () => {},
   signOut: async () => {},
 });
@@ -24,25 +24,25 @@ interface Credentials {
 }
 
 export const AuthProvider = ({ children }: Node) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const signIn = async ({ username, password }: Credentials): Promise<void> => {
     await delay(1500); // TODO remove delay and naive login before production
     if (username === "admin" && password === "admin") {
-      setIsAuthenticated(true);
+      setUser(username);
       navigate("/");
     }
   };
 
   const signOut = async () => {
     await delay(1500); // TODO remove this before production
-    setIsAuthenticated(false);
+    setUser(null);
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

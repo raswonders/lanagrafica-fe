@@ -7,14 +7,14 @@ type Node = {
 };
 
 export function AuthLayout({ children }: Node) {
-  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!user) {
       navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [user, navigate]);
 
   return children;
 }
