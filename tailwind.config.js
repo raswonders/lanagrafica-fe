@@ -48,6 +48,8 @@ export default {
         },
 
         accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
           1: "var(--accent-1)",
           2: "var(--accent-2)",
           3: "var(--accent-3)",
