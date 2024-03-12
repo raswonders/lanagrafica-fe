@@ -8,20 +8,12 @@ import {
 import { RootLayout } from "./layouts/root-layout";
 import { Background } from "./background";
 import { Members } from "./pages/members";
-import { ProtectedRoute } from "./protectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route path="login" element={<Login />} />
-      <Route
-        path="members"
-        element={
-          <ProtectedRoute>
-            <Members />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="members" element={<Members />} />
     </Route>,
   ),
 );
