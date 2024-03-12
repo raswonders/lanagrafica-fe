@@ -19,6 +19,7 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
+                    tabIndex={-1}
                     className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
                   >
                     Home
@@ -31,6 +32,7 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
+                    tabIndex={-1}
                     className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
                   >
                     Members
@@ -43,6 +45,7 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
+                    tabIndex={-1}
                     className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
                   >
                     Cards

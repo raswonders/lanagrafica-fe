@@ -14,7 +14,9 @@ export function AccountDetails() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Button variant="ghost">#{user}</Button>
+        <Button tabIndex={-1} variant="ghost">
+          #{user}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
