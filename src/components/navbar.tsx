@@ -19,7 +19,7 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
+                    className={isActive ? "text-accent-foreground bg-accent" : ""}
                   >
                     Home
                   </Button>
@@ -31,7 +31,7 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
+                    className={isActive ? "text-accent-foreground bg-accent" : ""}
                   >
                     Members
                   </Button>
@@ -43,7 +43,7 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
+                    className={isActive ? "text-accent-foreground bg-accent" : ""}
                   >
                     Cards
                   </Button>
