@@ -7,13 +7,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export function Members() {
+export function Home() {
   return (
     <section className="p-8">
       <Card>
         <CardHeader>
-          <CardTitle>Members</CardTitle>
-          <CardDescription>Members</CardDescription>
+          <CardTitle>Home</CardTitle>
+          <CardDescription>Home</CardDescription>
         </CardHeader>
         <CardContent>
           <p>content</p>
