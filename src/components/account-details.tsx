@@ -13,12 +13,14 @@ export function AccountDetails() {
   const { user, signOut } = useAuth();
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button tabIndex={-1} variant="ghost">
-          #{user}
-        </Button>
+      <DropdownMenuTrigger tabIndex={-1}>
+        <Button variant="ghost">#{user}</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent
+        onCloseAutoFocus={(e) => {
+          e.preventDefault();
+        }}
+      >
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
