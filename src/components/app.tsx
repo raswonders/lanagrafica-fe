@@ -14,8 +14,8 @@ import { Cards } from "./pages/cards";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
+      <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
-      <Route path="home" element={<Home />} />
       <Route path="members" element={<Members />} />
       <Route path="cards" element={<Cards />} />
     </Route>,
