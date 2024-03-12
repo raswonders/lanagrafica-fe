@@ -8,7 +8,7 @@ export function Navbar() {
   const { user } = useAuth();
 
   return (
-    <div className="border-neutral-6 flex w-full justify-between p-3">
+    <div className="fixed border-neutral-6 flex w-full justify-between p-3">
       <ModeToggle />
 
       <nav>

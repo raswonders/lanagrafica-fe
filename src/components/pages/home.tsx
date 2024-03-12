@@ -9,7 +9,7 @@ import {
 
 export function Home() {
   return (
-    <section className="p-8">
+    <section className="p-8 pt-24">
       <Card>
         <CardHeader>
           <CardTitle>Home</CardTitle>
