@@ -1,5 +1,6 @@
 import { delay } from "@/lib/utils";
 import { ReactNode, createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -24,19 +25,20 @@ interface Credentials {
 
 export const AuthProvider = ({ children }: Nodes) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
-  console.log(isAuthenticated);
-
-  const signIn = async ({ username, password }: Credentials) => {
+  const signIn = async ({ username, password }: Credentials): Promise<void> => {
     await delay(1500); // TODO remove delay and naive login before production
     if (username === "admin" && password === "admin") {
       setIsAuthenticated(true);
+      navigate("/");
     }
   };
 
   const signOut = async () => {
     await delay(1500); // TODO remove this before production
     setIsAuthenticated(false);
+    navigate("/login");
   };
 
   return (

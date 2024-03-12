@@ -1,5 +1,4 @@
 import { Login } from "./login";
-import { AuthProvider } from "./auth-provider";
 import {
   Route,
   RouterProvider,
@@ -38,10 +37,7 @@ function App() {
           zIndex: "-9999",
         }}
       />
-
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <RouterProvider router={router} />
     </>
   );
 }

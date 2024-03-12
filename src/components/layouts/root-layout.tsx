@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { ModeToggle } from "../mode-toggle";
+import { AuthProvider } from "../auth-provider";
 
 export function RootLayout() {
   return (
-    <div>
+    <AuthProvider>
       <header>
         <div className="absolute m-4">
           <ModeToggle />
@@ -13,6 +14,6 @@ export function RootLayout() {
       <main>
         <Outlet />
       </main>
-    </div>
+    </AuthProvider>
   );
 }
