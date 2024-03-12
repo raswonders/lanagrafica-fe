@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 
-export function AccountDetails() {
+export function AccountDetails({ user }: { user: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Button variant="ghost">#user</Button>
+        <Button variant="ghost">#{user}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
