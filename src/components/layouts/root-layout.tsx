@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import { ModeToggle } from "../mode-toggle";
 import { AuthProvider } from "../auth-provider";
 import { AuthLayout } from "./auth-layout";
+import { Navbar } from "../navbar";
 
 export function RootLayout() {
   return (
@@ -9,9 +9,7 @@ export function RootLayout() {
       <AuthLayout>
         <>
           <header>
-            <div className="absolute m-4">
-              <ModeToggle />
-            </div>
+            <Navbar />
           </header>
           <main>
             <Outlet />

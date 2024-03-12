@@ -8,12 +8,16 @@ import {
 import { RootLayout } from "./layouts/root-layout";
 import { Background } from "./background";
 import { Members } from "./pages/members";
+import { Home } from "./pages/home";
+import { Cards } from "./pages/cards";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
+      <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="members" element={<Members />} />
+      <Route path="cards" element={<Cards />} />
     </Route>,
   ),
 );
@@ -23,7 +27,7 @@ function App() {
     <>
       <Background
         style={{
-          position: "absolute",
+          position: "fixed",
           width: "100%",
           height: "100%",
           zIndex: "-9999",
