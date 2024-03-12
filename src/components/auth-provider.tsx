@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }: Node) => {
   };
 
   const signOut = async () => {
-    await delay(1500); // TODO remove this before production
     setUser(null);
     navigate("/login");
   };
