@@ -15,11 +15,10 @@ export function Navbar() {
         {user && (
           <ul className="flex gap-3">
             <li>
-              <NavLink to={"/home"}>
+              <NavLink to={"/home"} tabIndex={-1}>
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    tabIndex={-1}
                     className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
                   >
                     Home
@@ -28,11 +27,10 @@ export function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/members"}>
+              <NavLink to={"/members"} tabIndex={-1}>
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    tabIndex={-1}
                     className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
                   >
                     Members
@@ -41,11 +39,10 @@ export function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/cards"}>
+              <NavLink to={"/cards"} tabIndex={-1}>
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    tabIndex={-1}
                     className={isActive ? "text-neutral-12 bg-accent-a3" : ""}
                   >
                     Cards
