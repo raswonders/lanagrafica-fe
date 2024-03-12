@@ -14,7 +14,7 @@ const AuthContext = createContext<AuthContextType>({
   signOut: async () => {},
 });
 
-interface Nodes {
+interface Node {
   children: ReactNode;
 }
 
@@ -23,7 +23,7 @@ interface Credentials {
   password: string;
 }
 
-export const AuthProvider = ({ children }: Nodes) => {
+export const AuthProvider = ({ children }: Node) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
