@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: Node) => {
 
   const signIn = async ({ username, password }: Credentials): Promise<void> => {
     await delay(1500); // TODO remove delay and naive login before production
-    if (username === "admin" && password === "admin") {
+    if (username === "user" && password === "user") {
       setUser(username);
       navigate("/");
     }
