@@ -1,5 +1,5 @@
 import { delay } from "@/lib/utils";
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
@@ -8,7 +8,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({
+export const AuthContext = createContext<AuthContextType>({
   user: "",
   signIn: async () => {},
   signOut: async () => {},
@@ -46,7 +46,3 @@ export const AuthProvider = ({ children }: Node) => {
     </AuthContext.Provider>
   );
 };
-
-export function useAuth() {
-  return useContext(AuthContext);
-}

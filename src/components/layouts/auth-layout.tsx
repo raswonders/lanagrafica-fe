@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth-provider";
 import { useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 type Node = {
   children: React.ReactElement;
