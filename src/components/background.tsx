@@ -1,6 +1,6 @@
 type BackgroundProps = {
   style?: React.CSSProperties;
-} 
+};
 
 export function Background({ style }: BackgroundProps) {
   return (
@@ -10,7 +10,7 @@ export function Background({ style }: BackgroundProps) {
       viewBox="0 0 2560 1920"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{...style, opacity: "0.6"}}
+      style={{ ...style, opacity: "0.6" }}
       preserveAspectRatio="xMidYMid slice"
     >
       <g>
@@ -45,9 +45,9 @@ export function Background({ style }: BackgroundProps) {
           width="5601.16"
           height="4153.55"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -67,13 +67,13 @@ export function Background({ style }: BackgroundProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-804.109 -2036.8) rotate(64.9401) scale(6436.87 6304.81)"
         >
-          <stop stop-color="var(--color-background)"></stop>
-          <stop offset="0.0833333" stop-color="var(--accent-7)"></stop>
-          <stop offset="0.364583" stop-color="var(--accent-5)"></stop>
-          <stop offset="0.658041" stop-color="var(--color-background)"></stop>
-          <stop offset="0.798521" stop-color="var(--accent-9)"></stop>
-          <stop offset="0.942708" stop-color="var(--color-background)"></stop>
-          <stop offset="1" stop-color="var(--color-background)"></stop>
+          <stop stopColor="var(--color-background)"></stop>
+          <stop offset="0.0833333" stopColor="var(--accent-7)"></stop>
+          <stop offset="0.364583" stopColor="var(--accent-5)"></stop>
+          <stop offset="0.658041" stopColor="var(--color-background)"></stop>
+          <stop offset="0.798521" stopColor="var(--accent-9)"></stop>
+          <stop offset="0.942708" stopColor="var(--color-background)"></stop>
+          <stop offset="1" stopColor="var(--color-background)"></stop>
         </radialGradient>
         <radialGradient
           id="paint1_radial_37_453-1"
@@ -83,13 +83,13 @@ export function Background({ style }: BackgroundProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(201.6 -1080.02) rotate(64.9401) scale(6436.87 6304.81)"
         >
-          <stop stop-color="var(--color-background)"></stop>
-          <stop offset="0.0833333" stop-color="var(--accent-2)"></stop>
-          <stop offset="0.333803" stop-color="var(--accent-1)"></stop>
-          <stop offset="0.658041" stop-color="var(--color-background)"></stop>
-          <stop offset="0.798521" stop-color="var(--accent-9)"></stop>
-          <stop offset="0.942708" stop-color="var(--color-background)"></stop>
-          <stop offset="1" stop-color="var(--color-background)"></stop>
+          <stop stopColor="var(--color-background)"></stop>
+          <stop offset="0.0833333" stopColor="var(--accent-2)"></stop>
+          <stop offset="0.333803" stopColor="var(--accent-1)"></stop>
+          <stop offset="0.658041" stopColor="var(--color-background)"></stop>
+          <stop offset="0.798521" stopColor="var(--accent-9)"></stop>
+          <stop offset="0.942708" stopColor="var(--color-background)"></stop>
+          <stop offset="1" stopColor="var(--color-background)"></stop>
         </radialGradient>
         <radialGradient
           id="paint2_radial_37_453-1"
@@ -99,13 +99,13 @@ export function Background({ style }: BackgroundProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(912.834 -811.021) rotate(64.9401) scale(6436.87 6304.81)"
         >
-          <stop stop-color="var(--color-background)"></stop>
-          <stop offset="0.140625" stop-color="var(--accent-3)"></stop>
-          <stop offset="0.333803" stop-color="var(--accent-7)"></stop>
-          <stop offset="0.658041" stop-color="var(--color-background)"></stop>
-          <stop offset="0.798521" stop-color="var(--accent-9)"></stop>
-          <stop offset="0.942708" stop-color="var(--color-background)"></stop>
-          <stop offset="1" stop-color="var(--color-background)"></stop>
+          <stop stopColor="var(--color-background)"></stop>
+          <stop offset="0.140625" stopColor="var(--accent-3)"></stop>
+          <stop offset="0.333803" stopColor="var(--accent-7)"></stop>
+          <stop offset="0.658041" stopColor="var(--color-background)"></stop>
+          <stop offset="0.798521" stopColor="var(--accent-9)"></stop>
+          <stop offset="0.942708" stopColor="var(--color-background)"></stop>
+          <stop offset="1" stopColor="var(--color-background)"></stop>
         </radialGradient>
         <radialGradient
           id="paint3_radial_37_453-1"
@@ -115,13 +115,13 @@ export function Background({ style }: BackgroundProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(1711.41 -1639.11) rotate(64.9401) scale(6436.87 6304.81)"
         >
-          <stop stop-color="var(--color-background)"></stop>
-          <stop offset="0.0833333" stop-color="var(--accent-7)"></stop>
-          <stop offset="0.333803" stop-color="var(--accent-1)"></stop>
-          <stop offset="0.658041" stop-color="var(--color-background)"></stop>
-          <stop offset="0.798521" stop-color="var(--accent-9)"></stop>
-          <stop offset="0.942708" stop-color="var(--color-background)"></stop>
-          <stop offset="1" stop-color="var(--color-background)"></stop>
+          <stop stopColor="var(--color-background)"></stop>
+          <stop offset="0.0833333" stopColor="var(--accent-7)"></stop>
+          <stop offset="0.333803" stopColor="var(--accent-1)"></stop>
+          <stop offset="0.658041" stopColor="var(--color-background)"></stop>
+          <stop offset="0.798521" stopColor="var(--accent-9)"></stop>
+          <stop offset="0.942708" stopColor="var(--color-background)"></stop>
+          <stop offset="1" stopColor="var(--color-background)"></stop>
         </radialGradient>
         <radialGradient
           id="paint4_radial_37_453-1"
@@ -131,13 +131,13 @@ export function Background({ style }: BackgroundProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(3479.06 -623.459) rotate(113.028) scale(8332.26 4870.62)"
         >
-          <stop stop-color="var(--color-background)"></stop>
-          <stop offset="0.0833333" stop-color="var(--accent-7)"></stop>
-          <stop offset="0.333803" stop-color="var(--accent-1)"></stop>
-          <stop offset="0.658041" stop-color="var(--color-background)"></stop>
-          <stop offset="0.798521" stop-color="var(--accent-9)"></stop>
-          <stop offset="0.942708" stop-color="var(--color-background)"></stop>
-          <stop offset="1" stop-color="var(--color-background)"></stop>
+          <stop stopColor="var(--color-background)"></stop>
+          <stop offset="0.0833333" stopColor="var(--accent-7)"></stop>
+          <stop offset="0.333803" stopColor="var(--accent-1)"></stop>
+          <stop offset="0.658041" stopColor="var(--color-background)"></stop>
+          <stop offset="0.798521" stopColor="var(--accent-9)"></stop>
+          <stop offset="0.942708" stopColor="var(--color-background)"></stop>
+          <stop offset="1" stopColor="var(--color-background)"></stop>
         </radialGradient>
       </defs>
     </svg>
