@@ -13,7 +13,7 @@ export function AccountDetails() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger tabIndex={-1}>
-        <Button variant="ghost">#{user}</Button>
+        <Button variant="ghost">#{user?.username}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         onCloseAutoFocus={(e) => {
