@@ -27,6 +27,12 @@ i18n
               en: "English",
             },
           },
+          login: {
+            title: "Sign in",
+            username: "Username",
+            password: "Password",
+            submit: "Sign in",
+          },
         },
       },
       it: {
@@ -43,6 +49,12 @@ i18n
               it: "Italiano",
               en: "Inglese",
             },
+          },
+          login: {
+            title: "Accedi",
+            username: "Nome utente",
+            password: "Password",
+            submit: "Accedi",
           },
         },
       },
