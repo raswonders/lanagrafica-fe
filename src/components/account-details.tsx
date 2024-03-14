@@ -20,7 +20,7 @@ import { useTranslation } from "react-i18next";
 export function AccountDetails() {
   const { user, signOut } = useAuth();
   const { t, i18n } = useTranslation();
-  const [lang, setLang] = useState(i18n.language);
+  const [lang, setLang] = useState(i18n.resolvedLanguage);
 
   const handleLangChange = (newLang: string) => {
     setLang(newLang);
