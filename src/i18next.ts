@@ -14,6 +14,20 @@ i18n
     resources: {
       en: {
         translation: {
+          navbar: {
+            home: "Home",
+            members: "Members",
+            cards: "Cards",
+          },
+        },
+      },
+      it: {
+        translation: {
+          navbar: {
+            home: "Casa",
+            members: "Membri",
+            cards: "Carte",
+          },
         },
       },
     },
