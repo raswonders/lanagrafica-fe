@@ -1,13 +1,5 @@
+import { User, UserSchema } from "@/types/user";
 import { useEffect, useState } from "react";
-import { z } from "zod";
-
-// eslint-disable-next-line react-refresh/only-export-components
-const UserSchema = z.object({
-  username: z.string(),
-  jwt: z.string(),
-});
-
-type User = z.infer<typeof UserSchema> | null;
 
 const key = "user";
 
