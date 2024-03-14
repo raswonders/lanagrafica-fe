@@ -3,9 +3,11 @@ import { AccountDetails } from "./account-details";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Navbar() {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <div className="fixed border-neutral-6 flex w-full justify-between p-3">
@@ -19,9 +21,11 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={isActive ? "text-accent-foreground bg-accent" : ""}
+                    className={
+                      isActive ? "text-accent-foreground bg-accent" : ""
+                    }
                   >
-                    Home
+                    {t("navbar.home")}
                   </Button>
                 )}
               </NavLink>
@@ -31,9 +35,11 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={isActive ? "text-accent-foreground bg-accent" : ""}
+                    className={
+                      isActive ? "text-accent-foreground bg-accent" : ""
+                    }
                   >
-                    Members
+                    {t("navbar.members")}
                   </Button>
                 )}
               </NavLink>
@@ -43,9 +49,11 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={isActive ? "text-accent-foreground bg-accent" : ""}
+                    className={
+                      isActive ? "text-accent-foreground bg-accent" : ""
+                    }
                   >
-                    Cards
+                    {t("navbar.cards")}
                   </Button>
                 )}
               </NavLink>
