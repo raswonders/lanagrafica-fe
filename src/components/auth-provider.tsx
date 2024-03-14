@@ -1,15 +1,17 @@
+import { useLocalUser } from "@/hooks/useLocalUser";
 import { delay } from "@/lib/utils";
-import { ReactNode, createContext, useContext, useState } from "react";
+import { User } from "@/types/user";
+import { ReactNode, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
-  user: string | null;
+  user: User;
   signIn: (credentials: Credentials) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  user: "",
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
   signIn: async () => {},
   signOut: async () => {},
 });
@@ -24,13 +26,15 @@ interface Credentials {
 }
 
 export const AuthProvider = ({ children }: Node) => {
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useLocalUser(null);
+
+
   const navigate = useNavigate();
 
   const signIn = async ({ username, password }: Credentials): Promise<void> => {
     await delay(1500); // TODO remove delay and naive login before production
     if (username === "user" && password === "user") {
-      setUser(username);
+      setUser({username: "user", jwt: "user"});
       navigate("/");
     }
   };
@@ -46,7 +50,3 @@ export const AuthProvider = ({ children }: Node) => {
     </AuthContext.Provider>
   );
 };
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
