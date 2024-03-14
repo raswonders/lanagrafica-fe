@@ -21,6 +21,11 @@ i18n
           },
           account: {
             logout: "Log out",
+            language: "Language",
+            lang: {
+              it: "Italian",
+              en: "English",
+            },
           },
         },
       },
@@ -33,6 +38,11 @@ i18n
           },
           account: {
             logout: "Esci",
+            language: "Lingua",
+            lang: {
+              it: "Italiano",
+              en: "Inglese",
+            },
           },
         },
       },
