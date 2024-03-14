@@ -19,6 +19,9 @@ i18n
             members: "Members",
             cards: "Cards",
           },
+          account: {
+            logout: "Log out",
+          },
         },
       },
       it: {
@@ -27,6 +30,9 @@ i18n
             home: "Casa",
             members: "Membri",
             cards: "Carte",
+          },
+          account: {
+            logout: "Esci",
           },
         },
       },

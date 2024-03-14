@@ -7,6 +7,7 @@ import {
 import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { t } from "i18next";
 
 export function AccountDetails() {
   const { user, signOut } = useAuth();
@@ -27,7 +28,7 @@ export function AccountDetails() {
           }}
         >
           <LogOut className="w-4 h-4 mr-2" />
-          <span>Log out</span>
+          <span>{t("account.logout")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
