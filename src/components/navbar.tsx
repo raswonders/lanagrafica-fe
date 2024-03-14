@@ -1,5 +1,5 @@
+import { useAuth } from "@/hooks/useAuth";
 import { AccountDetails } from "./account-details";
-import { useAuth } from "./auth-provider";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";

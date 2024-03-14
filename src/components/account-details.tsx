@@ -5,15 +5,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { useAuth } from "./auth-provider";
 import { LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export function AccountDetails() {
   const { user, signOut } = useAuth();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger tabIndex={-1}>
-        <Button variant="ghost">#{user}</Button>
+        <Button variant="ghost">#{user?.username}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         onCloseAutoFocus={(e) => {
