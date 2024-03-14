@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -27,6 +28,7 @@ const formSchema = z.object({
 
 export function Login() {
   const { signIn } = useAuth();
+  const { t } = useTranslation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,7 +47,7 @@ export function Login() {
     <div className="flex items-center justify-center min-h-screen">
       <Card className="max-w-md mx-auto flex-grow">
         <CardHeader>
-          <CardTitle>Sign in</CardTitle>
+          <CardTitle>{t("login.title")}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -58,7 +60,7 @@ export function Login() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>{t("login.username")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -71,7 +73,7 @@ export function Login() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("login.password")}</FormLabel>
                     <FormControl>
                       <Input type="password" {...field} />
                     </FormControl>
@@ -84,7 +86,7 @@ export function Login() {
                 className="md:self-end"
                 disabled={form.formState.isSubmitting}
               >
-                Submit
+                {t("login.submit")}
               </Button>
             </form>
           </Form>

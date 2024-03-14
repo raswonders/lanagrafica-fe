@@ -4,6 +4,7 @@ import App from "./components/app.tsx";
 import "normalize.css";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
+import "./i18next";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
