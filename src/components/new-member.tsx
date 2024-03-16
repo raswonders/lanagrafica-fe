@@ -34,7 +34,7 @@ import { Input } from "./ui/input";
 
 const formSchema = z.object({
   firstName: z.string(),
-  surname: z.string(),
+  lastName: z.string(),
   birthdate: z.string(),
   state: z.string(),
 });
@@ -46,7 +46,7 @@ export function NewMember() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
-      surname: "",
+      lastName: "",
       birthdate: "",
       state: "",
     },
@@ -86,10 +86,10 @@ export function NewMember() {
 
             <FormField
               control={form.control}
-              name="surname"
+              name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Surname</FormLabel>
+                  <FormLabel>Last name</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
