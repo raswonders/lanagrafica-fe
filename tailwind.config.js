@@ -104,7 +104,7 @@ export default {
         },
 
         // shadcn/ui b&w theme
-        border: "hsl(var(--border))",
+        border: "var(--border)",
         input: "hsl(var(--input))",
         ring: "var(--ring)",
         background: "hsl(var(--background))",

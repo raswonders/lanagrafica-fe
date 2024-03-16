@@ -120,7 +120,7 @@
     --accent-foreground: var(--accent-12);
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
+    --border: var(--neutral-7);
     --input: 240 5.9% 90%;
     --ring: var(--accent-8);
     --radius: 0.5rem;
@@ -145,7 +145,6 @@
     --accent-foreground: var(--accent-12);
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
   }
 }
