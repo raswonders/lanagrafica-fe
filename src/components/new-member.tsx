@@ -10,7 +10,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -37,7 +36,8 @@ import countries from "../assets/countries.json";
 const formSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
-  birthdate: z.string(),
+  birthDate: z.string(),
+  birthPlace: z.string(),
   state: z.string(),
 });
 
@@ -49,7 +49,7 @@ export function NewMember() {
     defaultValues: {
       firstName: "",
       lastName: "",
-      birthdate: "",
+      birthDate: "",
       state: "Italia",
     },
   });
@@ -104,7 +104,7 @@ export function NewMember() {
 
             <FormField
               control={form.control}
-              name="birthdate"
+              name="birthDate"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Date of birth</FormLabel>
@@ -147,7 +147,7 @@ export function NewMember() {
             {countryOfOrigin === "Italia" && (
               <FormField
                 control={form.control}
-                name="birthplace"
+                name="birthPlace"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Place of birth</FormLabel>
