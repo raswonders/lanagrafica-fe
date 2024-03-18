@@ -33,6 +33,11 @@ i18n
             password: "Password",
             submit: "Sign in",
           },
+          newMember: {
+            trigger: "Add new member",
+            title: "New member",
+            submit: "Create member",
+          },
         },
       },
       it: {
@@ -55,6 +60,10 @@ i18n
             username: "Nome utente",
             password: "Password",
             submit: "Accedi",
+          },
+          newMember: {
+            trigger: "Aggiungi nuovo membro",
+            // TODO finish translation
           },
         },
       },
