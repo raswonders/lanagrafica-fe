@@ -171,7 +171,7 @@ export function NewMember() {
                     </FormControl>
                     <SelectContent>
                       {smaller.map((city) => (
-                        <SelectItem value={city}>{city}</SelectItem>
+                        <SelectItem key={city} value={city}>{city}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
