@@ -153,7 +153,6 @@ export function NewMember() {
               )}
             />
 
-            {/* controlled version */}
             <FormField
               control={form.control}
               name="birthPlace"
@@ -170,7 +169,7 @@ export function NewMember() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {smaller.map((city) => (
+                      {cities.map((city) => (
                         <SelectItem key={city} value={city}>{city}</SelectItem>
                       ))}
                     </SelectContent>
@@ -179,15 +178,6 @@ export function NewMember() {
                 </FormItem>
               )}
             />
-
-            {/* uncontrolled version */}
-            {/* <select {...form.register("birthPlace")}>
-              {smaller.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select> */}
 
             <FormField
               control={form.control}
