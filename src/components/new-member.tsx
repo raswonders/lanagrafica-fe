@@ -33,7 +33,6 @@ import { z } from "zod";
 import { Input } from "./ui/input";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
-const smaller = cities.slice(0, 500);
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -63,7 +62,7 @@ export function NewMember() {
     },
   });
 
-  // const countryOfOrigin = form.watch("state");
+  const countryOfOrigin = form.watch("state");
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -153,31 +152,35 @@ export function NewMember() {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="birthPlace"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Place of birth</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {cities.map((city) => (
-                        <SelectItem key={city} value={city}>{city}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {countryOfOrigin === "Italia" && (
+              <FormField
+                control={form.control}
+                name="birthPlace"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Place of birth</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {cities.map((city) => (
+                          <SelectItem key={city} value={city}>
+                            {city}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <FormField
               control={form.control}
