@@ -32,13 +32,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "./ui/input";
 import countries from "../assets/countries.json";
+import cities from "../assets/cities.json";
+const smaller = cities.slice(0, 500);
 
 const formSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
+  email: z.string(),
   birthDate: z.string(),
   birthPlace: z.string(),
   state: z.string(),
+  docType: z.string(),
+  docId: z.string(),
 });
 
 export function NewMember() {
@@ -49,12 +54,16 @@ export function NewMember() {
     defaultValues: {
       firstName: "",
       lastName: "",
+      email: "",
       birthDate: "",
+      birthPlace: "",
       state: "Italia",
+      docType: "",
+      docId: "",
     },
   });
 
-  const countryOfOrigin = form.watch("state");
+  // const countryOfOrigin = form.watch("state");
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -133,7 +142,7 @@ export function NewMember() {
                     </FormControl>
                     <SelectContent>
                       {countries.map((country) => (
-                        <SelectItem value={country.name}>
+                        <SelectItem key={country.code} value={country.name}>
                           {country.name}
                         </SelectItem>
                       ))}
@@ -144,43 +153,45 @@ export function NewMember() {
               )}
             />
 
-            {countryOfOrigin === "Italia" && (
-              <FormField
-                control={form.control}
-                name="birthPlace"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Place of birth</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="m@example.com">
-                          m@example.com
-                        </SelectItem>
-                        <SelectItem value="m@google.com">
-                          m@google.com
-                        </SelectItem>
-                        <SelectItem value="m@support.com">
-                          m@support.com
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+            {/* controlled version */}
+            <FormField
+              control={form.control}
+              name="birthPlace"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Place of birth</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {smaller.map((city) => (
+                        <SelectItem value={city}>{city}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* uncontrolled version */}
+            {/* <select {...form.register("birthPlace")}>
+              {smaller.map((city, index) => (
+                <option key={index} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select> */}
 
             <FormField
               control={form.control}
-              name="docuType"
+              name="docType"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Document type</FormLabel>
@@ -210,7 +221,7 @@ export function NewMember() {
 
             <FormField
               control={form.control}
-              name="docuId"
+              name="docId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Document ID</FormLabel>
