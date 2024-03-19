@@ -48,6 +48,7 @@ import { z } from "zod";
 import { Input } from "./ui/input";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
+import documents from "../assets/documents.json";
 import { cn } from "@/lib/utils";
 import React from "react";
 
@@ -57,6 +58,9 @@ const formSchema = z.object({
   birthDate: z.string(),
   birthPlace: z.string(),
   state: z.string(),
+  docType: z.string(),
+  docId: z.string(),
+  email: z.string(),
 });
 
 export function NewMember() {
@@ -290,10 +294,9 @@ export function NewMember() {
                 )}
               />
             )}
-
             <FormField
               control={form.control}
-              name="docuType"
+              name="docType"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Document type</FormLabel>
@@ -307,13 +310,10 @@ export function NewMember() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="m@example.com">
-                        m@example.com
-                      </SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">
-                        m@support.com
-                      </SelectItem>
+                      {documents.map((doc) => {
+                        const value = isItaly ? doc.it : doc.en;
+                        return <SelectItem value={value}>{value}</SelectItem>;
+                      })}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -323,7 +323,7 @@ export function NewMember() {
 
             <FormField
               control={form.control}
-              name="docuId"
+              name="docId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Document ID</FormLabel>
