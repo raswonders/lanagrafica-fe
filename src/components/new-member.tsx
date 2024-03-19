@@ -49,6 +49,19 @@ import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { CommandGroup, CommandSeparator } from "cmdk";
+
+const languages = [
+  { label: "English", value: "en" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" },
+  { label: "Spanish", value: "es" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Chinese", value: "zh" },
+] as const;
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -204,6 +217,17 @@ export function NewMember() {
                               {country.name}
                             </CommandItem>
                           ))}
+
+                          <CommandItem
+                            value="unknown"
+                            key="unknown"
+                            onSelect={(value) => {
+                              form.setValue("state", value);
+                            }}
+                            forceMount
+                          >
+                            Unknown
+                          </CommandItem>
                         </CommandList>
                       </Command>
                     </PopoverContent>
