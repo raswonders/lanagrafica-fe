@@ -30,6 +30,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandGroup,
 } from "@/components/ui/command";
 
 import {
@@ -49,19 +50,6 @@ import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { CommandGroup, CommandSeparator } from "cmdk";
-
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
-] as const;
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -74,6 +62,7 @@ const formSchema = z.object({
 export function NewMember() {
   const { t } = useTranslation();
   const [countrySearch, setCountrySearch] = React.useState("");
+  const [citySearch, setCitySearch] = React.useState("");
   const maxSuggested = 50;
 
   const matchingStartCountries = countries.filter((country) => {
@@ -91,6 +80,21 @@ export function NewMember() {
     ...new Set([...matchingStartCountries, ...matchingSubstringCountries]),
   ].slice(0, maxSuggested);
 
+  const matchingStartCities = cities.filter((city) => {
+    return city
+      .toLowerCase()
+      .split(" ")
+      .some((word) => word.startsWith(citySearch.toLowerCase()));
+  });
+
+  const matchingSubstringCities = cities.filter((city) => {
+    return city.toLowerCase().includes(citySearch.toLowerCase());
+  });
+
+  const filteredCities = [
+    ...new Set([...matchingStartCities, ...matchingSubstringCities]),
+  ].slice(0, maxSuggested);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -101,7 +105,7 @@ export function NewMember() {
     },
   });
 
-  // const countryOfOrigin = form.watch("state");
+  const isItaly = form.watch("state") === "Italia";
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -223,6 +227,69 @@ export function NewMember() {
                 </FormItem>
               )}
             />
+
+            {isItaly && (
+              <FormField
+                control={form.control}
+                name="birthPlace"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Place of birth</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-[200px] justify-between",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value ? field.value : "Select city"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command shouldFilter={false}>
+                          <CommandInput
+                            value={citySearch}
+                            onValueChange={setCitySearch}
+                            placeholder="Search city..."
+                          />
+                          <CommandList>
+                            <CommandEmpty>No city found.</CommandEmpty>
+                            <CommandGroup>
+                              {filteredCities.map((city) => (
+                                <CommandItem
+                                  value={city}
+                                  key={city}
+                                  onSelect={() => {
+                                    form.setValue("birthPlace", city);
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      city === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {city}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <FormField
               control={form.control}
