@@ -51,6 +51,7 @@ import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { ResetButton } from "./reset-button";
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -105,11 +106,20 @@ export function NewMember() {
       firstName: "",
       lastName: "",
       birthDate: "",
+      birthPlace: "",
       state: "Italia",
+      docType: "",
+      docId: "",
+      email: "",
     },
   });
 
   const isItaly = form.watch("state") === "Italia";
+  const resetForm = () => {
+    form.reset();
+    setCountrySearch("");
+    setCitySearch("");
+  };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -349,7 +359,10 @@ export function NewMember() {
               )}
             />
 
-            <Button type="submit">{t("newMember.submit")}</Button>
+            <div className="flex justify-between">
+              <Button type="submit">{t("newMember.submit")}</Button>
+              <ResetButton resetForm={resetForm} />
+            </div>
           </form>
         </Form>
         <DialogFooter></DialogFooter>
