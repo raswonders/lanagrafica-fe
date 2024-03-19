@@ -48,7 +48,7 @@ import { Input } from "./ui/input";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import { cn } from "@/lib/utils";
-const smaller = cities.slice(0, 100);
+import React from "react";
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -60,6 +60,23 @@ const formSchema = z.object({
 
 export function NewMember() {
   const { t } = useTranslation();
+  const [countrySearch, setCountrySearch] = React.useState("");
+  const maxSuggested = 50;
+
+  const matchingStartCountries = countries.filter((country) => {
+    return country.name
+      .toLowerCase()
+      .split(" ")
+      .some((word) => word.startsWith(countrySearch.toLowerCase()));
+  });
+
+  const matchingSubstringCountries = countries.filter((country) => {
+    return country.name.toLowerCase().includes(countrySearch.toLowerCase());
+  });
+
+  const filteredCountries = [
+    ...new Set([...matchingStartCountries, ...matchingSubstringCountries]),
+  ].slice(0, maxSuggested);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -160,11 +177,15 @@ export function NewMember() {
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput placeholder="Search country..." />
+                      <Command shouldFilter={false}>
+                        <CommandInput
+                          value={countrySearch}
+                          onValueChange={setCountrySearch}
+                          placeholder="Search country..."
+                        />
                         <CommandEmpty>No country found.</CommandEmpty>
                         <CommandList>
-                          {countries.map((country) => (
+                          {filteredCountries.map((country) => (
                             <CommandItem
                               value={country.name}
                               key={country.code}
