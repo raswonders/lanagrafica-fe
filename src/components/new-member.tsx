@@ -180,11 +180,7 @@ export function NewMember() {
                             !field.value && "text-muted-foreground",
                           )}
                         >
-                          {field.value
-                            ? countries.find(
-                                (country) => country.name === field.value,
-                              )?.name
-                            : "Select country"}
+                          {field.value ? field.value : "Select country"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -196,38 +192,29 @@ export function NewMember() {
                           onValueChange={setCountrySearch}
                           placeholder="Search country..."
                         />
-                        <CommandEmpty>No country found.</CommandEmpty>
                         <CommandList>
-                          {filteredCountries.map((country) => (
-                            <CommandItem
-                              value={country.name}
-                              key={country.code}
-                              onSelect={() => {
-                                form.setValue("state", country.name);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  country.name === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0",
-                                )}
-                              />
-                              {country.name}
-                            </CommandItem>
-                          ))}
-
-                          <CommandItem
-                            value="unknown"
-                            key="unknown"
-                            onSelect={(value) => {
-                              form.setValue("state", value);
-                            }}
-                            forceMount
-                          >
-                            Unknown
-                          </CommandItem>
+                          <CommandEmpty>No country found.</CommandEmpty>
+                          <CommandGroup>
+                            {filteredCountries.map((country) => (
+                              <CommandItem
+                                value={country.name}
+                                key={country.code}
+                                onSelect={() => {
+                                  form.setValue("state", country.name);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    country.name === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                                {country.name}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
                         </CommandList>
                       </Command>
                     </PopoverContent>
