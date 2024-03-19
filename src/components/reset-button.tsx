@@ -11,11 +11,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "./ui/button";
 
-export function ResetButton({ resetForm }: { resetForm: () => void }) {
+export function ResetButton({
+  resetForm,
+  disabled,
+}: {
+  resetForm: () => void;
+  disabled: boolean;
+}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button type="button" variant="outline">
+        <Button disabled={disabled} type="button" variant="outline">
           Reset form
         </Button>
       </AlertDialogTrigger>

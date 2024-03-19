@@ -49,7 +49,7 @@ import { Input } from "./ui/input";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
-import { cn } from "@/lib/utils";
+import { cn, delay } from "@/lib/utils";
 import React from "react";
 import { ResetButton } from "./reset-button";
 
@@ -121,8 +121,10 @@ export function NewMember() {
     setCitySearch("");
   };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    await delay(1500);
+    form.reset();
   }
 
   return (
@@ -360,8 +362,13 @@ export function NewMember() {
             />
 
             <div className="flex justify-between">
-              <Button type="submit">{t("newMember.submit")}</Button>
-              <ResetButton resetForm={resetForm} />
+              <Button disabled={form.formState.isSubmitting} type="submit">
+                {t("newMember.submit")}
+              </Button>
+              <ResetButton
+                disabled={form.formState.isSubmitting}
+                resetForm={resetForm}
+              />
             </div>
           </form>
         </Form>
