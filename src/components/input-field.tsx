@@ -6,21 +6,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "./ui/input";
-import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
-type InputFieldProps<T extends FieldValues> = {
-  form: UseFormReturn<T>;
-  name: Path<T>;
+type InputFieldProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  name: string;
   label: string;
   type?: string;
 };
 
-export function InputField<T extends FieldValues>({
+export function InputField({
   form,
   name,
   label,
   type = "text",
-}: InputFieldProps<T>) {
+}: InputFieldProps) {
   return (
     <FormField
       control={form.control}
