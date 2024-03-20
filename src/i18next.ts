@@ -38,6 +38,9 @@ i18n
             title: "New member",
             submit: "Create member",
           },
+          validation: {
+            required: "is required",
+          }
         },
       },
       it: {

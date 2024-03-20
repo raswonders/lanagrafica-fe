@@ -53,22 +53,22 @@ import { cn, delay } from "@/lib/utils";
 import React from "react";
 import { ResetButton } from "./reset-button";
 
-const formSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  birthDate: z.string(),
-  birthPlace: z.string(),
-  state: z.string(),
-  docType: z.string(),
-  docId: z.string(),
-  email: z.string(),
-});
-
 export function NewMember() {
   const { t } = useTranslation();
   const [countrySearch, setCountrySearch] = React.useState("");
   const [citySearch, setCitySearch] = React.useState("");
   const maxSuggested = 50;
+
+  const formSchema = z.object({
+    name: z.string().min(1, { message: t("validation.required") }),
+    surname: z.string().min(1, { message: t("validation.required") }),
+    birthDate: z.string(),
+    birthPlace: z.string(),
+    state: z.string(),
+    docType: z.string(),
+    docId: z.string(),
+    email: z.string(),
+  });
 
   const matchingStartCountries = countries.filter((country) => {
     return country.name
@@ -103,8 +103,8 @@ export function NewMember() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
+      surname: "",
       birthDate: "",
       birthPlace: "",
       state: "Italia",
@@ -143,7 +143,7 @@ export function NewMember() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="firstName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>First name</FormLabel>
@@ -157,10 +157,10 @@ export function NewMember() {
 
             <FormField
               control={form.control}
-              name="lastName"
+              name="surname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last name</FormLabel>
+                  <FormLabel>Surname</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
