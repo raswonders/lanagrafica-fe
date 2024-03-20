@@ -7,23 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+import { Form } from "@/components/ui/form";
 import { Button } from "./ui/button";
 import { UserPlus } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -38,6 +22,7 @@ import React from "react";
 import { ResetButton } from "./reset-button";
 import { InputField } from "./input-field";
 import { Combobox } from "./combobox";
+import { SelectField } from "./select-field";
 
 export function NewMember() {
   const { t } = useTranslation();
@@ -135,31 +120,11 @@ export function NewMember() {
               />
             )}
 
-            <FormField
-              control={form.control}
+            <SelectField
+              form={form}
               name="docType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Document type</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {documents.map((doc) => {
-                        const value = isItaly ? doc.it : doc.en;
-                        return <SelectItem value={value}>{value}</SelectItem>;
-                      })}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label={t("newMember.docTypeFieldLabel")}
+              data={documents.map((entry) => (isItaly ? entry.it : entry.en))}
             />
 
             <InputField

@@ -44,6 +44,7 @@ i18n
             emailFieldLabel: "Email",
             countryFieldLabel: "Country of origin",
             cityFieldLabel: "Place of birth",
+            docTypeFieldLabel: "Document type",
           },
           validation: {
             required: "is required",
@@ -85,6 +86,7 @@ i18n
             emailFieldLabel: "Email",
             countryFieldLabel: "Paese di origine",
             cityFieldLabel: "Luogo di nascita",
+            docTypeFieldLabel: "Tipo di documento",
           },
           validation: {
             required: "è richiesto",
