@@ -62,11 +62,11 @@ export function NewMember() {
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
     surname: z.string().min(1, { message: t("validation.required") }),
-    birthDate: z.string(),
-    birthPlace: z.string(),
-    state: z.string(),
-    docType: z.string(),
-    docId: z.string(),
+    birthDate: z.string().min(1, { message: t("validation.required") }),
+    birthPlace: z.string().min(1, { message: t("validation.required") }),
+    state: z.string().min(1, { message: t("validation.required") }),
+    docType: z.string().min(1, { message: t("validation.required") }),
+    docId: z.string().min(1, { message: t("validation.required") }),
     email: z.string(),
   });
 
