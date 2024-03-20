@@ -45,13 +45,13 @@ import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Input } from "./ui/input";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
 import { cn, delay } from "@/lib/utils";
 import React from "react";
 import { ResetButton } from "./reset-button";
+import { InputField } from "./input-field";
 
 export function NewMember() {
   const { t } = useTranslation();
@@ -141,46 +141,23 @@ export function NewMember() {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
+            <InputField
+              form={form}
+              label={t("newMember.nameFieldLabel")}
               name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First name</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
 
-            <FormField
-              control={form.control}
+            <InputField
+              form={form}
+              label={t("newMember.surnameFieldLabel")}
               name="surname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Surname</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
 
-            <FormField
-              control={form.control}
+            <InputField
+              form={form}
+              label={t("newMember.dateFieldLabel")}
               name="birthDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date of birth</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              type="date"
             />
 
             <FormField
@@ -306,6 +283,7 @@ export function NewMember() {
                 )}
               />
             )}
+
             <FormField
               control={form.control}
               name="docType"
@@ -333,32 +311,16 @@ export function NewMember() {
               )}
             />
 
-            <FormField
-              control={form.control}
+            <InputField
+              form={form}
+              label={t("newMember.docIdFieldLabel")}
               name="docId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Document ID</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
 
-            <FormField
-              control={form.control}
+            <InputField
+              form={form}
+              label={t("newMember.emailFieldLabel")}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input type="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
 
             <div className="flex justify-between">

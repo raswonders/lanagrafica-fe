@@ -37,10 +37,15 @@ i18n
             trigger: "Add new member",
             title: "New member",
             submit: "Create member",
+            nameFieldLabel: "First name",
+            surnameFieldLabel: "Surname",
+            dateFieldLabel: "Place of birth",
+            docIdFieldLabel: "Document ID",
+            emailFieldLabel: "Email",
           },
           validation: {
             required: "is required",
-          }
+          },
         },
       },
       it: {
@@ -66,7 +71,16 @@ i18n
           },
           newMember: {
             trigger: "Aggiungi nuovo membro",
-            // TODO finish translation
+            title: "Nuovo membro",
+            submit: "Crea membro",
+            nameFieldLabel: "Nome",
+            surnameFieldLabel: "Cognome",
+            dateFieldLabel: "Luogo di nascita",
+            docIdFieldLabel: "ID documento",
+            emailFieldLabel: "Email",
+          },
+          validation: {
+            required: "è richiesto",
           },
         },
       },
