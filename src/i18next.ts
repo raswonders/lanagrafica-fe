@@ -42,9 +42,14 @@ i18n
             dateFieldLabel: "Place of birth",
             docIdFieldLabel: "Document ID",
             emailFieldLabel: "Email",
+            countryFieldLabel: "Country of origin",
+            cityFieldLabel: "Place of birth",
           },
           validation: {
             required: "is required",
+          },
+          combobox: {
+            noItems: "No item found.",
           },
         },
       },
@@ -78,9 +83,14 @@ i18n
             dateFieldLabel: "Luogo di nascita",
             docIdFieldLabel: "ID documento",
             emailFieldLabel: "Email",
+            countryFieldLabel: "Paese di origine",
+            cityFieldLabel: "Luogo di nascita",
           },
           validation: {
             required: "è richiesto",
+          },
+          combobox: {
+            noItems: "No item found.",
           },
         },
       },

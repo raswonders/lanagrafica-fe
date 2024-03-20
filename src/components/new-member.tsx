@@ -24,23 +24,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {
-  Command,
-  CommandEmpty,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandGroup,
-} from "@/components/ui/command";
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-
 import { Button } from "./ui/button";
-import { Check, ChevronsUpDown, UserPlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -48,16 +33,16 @@ import { z } from "zod";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
-import { cn, delay } from "@/lib/utils";
+import { delay } from "@/lib/utils";
 import React from "react";
 import { ResetButton } from "./reset-button";
 import { InputField } from "./input-field";
+import { Combobox } from "./combobox";
 
 export function NewMember() {
   const { t } = useTranslation();
   const [countrySearch, setCountrySearch] = React.useState("");
   const [citySearch, setCitySearch] = React.useState("");
-  const maxSuggested = 50;
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -69,36 +54,6 @@ export function NewMember() {
     docId: z.string().min(1, { message: t("validation.required") }),
     email: z.string(),
   });
-
-  const matchingStartCountries = countries.filter((country) => {
-    return country.name
-      .toLowerCase()
-      .split(" ")
-      .some((word) => word.startsWith(countrySearch.toLowerCase()));
-  });
-
-  const matchingSubstringCountries = countries.filter((country) => {
-    return country.name.toLowerCase().includes(countrySearch.toLowerCase());
-  });
-
-  const filteredCountries = [
-    ...new Set([...matchingStartCountries, ...matchingSubstringCountries]),
-  ].slice(0, maxSuggested);
-
-  const matchingStartCities = cities.filter((city) => {
-    return city
-      .toLowerCase()
-      .split(" ")
-      .some((word) => word.startsWith(citySearch.toLowerCase()));
-  });
-
-  const matchingSubstringCities = cities.filter((city) => {
-    return city.toLowerCase().includes(citySearch.toLowerCase());
-  });
-
-  const filteredCities = [
-    ...new Set([...matchingStartCities, ...matchingSubstringCities]),
-  ].slice(0, maxSuggested);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -160,127 +115,23 @@ export function NewMember() {
               type="date"
             />
 
-            <FormField
-              control={form.control}
+            <Combobox
+              form={form}
               name="state"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Country of origin</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-[200px] justify-between",
-                            !field.value && "text-muted-foreground",
-                          )}
-                        >
-                          {field.value ? field.value : "Select country"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command shouldFilter={false}>
-                        <CommandInput
-                          value={countrySearch}
-                          onValueChange={setCountrySearch}
-                          placeholder="Search country..."
-                        />
-                        <CommandList>
-                          <CommandEmpty>No country found.</CommandEmpty>
-                          <CommandGroup>
-                            {filteredCountries.map((country) => (
-                              <CommandItem
-                                value={country.name}
-                                key={country.code}
-                                onSelect={() => {
-                                  form.setValue("state", country.name);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    country.name === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0",
-                                  )}
-                                />
-                                {country.name}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label={t("newMember.countryFieldLabel")}
+              data={countries.map((entry) => entry.name)}
+              search={countrySearch}
+              setSearch={setCountrySearch}
             />
 
             {isItaly && (
-              <FormField
-                control={form.control}
+              <Combobox
+                form={form}
                 name="birthPlace"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Place of birth</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground",
-                            )}
-                          >
-                            {field.value ? field.value : "Select city"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
-                        <Command shouldFilter={false}>
-                          <CommandInput
-                            value={citySearch}
-                            onValueChange={setCitySearch}
-                            placeholder="Search city..."
-                          />
-                          <CommandList>
-                            <CommandEmpty>No city found.</CommandEmpty>
-                            <CommandGroup>
-                              {filteredCities.map((city) => (
-                                <CommandItem
-                                  value={city}
-                                  key={city}
-                                  onSelect={() => {
-                                    form.setValue("birthPlace", city);
-                                  }}
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      city === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0",
-                                    )}
-                                  />
-                                  {city}
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label={t("newMember.cityFieldLabel")}
+                data={cities}
+                search={citySearch}
+                setSearch={setCitySearch}
               />
             )}
 
