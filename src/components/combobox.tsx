@@ -90,7 +90,7 @@ export function Combobox({
                 <CommandInput
                   value={search}
                   onValueChange={setSearch}
-                  placeholder="Search country..."
+                  placeholder={t("combobox.placeholder")}
                 />
                 <CommandList>
                   <CommandEmpty>{t("combobox.noItems")}</CommandEmpty>

@@ -51,6 +51,7 @@ i18n
           },
           combobox: {
             noItems: "No item found.",
+            placeholder: "Search items...",
           },
         },
       },
@@ -92,7 +93,8 @@ i18n
             required: "è richiesto",
           },
           combobox: {
-            noItems: "No item found.",
+            noItems: "Nessun elemento trovato.",
+            placeholder: "Cerca elementi...",
           },
         },
       },
