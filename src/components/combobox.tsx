@@ -100,7 +100,7 @@ export function Combobox({
                         value={entry}
                         key={entry}
                         onSelect={() => {
-                          form.setValue("state", entry);
+                          form.setValue(name, entry);
                         }}
                       >
                         <Check
