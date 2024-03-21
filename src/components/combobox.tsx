@@ -44,7 +44,7 @@ export function Combobox({
   search,
   setSearch,
 }: ComboboxProps) {
-  const maxSuggested = 50;
+  const maxSuggested = 9;
   const { t } = useTranslation();
 
   const matchingStart = data.filter((entry) => {
