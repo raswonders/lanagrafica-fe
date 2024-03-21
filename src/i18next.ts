@@ -18,6 +18,7 @@ i18n
             home: "Home",
             members: "Members",
             cards: "Cards",
+            addMember: "Add member",
           },
           account: {
             logout: "Log out",
@@ -61,6 +62,7 @@ i18n
             home: "Casa",
             members: "Membri",
             cards: "Carte",
+            addMember: "Aggiungi membro",
           },
           account: {
             logout: "Esci",

@@ -4,6 +4,7 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { UserPlus } from "lucide-react";
 
 export function Navbar() {
   const { user } = useAuth();
@@ -40,6 +41,21 @@ export function Navbar() {
                     }
                   >
                     {t("navbar.members")}
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/new-member"} tabIndex={-1}>
+                {({ isActive }) => (
+                  <Button
+                    variant="ghost"
+                    className={
+                      isActive ? "text-accent-foreground bg-accent" : ""
+                    }
+                  >
+                    <UserPlus className="mr-1 h-6" />
+                    {t("navbar.addMember")}
                   </Button>
                 )}
               </NavLink>
