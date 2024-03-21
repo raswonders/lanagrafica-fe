@@ -40,7 +40,7 @@ i18n
             submit: "Create member",
             nameFieldLabel: "First name",
             surnameFieldLabel: "Surname",
-            dateFieldLabel: "Place of birth",
+            dateFieldLabel: "Date of birth",
             docIdFieldLabel: "Document ID",
             emailFieldLabel: "Email",
             countryFieldLabel: "Country of origin",
@@ -49,11 +49,17 @@ i18n
           },
           validation: {
             required: "is required",
+            wrongDate: "is invalid date",
           },
           combobox: {
             noItems: "No item found.",
             commandPlaceholder: "Search items...",
             buttonPlaceholder: "Select item",
+          },
+          dateField: {
+            day: "day",
+            month: "month",
+            year: "year",
           },
         },
       },
@@ -85,7 +91,7 @@ i18n
             submit: "Crea membro",
             nameFieldLabel: "Nome",
             surnameFieldLabel: "Cognome",
-            dateFieldLabel: "Luogo di nascita",
+            dateFieldLabel: "Data di nascita",
             docIdFieldLabel: "ID documento",
             emailFieldLabel: "Email",
             countryFieldLabel: "Paese di origine",
@@ -94,11 +100,17 @@ i18n
           },
           validation: {
             required: "è richiesto",
+            wrongDate: "è una data non valida",
           },
           combobox: {
             noItems: "Nessun elemento trovato.",
             commandPlaceholder: "Cerca elementi...",
             buttonPlaceholder: "Seleziona elemento",
+          },
+          dateField: {
+            day: "giorno",
+            month: "mese",
+            year: "anno",
           },
         },
       },

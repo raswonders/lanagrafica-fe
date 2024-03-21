@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { Form } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
@@ -9,22 +8,29 @@ import { z } from "zod";
 import countries from "../../assets/countries.json";
 import cities from "../../assets/cities.json";
 import documents from "../../assets/documents.json";
-import { delay } from "@/lib/utils";
-import React from "react";
+import { delay, isValidISODate } from "@/lib/utils";
+import { useState } from "react";
 import { ResetButton } from "../reset-button";
 import { InputField } from "../input-field";
 import { Combobox } from "../combobox";
 import { SelectField } from "../select-field";
+import { DateField } from "../date-field";
 
 export function NewMember() {
   const { t } = useTranslation();
-  const [countrySearch, setCountrySearch] = React.useState("");
-  const [citySearch, setCitySearch] = React.useState("");
+  const [countrySearch, setCountrySearch] = useState("");
+  const [citySearch, setCitySearch] = useState("");
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
     surname: z.string().min(1, { message: t("validation.required") }),
-    birthDate: z.string().min(1, { message: t("validation.required") }),
+    birthDate: z
+      .string()
+      .min(1, { message: t("validation.required") })
+      .refine(isValidISODate, { message: t("validation.wrongDate") }),
     birthPlace: z.string().min(1, { message: t("validation.required") }),
     state: z.string().min(1, { message: t("validation.required") }),
     docType: z.string().min(1, { message: t("validation.required") }),
@@ -51,6 +57,9 @@ export function NewMember() {
     form.reset();
     setCountrySearch("");
     setCitySearch("");
+    setDay("");
+    setMonth("");
+    setYear("");
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -65,7 +74,7 @@ export function NewMember() {
         <CardHeader>
           <CardTitle>{t("newMember.title")}</CardTitle>
         </CardHeader>
-        <CardContent >
+        <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <InputField
@@ -80,11 +89,16 @@ export function NewMember() {
                 name="surname"
               />
 
-              <InputField
+              <DateField
                 form={form}
                 label={t("newMember.dateFieldLabel")}
                 name="birthDate"
-                type="date"
+                day={day}
+                month={month}
+                year={year}
+                setDay={setDay}
+                setMonth={setMonth}
+                setYear={setYear}
               />
 
               <Combobox
