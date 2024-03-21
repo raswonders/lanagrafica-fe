@@ -68,7 +68,7 @@ export function Combobox({
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="w-max">{label}</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
