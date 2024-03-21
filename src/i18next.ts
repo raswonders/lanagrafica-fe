@@ -52,7 +52,8 @@ i18n
           },
           combobox: {
             noItems: "No item found.",
-            placeholder: "Search items...",
+            commandPlaceholder: "Search items...",
+            buttonPlaceholder: "Select item",
           },
         },
       },
@@ -96,7 +97,8 @@ i18n
           },
           combobox: {
             noItems: "Nessun elemento trovato.",
-            placeholder: "Cerca elementi...",
+            commandPlaceholder: "Cerca elementi...",
+            buttonPlaceholder: "Seleziona elemento",
           },
         },
       },
