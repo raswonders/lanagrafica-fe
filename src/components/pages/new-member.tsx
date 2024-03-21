@@ -60,12 +60,12 @@ export function NewMember() {
   }
 
   return (
-    <section className="p-8 pt-24">
-      <Card>
+    <section className="p-8 pt-24 flex justify-center">
+      <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>{t("newMember.title")}</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent >
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <InputField
