@@ -20,11 +20,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+
 import { Button } from "./ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
+import { Input } from "./ui/input";
 
 type ComboboxProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,7 +75,7 @@ export function Combobox({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  variant="outline"
+                  variant="select"
                   role="combobox"
                   className={cn(
                     "w-[200px] justify-between",
