@@ -61,6 +61,9 @@ i18n
             month: "month",
             year: "year",
           },
+          selectField: {
+            placeholder: "Select document",
+          },
         },
       },
       it: {
@@ -111,6 +114,9 @@ i18n
             day: "giorno",
             month: "mese",
             year: "anno",
+          },
+          selectField: {
+            placeholder: "Seleziona documento",
           },
         },
       },
