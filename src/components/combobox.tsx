@@ -24,9 +24,8 @@ import {
 import { Button } from "./ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Input } from "./ui/input";
 
 type ComboboxProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,6 +35,7 @@ type ComboboxProps = {
   data: string[];
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
+  value?: string;
 };
 
 export function Combobox({
@@ -45,9 +45,16 @@ export function Combobox({
   data,
   search,
   setSearch,
+  value,
 }: ComboboxProps) {
   const maxSuggested = 9;
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (value !== undefined) {
+      form.setValue(name, value);
+    }
+  }, [form, name, value]);
 
   const matchingStart = data.filter((entry) => {
     return entry

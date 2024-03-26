@@ -51,7 +51,8 @@ export function NewMember() {
     },
   });
 
-  const isItaly = form.watch("state") === "Italy";
+  const country = form.watch("state");
+  const isItaly = country === "Italy";
   const resetForm = () => {
     form.reset();
     setCountrySearch("");
@@ -112,16 +113,15 @@ export function NewMember() {
                 setSearch={setCountrySearch}
               />
 
-              {isItaly && (
-                <Combobox
-                  form={form}
-                  name="birthPlace"
-                  label={t("newMember.cityFieldLabel")}
-                  data={cities}
-                  search={citySearch}
-                  setSearch={setCitySearch}
-                />
-              )}
+              <Combobox
+                form={form}
+                name="birthPlace"
+                label={t("newMember.cityFieldLabel")}
+                data={cities}
+                search={citySearch}
+                setSearch={setCitySearch}
+                value={isItaly ? "" : country}
+              />
 
               <SelectField
                 form={form}
