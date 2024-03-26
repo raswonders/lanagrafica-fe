@@ -54,7 +54,7 @@ i18n
           combobox: {
             noItems: "No item found.",
             commandPlaceholder: "Search items...",
-            buttonPlaceholder: "Select item",
+            buttonPlaceholder: "Select city",
           },
           dateField: {
             day: "day",
@@ -108,7 +108,7 @@ i18n
           combobox: {
             noItems: "Nessun elemento trovato.",
             commandPlaceholder: "Cerca elementi...",
-            buttonPlaceholder: "Seleziona elemento",
+            buttonPlaceholder: "Seleziona posto", 
           },
           dateField: {
             day: "giorno",
