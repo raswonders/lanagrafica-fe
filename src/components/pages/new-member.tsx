@@ -121,6 +121,7 @@ export function NewMember() {
                 search={citySearch}
                 setSearch={setCitySearch}
                 value={isItaly ? "" : country}
+                disabled={!isItaly}
               />
 
               <SelectField

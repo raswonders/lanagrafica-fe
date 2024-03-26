@@ -36,6 +36,7 @@ type ComboboxProps = {
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
   value?: string;
+  disabled?: boolean;
 };
 
 export function Combobox({
@@ -46,6 +47,7 @@ export function Combobox({
   search,
   setSearch,
   value,
+  disabled = false,
 }: ComboboxProps) {
   const maxSuggested = 9;
   const { t } = useTranslation();
@@ -79,7 +81,7 @@ export function Combobox({
         <FormItem className="flex flex-col">
           <FormLabel className="w-max">{label}</FormLabel>
           <Popover>
-            <PopoverTrigger asChild>
+            <PopoverTrigger asChild disabled={disabled}>
               <FormControl>
                 <Button
                   variant="select"
