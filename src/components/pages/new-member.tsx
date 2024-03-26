@@ -10,7 +10,6 @@ import cities from "../../assets/cities.json";
 import documents from "../../assets/documents.json";
 import { delay, isValidISODate } from "@/lib/utils";
 import { useState } from "react";
-import { ResetButton } from "../reset-button";
 import { InputField } from "../input-field";
 import { Combobox } from "../combobox";
 import { SelectField } from "../select-field";
@@ -53,14 +52,14 @@ export function NewMember() {
   });
 
   const isItaly = form.watch("state") === "Italy";
-  const resetForm = () => {
-    form.reset();
-    setCountrySearch("");
-    setCitySearch("");
-    setDay("");
-    setMonth("");
-    setYear("");
-  };
+  // const resetForm = () => {
+  //   form.reset();
+  //   setCountrySearch("");
+  //   setCitySearch("");
+  //   setDay("");
+  //   setMonth("");
+  //   setYear("");
+  // };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -76,7 +75,10 @@ export function NewMember() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8 flex flex-col"
+            >
               <InputField
                 form={form}
                 label={t("newMember.nameFieldLabel")}
@@ -142,15 +144,13 @@ export function NewMember() {
                 name="email"
               />
 
-              <div className="flex justify-between">
-                <Button disabled={form.formState.isSubmitting} type="submit">
-                  {t("newMember.submit")}
-                </Button>
-                <ResetButton
-                  disabled={form.formState.isSubmitting}
-                  resetForm={resetForm}
-                />
-              </div>
+              <Button
+                disabled={form.formState.isSubmitting}
+                type="submit"
+                className="md:self-end"
+              >
+                {t("newMember.submit")}
+              </Button>
             </form>
           </Form>
         </CardContent>
