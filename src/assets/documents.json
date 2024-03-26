@@ -1,0 +1,22 @@
+[
+  {
+    "en": "Id card",
+    "it": "Carta identità"
+  },
+  {
+    "en": "Driver license",
+    "it": "Patente"
+  },
+  {
+    "en": "Passport",
+    "it": "Passaporto"
+  },
+  { 
+    "en": "Residence permit",
+    "it": "Permesso di soggiorno" 
+  },
+  { 
+    "en": "Other",
+    "it": "Altro" 
+  }
+]
