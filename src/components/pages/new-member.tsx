@@ -52,19 +52,19 @@ export function NewMember() {
   });
 
   const isItaly = form.watch("state") === "Italy";
-  // const resetForm = () => {
-  //   form.reset();
-  //   setCountrySearch("");
-  //   setCitySearch("");
-  //   setDay("");
-  //   setMonth("");
-  //   setYear("");
-  // };
+  const resetForm = () => {
+    form.reset();
+    setCountrySearch("");
+    setCitySearch("");
+    setDay("");
+    setMonth("");
+    setYear("");
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     await delay(1500);
-    form.reset();
+    resetForm();
   }
 
   return (
