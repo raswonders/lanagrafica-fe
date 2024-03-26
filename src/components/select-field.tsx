@@ -37,7 +37,7 @@ export function SelectField({ form, name, label, data }: SelectFieldProps) {
             </FormControl>
             <SelectContent>
               {data.map((entry) => {
-                return <SelectItem value={entry}>{entry}</SelectItem>;
+                return <SelectItem value={entry} key={entry}>{entry}</SelectItem>;
               })}
             </SelectContent>
           </Select>

@@ -17,7 +17,7 @@ import { SelectField } from "../select-field";
 import { DateField } from "../date-field";
 
 export function NewMember() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
   const [day, setDay] = useState("");
@@ -125,7 +125,9 @@ export function NewMember() {
                 form={form}
                 name="docType"
                 label={t("newMember.docTypeFieldLabel")}
-                data={documents.map((entry) => (isItaly ? entry.it : entry.en))}
+                data={documents.map((entry) =>
+                  i18n.language === "it" ? entry.it : entry.en,
+                )}
               />
 
               <InputField
