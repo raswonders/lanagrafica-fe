@@ -45,14 +45,14 @@ export function NewMember() {
       surname: "",
       birthDate: "",
       birthPlace: "",
-      state: "Italia",
+      state: "Italy",
       docType: "",
       docId: "",
       email: "",
     },
   });
 
-  const isItaly = form.watch("state") === "Italia";
+  const isItaly = form.watch("state") === "Italy";
   const resetForm = () => {
     form.reset();
     setCountrySearch("");
@@ -105,7 +105,7 @@ export function NewMember() {
                 form={form}
                 name="state"
                 label={t("newMember.countryFieldLabel")}
-                data={countries.map((entry) => entry.name)}
+                data={countries.map((entry) => entry.en)}
                 search={countrySearch}
                 setSearch={setCountrySearch}
               />
