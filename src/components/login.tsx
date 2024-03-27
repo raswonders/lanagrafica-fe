@@ -17,18 +17,14 @@ import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
 
-const formSchema = z.object({
-  username: z.string().min(1, {
-    message: "Username cannot be empty.",
-  }),
-  password: z.string().min(1, {
-    message: "Password cannot be empty.",
-  }),
-});
-
 export function Login() {
   const { signIn } = useAuth();
   const { t } = useTranslation();
+
+  const formSchema = z.object({
+    username: z.string().min(1, { message: t("validation.required") }),
+    password: z.string().min(1, { message: t("validation.required") }),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
