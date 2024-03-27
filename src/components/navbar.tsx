@@ -4,7 +4,7 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { UserPlus, UserRoundPlus, UserRoundSearch } from "lucide-react";
+import { UserRoundPlus, UserRoundSearch } from "lucide-react";
 import { Logo } from "./logo";
 
 export function Navbar() {
