@@ -79,7 +79,7 @@ export function Login() {
               />
               <Button
                 type="submit"
-                className="md:self-end"
+                className="sm:self-end"
                 disabled={form.formState.isSubmitting}
               >
                 {t("login.submit")}

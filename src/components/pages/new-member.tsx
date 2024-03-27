@@ -137,7 +137,7 @@ export function NewMember() {
               <Button
                 disabled={form.formState.isSubmitting}
                 type="submit"
-                className="md:self-end"
+                className="sm:self-end"
               >
                 {t("newMember.submit")}
               </Button>
