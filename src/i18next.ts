@@ -27,6 +27,7 @@ i18n
               it: "Italian",
               en: "English",
             },
+            theme: "Theme",
           },
           login: {
             title: "Sign in",
@@ -81,6 +82,7 @@ i18n
               it: "Italiano",
               en: "Inglese",
             },
+            theme: "Tema",
           },
           login: {
             title: "Accedi",
@@ -108,7 +110,7 @@ i18n
           combobox: {
             noItems: "Nessun elemento trovato.",
             commandPlaceholder: "Cerca elementi...",
-            buttonPlaceholder: "Seleziona posto", 
+            buttonPlaceholder: "Seleziona posto",
           },
           dateField: {
             day: "giorno",
