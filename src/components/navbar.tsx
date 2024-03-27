@@ -4,7 +4,7 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { UserPlus } from "lucide-react";
+import { UserPlus, UserRoundPlus, UserRoundSearch } from "lucide-react";
 import { Logo } from "./logo";
 
 export function Navbar() {
@@ -33,6 +33,7 @@ export function Navbar() {
                       isActive ? "text-accent-foreground bg-accent" : ""
                     }
                   >
+                    <UserRoundSearch className="mr-1 h-5" />
                     {t("navbar.members")}
                   </Button>
                 )}
@@ -47,7 +48,7 @@ export function Navbar() {
                       isActive ? "text-accent-foreground bg-accent" : ""
                     }
                   >
-                    <UserPlus className="mr-1 h-6" />
+                    <UserRoundPlus className="mr-1 h-5" />
                     {t("navbar.addMember")}
                   </Button>
                 )}
