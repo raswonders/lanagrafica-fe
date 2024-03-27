@@ -13,9 +13,13 @@ export function Navbar() {
 
   return (
     <div className="fixed border-neutral-6 flex w-full justify-between p-3">
-      <NavLink to={"/"}>
+      {user ? (
+        <NavLink to={"/"}>
+          <Logo />
+        </NavLink>
+      ) : (
         <Logo />
-      </NavLink>
+      )}
 
       <nav>
         {user && (
