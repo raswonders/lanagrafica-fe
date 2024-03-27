@@ -16,7 +16,6 @@ import { Globe, LogOut, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ModeToggle } from "./mode-toggle";
 import { useTheme } from "./theme-provider";
 
 export function AccountDetails() {
