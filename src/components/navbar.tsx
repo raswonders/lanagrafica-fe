@@ -33,8 +33,10 @@ export function Navbar() {
                       isActive ? "text-accent-foreground bg-accent" : ""
                     }
                   >
-                    <UserRoundSearch className="mr-1 h-5" />
-                    {t("navbar.members")}
+                    <UserRoundSearch className="h-8 w-8 sm:mr-1 sm:h-6 sm:w-6" />
+                    <span className="hidden sm:inline">
+                      {t("navbar.members")}
+                    </span>
                   </Button>
                 )}
               </NavLink>
@@ -48,8 +50,10 @@ export function Navbar() {
                       isActive ? "text-accent-foreground bg-accent" : ""
                     }
                   >
-                    <UserRoundPlus className="mr-1 h-5" />
-                    {t("navbar.addMember")}
+                    <UserRoundPlus className="h-8 w-8 sm:mr-1 sm:h-6 sm:w-6" />
+                    <span className="hidden sm:inline">
+                      {t("navbar.addMember")}
+                    </span>
                   </Button>
                 )}
               </NavLink>
