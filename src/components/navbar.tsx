@@ -13,7 +13,7 @@ export function Navbar() {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-20 border-neutral-6 flex w-full justify-between p-3 items-center">
+    <div className="min-h-20 absolute border-neutral-6 flex w-full justify-between p-3 items-center">
       {user ? (
         <NavLink to={"/"}>
           <Logo />

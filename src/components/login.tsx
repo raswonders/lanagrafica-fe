@@ -40,7 +40,7 @@ export function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center h-screen">
       <Card className="sm:max-w-md mx-auto flex-grow">
         <CardHeader>
           <CardTitle>{t("login.title")}</CardTitle>
