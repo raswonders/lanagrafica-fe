@@ -8,7 +8,7 @@ type PagePropsProps = {
 
 export function PageLayout({ title, children }: PagePropsProps) {
   return (
-    <section className="sm:px-8 pt-24 ">
+    <section className="sm:px-8">
       <Card>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
