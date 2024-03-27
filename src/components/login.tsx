@@ -41,7 +41,7 @@ export function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <Card className="max-w-md mx-auto flex-grow">
+      <Card className="sm:max-w-md mx-auto flex-grow">
         <CardHeader>
           <CardTitle>{t("login.title")}</CardTitle>
         </CardHeader>
