@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
@@ -14,6 +13,7 @@ import { InputField } from "../input-field";
 import { Combobox } from "../combobox";
 import { SelectField } from "../select-field";
 import { DateField } from "../date-field";
+import { PageLayout } from "../layouts/page-layout";
 
 export function NewMember() {
   const { t, i18n } = useTranslation();
@@ -69,12 +69,9 @@ export function NewMember() {
   }
 
   return (
-    <section className="p-8 pt-24 flex justify-center">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>{t("newMember.title")}</CardTitle>
-        </CardHeader>
-        <CardContent>
+    <PageLayout title={t("newMember.title")}>
+      <div className="flex justify-center">
+        <div className="w-full max-w-md">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -85,13 +82,11 @@ export function NewMember() {
                 label={t("newMember.nameFieldLabel")}
                 name="name"
               />
-
               <InputField
                 form={form}
                 label={t("newMember.surnameFieldLabel")}
                 name="surname"
               />
-
               <DateField
                 form={form}
                 label={t("newMember.dateFieldLabel")}
@@ -103,7 +98,6 @@ export function NewMember() {
                 setMonth={setMonth}
                 setYear={setYear}
               />
-
               <Combobox
                 form={form}
                 name="state"
@@ -112,7 +106,6 @@ export function NewMember() {
                 search={countrySearch}
                 setSearch={setCountrySearch}
               />
-
               <Combobox
                 form={form}
                 name="birthPlace"
@@ -123,7 +116,6 @@ export function NewMember() {
                 value={isItaly ? "" : country}
                 disabled={!isItaly}
               />
-
               <SelectField
                 form={form}
                 name="docType"
@@ -132,19 +124,16 @@ export function NewMember() {
                   i18n.language === "it" ? entry.it : entry.en,
                 )}
               />
-
               <InputField
                 form={form}
                 label={t("newMember.docIdFieldLabel")}
                 name="docId"
               />
-
               <InputField
                 form={form}
                 label={t("newMember.emailFieldLabel")}
                 name="email"
               />
-
               <Button
                 disabled={form.formState.isSubmitting}
                 type="submit"
@@ -154,8 +143,8 @@ export function NewMember() {
               </Button>
             </form>
           </Form>
-        </CardContent>
-      </Card>
-    </section>
+        </div>
+      </div>
+    </PageLayout>
   );
 }

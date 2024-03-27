@@ -48,6 +48,12 @@ i18n
             cityFieldLabel: "Place of birth",
             docTypeFieldLabel: "Document type",
           },
+          members: {
+            title: "Members",
+          },
+          home: {
+            title: "Home",
+          },
           validation: {
             required: "is required",
             wrongDate: "is invalid date",
@@ -102,6 +108,12 @@ i18n
             countryFieldLabel: "Paese di origine",
             cityFieldLabel: "Luogo di nascita",
             docTypeFieldLabel: "Tipo di documento",
+          },
+          members: {
+            title: "Membri",
+          },
+          home: {
+            title: "Casa",
           },
           validation: {
             required: "è richiesto",
