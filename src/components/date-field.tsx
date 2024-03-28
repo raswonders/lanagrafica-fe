@@ -56,6 +56,7 @@ export function DateField({
               <Input
                 id="day"
                 maxLength={2}
+                inputMode="numeric"
                 value={day}
                 style={{ width: "calc(2ch + 1.5rem + 2px)" }}
                 className="mt-2"
@@ -77,6 +78,7 @@ export function DateField({
               <Input
                 id="month"
                 maxLength={2}
+                inputMode="numeric"
                 value={month}
                 style={{ width: "calc(2ch + 1.5rem + 2px)" }}
                 className="mt-2"
@@ -98,6 +100,7 @@ export function DateField({
               <Input
                 id="year"
                 maxLength={4}
+                inputMode="numeric"
                 value={year}
                 style={{ width: "calc(4ch + 1.5rem + 2px)" }}
                 className="mt-2"
