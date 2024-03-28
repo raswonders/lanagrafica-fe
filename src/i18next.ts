@@ -58,6 +58,7 @@ i18n
             required: "is required",
             wrongDate: "is invalid date",
             notAdult: "not an adult",
+            notInRange: "cannot be less than 0 or more than 120 years old",
           },
           combobox: {
             noItems: "No item found.",
@@ -120,6 +121,7 @@ i18n
             required: "è richiesto",
             wrongDate: "è una data non valida",
             notAdult: "non un adulto",
+            notInRange: "non può essere inferiore a 0 o superiore a 120 anni",
           },
           combobox: {
             noItems: "Nessun elemento trovato.",

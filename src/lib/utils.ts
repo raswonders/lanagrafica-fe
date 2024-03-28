@@ -20,6 +20,14 @@ export function isValidISODate(value: string) {
   return !isNaN(date.getTime()) && value === date.toISOString().slice(0, 10);
 }
 
+export function isWithinRange(value: string) {
+  const maxAge = 120;
+  const today = new Date();
+  const birthDate = new Date(value);
+  const ageDiff = today.getFullYear() - birthDate.getFullYear();
+  return ageDiff >= 0 && ageDiff <= maxAge;
+}
+
 export function isAdult(value: string) {
   const today = new Date();
   const birthDate = new Date(value);
