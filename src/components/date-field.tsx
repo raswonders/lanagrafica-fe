@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { createDateString } from "@/lib/utils";
 
@@ -36,6 +36,8 @@ export function DateField({
   setYear,
 }: DateFieldProps) {
   const { t } = useTranslation();
+  const monthInputRef = useRef<HTMLInputElement | null>(null);
+  const yearInputRef = useRef<HTMLInputElement | null>(null);
 
   return (
     <FormField
@@ -67,6 +69,9 @@ export function DateField({
                     const date = createDateString(nextValue, month, year);
                     field.onChange(date);
                   }
+                  if (nextValue.length === e.target.maxLength) {
+                    monthInputRef.current?.focus();
+                  }
                 }}
               />
             </div>
@@ -81,6 +86,7 @@ export function DateField({
                 inputMode="numeric"
                 value={month}
                 style={{ width: "calc(2ch + 1.5rem + 2px)" }}
+                ref={monthInputRef}
                 className="mt-2"
                 onChange={(e) => {
                   const nextValue = e.target.value;
@@ -88,6 +94,9 @@ export function DateField({
                     setMonth(nextValue);
                     const date = createDateString(day, nextValue, year);
                     field.onChange(date);
+                  }
+                  if (nextValue.length === e.target.maxLength) {
+                    yearInputRef.current?.focus();
                   }
                 }}
               />
@@ -103,6 +112,7 @@ export function DateField({
                 inputMode="numeric"
                 value={year}
                 style={{ width: "calc(4ch + 1.5rem + 2px)" }}
+                ref={yearInputRef}
                 className="mt-2"
                 onChange={(e) => {
                   const nextValue = e.target.value;
