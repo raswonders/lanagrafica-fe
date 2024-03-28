@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
@@ -69,81 +70,86 @@ export function NewMember() {
   }
 
   return (
-    <PageLayout title={t("newMember.title")}>
+    <PageLayout>
       <div className="flex justify-center">
-        <div className="w-full max-w-md">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8 flex flex-col"
-            >
-              <InputField
-                form={form}
-                label={t("newMember.nameFieldLabel")}
-                name="name"
-              />
-              <InputField
-                form={form}
-                label={t("newMember.surnameFieldLabel")}
-                name="surname"
-              />
-              <DateField
-                form={form}
-                label={t("newMember.dateFieldLabel")}
-                name="birthDate"
-                day={day}
-                month={month}
-                year={year}
-                setDay={setDay}
-                setMonth={setMonth}
-                setYear={setYear}
-              />
-              <Combobox
-                form={form}
-                name="state"
-                label={t("newMember.countryFieldLabel")}
-                data={countries.map((entry) => entry.en)}
-                search={countrySearch}
-                setSearch={setCountrySearch}
-              />
-              <Combobox
-                form={form}
-                name="birthPlace"
-                label={t("newMember.cityFieldLabel")}
-                data={cities}
-                search={citySearch}
-                setSearch={setCitySearch}
-                value={isItaly ? "" : country}
-                disabled={!isItaly}
-              />
-              <SelectField
-                form={form}
-                name="docType"
-                label={t("newMember.docTypeFieldLabel")}
-                data={documents.map((entry) =>
-                  i18n.language === "it" ? entry.it : entry.en,
-                )}
-              />
-              <InputField
-                form={form}
-                label={t("newMember.docIdFieldLabel")}
-                name="docId"
-              />
-              <InputField
-                form={form}
-                label={t("newMember.emailFieldLabel")}
-                name="email"
-              />
-              <Button
-                disabled={form.formState.isSubmitting}
-                type="submit"
-                className="sm:self-end"
+        <Card className="w-full flex flex-col items-center sm:max-w-md">
+          <CardHeader className="w-full max-w-md">
+            <CardTitle>{t("newMember.title")}</CardTitle>
+          </CardHeader>
+          <CardContent className="w-full max-w-md">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8 flex flex-col"
               >
-                {t("newMember.submit")}
-              </Button>
-            </form>
-          </Form>
-        </div>
+                <InputField
+                  form={form}
+                  label={t("newMember.nameFieldLabel")}
+                  name="name"
+                />
+                <InputField
+                  form={form}
+                  label={t("newMember.surnameFieldLabel")}
+                  name="surname"
+                />
+                <DateField
+                  form={form}
+                  label={t("newMember.dateFieldLabel")}
+                  name="birthDate"
+                  day={day}
+                  month={month}
+                  year={year}
+                  setDay={setDay}
+                  setMonth={setMonth}
+                  setYear={setYear}
+                />
+                <Combobox
+                  form={form}
+                  name="state"
+                  label={t("newMember.countryFieldLabel")}
+                  data={countries.map((entry) => entry.en)}
+                  search={countrySearch}
+                  setSearch={setCountrySearch}
+                />
+                <Combobox
+                  form={form}
+                  name="birthPlace"
+                  label={t("newMember.cityFieldLabel")}
+                  data={cities}
+                  search={citySearch}
+                  setSearch={setCitySearch}
+                  value={isItaly ? "" : country}
+                  disabled={!isItaly}
+                />
+                <SelectField
+                  form={form}
+                  name="docType"
+                  label={t("newMember.docTypeFieldLabel")}
+                  data={documents.map((entry) =>
+                    i18n.language === "it" ? entry.it : entry.en,
+                  )}
+                />
+                <InputField
+                  form={form}
+                  label={t("newMember.docIdFieldLabel")}
+                  name="docId"
+                />
+                <InputField
+                  form={form}
+                  label={t("newMember.emailFieldLabel")}
+                  name="email"
+                />
+                <Button
+                  disabled={form.formState.isSubmitting}
+                  type="submit"
+                  className="sm:self-end"
+                >
+                  {t("newMember.submit")}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
       </div>
     </PageLayout>
   );
