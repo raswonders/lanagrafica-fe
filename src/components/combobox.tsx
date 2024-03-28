@@ -56,6 +56,7 @@ export function Combobox({
   useEffect(() => {
     if (value !== undefined) {
       form.setValue(name, value);
+      form.clearErrors();
     }
   }, [form, name, value]);
 
