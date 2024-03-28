@@ -109,7 +109,10 @@ export function NewMember() {
                   form={form}
                   name="state"
                   label={t("newMember.countryFieldLabel")}
-                  data={countries.map((entry) => entry.en)}
+                  data={[
+                    i18n.language === "it" ? "__Altro__" : "__Other__",
+                    ...countries.map((entry) => entry.en),
+                  ]}
                   search={countrySearch}
                   setSearch={setCountrySearch}
                 />
@@ -117,7 +120,10 @@ export function NewMember() {
                   form={form}
                   name="birthPlace"
                   label={t("newMember.cityFieldLabel")}
-                  data={cities}
+                  data={[
+                    i18n.language === "it" ? "__Altro__" : "__Other__",
+                    ...cities,
+                  ]}
                   search={citySearch}
                   setSearch={setCitySearch}
                   value={isItaly ? "" : country}
