@@ -42,7 +42,7 @@ export function AccountDetails() {
       >
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Globe className="w-4 h-4 mr-2" />
+            <Globe className="w-6 h-6 lg:w-4 lg:h-4 mr-2" />
             <span>{t("account.language")}</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
@@ -66,9 +66,9 @@ export function AccountDetails() {
             theme === "dark" ? setTheme("light") : setTheme("dark")
           }
         >
-          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <span className="ml-2">{t("account.theme")}</span>
+          <Moon className="absolute w-6 h-6 lg:w-4 lg:h-4 mr-2 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <Sun className="w-6 h-6 lg:w-4 lg:h-4 mr-2 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <span>{t("account.theme")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -76,7 +76,7 @@ export function AccountDetails() {
             signOut();
           }}
         >
-          <LogOut className="w-4 h-4 mr-2" />
+          <LogOut className="w-6 h-6 lg:w-4 lg:h-4 mr-2" />
           <span>{t("account.logout")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
