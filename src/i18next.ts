@@ -57,6 +57,7 @@ i18n
           validation: {
             required: "is required",
             wrongDate: "is invalid date",
+            notAdult: "not an adult",
           },
           combobox: {
             noItems: "No item found.",
@@ -118,6 +119,7 @@ i18n
           validation: {
             required: "è richiesto",
             wrongDate: "è una data non valida",
+            notAdult: "non un adulto",
           },
           combobox: {
             noItems: "Nessun elemento trovato.",

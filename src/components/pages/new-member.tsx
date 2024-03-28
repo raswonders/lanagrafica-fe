@@ -8,7 +8,7 @@ import { z } from "zod";
 import countries from "../../assets/countries.json";
 import cities from "../../assets/cities.json";
 import documents from "../../assets/documents.json";
-import { delay, isValidISODate } from "@/lib/utils";
+import { delay, isAdult, isValidISODate } from "@/lib/utils";
 import { useState } from "react";
 import { InputField } from "../input-field";
 import { Combobox } from "../combobox";
@@ -30,7 +30,8 @@ export function NewMember() {
     birthDate: z
       .string()
       .min(1, { message: t("validation.required") })
-      .refine(isValidISODate, { message: t("validation.wrongDate") }),
+      .refine(isValidISODate, { message: t("validation.wrongDate") })
+      .refine(isAdult, { message: t("validation.notAdult") }),
     birthPlace: z.string().min(1, { message: t("validation.required") }),
     state: z.string().min(1, { message: t("validation.required") }),
     docType: z.string().min(1, { message: t("validation.required") }),
