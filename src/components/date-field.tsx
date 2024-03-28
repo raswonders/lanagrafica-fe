@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { createDateString } from "@/lib/utils";
 
@@ -38,6 +38,16 @@ export function DateField({
   const { t } = useTranslation();
   const monthInputRef = useRef<HTMLInputElement | null>(null);
   const yearInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const triggerValidation = async () => {
+      await form.trigger(name);
+    };
+
+    if (day && month && year.length === 4) {
+      triggerValidation();
+    }
+  }, [day, month, year, name, form]);
 
   return (
     <FormField
