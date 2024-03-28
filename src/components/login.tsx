@@ -17,18 +17,14 @@ import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
 
-const formSchema = z.object({
-  username: z.string().min(1, {
-    message: "Username cannot be empty.",
-  }),
-  password: z.string().min(1, {
-    message: "Password cannot be empty.",
-  }),
-});
-
 export function Login() {
   const { signIn } = useAuth();
   const { t } = useTranslation();
+
+  const formSchema = z.object({
+    username: z.string().min(1, { message: t("validation.required") }),
+    password: z.string().min(1, { message: t("validation.required") }),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,8 +40,8 @@ export function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <Card className="max-w-md mx-auto flex-grow">
+    <div className="flex items-center justify-center h-screen">
+      <Card className="sm:max-w-md mx-auto flex-grow">
         <CardHeader>
           <CardTitle>{t("login.title")}</CardTitle>
         </CardHeader>
@@ -83,7 +79,7 @@ export function Login() {
               />
               <Button
                 type="submit"
-                className="md:self-end"
+                className="sm:self-end"
                 disabled={form.formState.isSubmitting}
               >
                 {t("login.submit")}

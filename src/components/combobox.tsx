@@ -24,7 +24,7 @@ import {
 import { Button } from "./ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 type ComboboxProps = {
@@ -49,12 +49,14 @@ export function Combobox({
   value,
   disabled = false,
 }: ComboboxProps) {
+  const [open, setOpen] = useState(false);
   const maxSuggested = 9;
   const { t } = useTranslation();
 
   useEffect(() => {
     if (value !== undefined) {
       form.setValue(name, value);
+      form.clearErrors();
     }
   }, [form, name, value]);
 
@@ -80,7 +82,7 @@ export function Combobox({
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <FormLabel className="w-max">{label}</FormLabel>
-          <Popover>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild disabled={disabled}>
               <FormControl>
                 <Button
@@ -112,6 +114,8 @@ export function Combobox({
                         key={entry}
                         onSelect={() => {
                           form.setValue(name, entry);
+                          form.clearErrors(name);
+                          setOpen(false);
                         }}
                       >
                         <Check

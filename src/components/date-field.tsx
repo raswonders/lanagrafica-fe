@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { createDateString } from "@/lib/utils";
 
@@ -36,6 +36,18 @@ export function DateField({
   setYear,
 }: DateFieldProps) {
   const { t } = useTranslation();
+  const monthInputRef = useRef<HTMLInputElement | null>(null);
+  const yearInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const triggerValidation = async () => {
+      await form.trigger(name);
+    };
+
+    if (day && month && year.length === 4) {
+      triggerValidation();
+    }
+  }, [day, month, year, name, form]);
 
   return (
     <FormField
@@ -56,8 +68,10 @@ export function DateField({
               <Input
                 id="day"
                 maxLength={2}
+                inputMode="numeric"
                 value={day}
                 style={{ width: "calc(2ch + 1.5rem + 2px)" }}
+                onTouchStart={(e) => (e.target as HTMLInputElement).select()}
                 className="mt-2"
                 onChange={(e) => {
                   const nextValue = e.target.value;
@@ -65,6 +79,9 @@ export function DateField({
                     setDay(nextValue);
                     const date = createDateString(nextValue, month, year);
                     field.onChange(date);
+                  }
+                  if (nextValue.length === e.target.maxLength) {
+                    monthInputRef.current?.focus();
                   }
                 }}
               />
@@ -77,8 +94,11 @@ export function DateField({
               <Input
                 id="month"
                 maxLength={2}
+                inputMode="numeric"
                 value={month}
                 style={{ width: "calc(2ch + 1.5rem + 2px)" }}
+                onTouchStart={(e) => (e.target as HTMLInputElement).select()}
+                ref={monthInputRef}
                 className="mt-2"
                 onChange={(e) => {
                   const nextValue = e.target.value;
@@ -86,6 +106,9 @@ export function DateField({
                     setMonth(nextValue);
                     const date = createDateString(day, nextValue, year);
                     field.onChange(date);
+                  }
+                  if (nextValue.length === e.target.maxLength) {
+                    yearInputRef.current?.focus();
                   }
                 }}
               />
@@ -98,8 +121,11 @@ export function DateField({
               <Input
                 id="year"
                 maxLength={4}
+                inputMode="numeric"
                 value={year}
                 style={{ width: "calc(4ch + 1.5rem + 2px)" }}
+                onTouchStart={(e) => (e.target as HTMLInputElement).select()}
+                ref={yearInputRef}
                 className="mt-2"
                 onChange={(e) => {
                   const nextValue = e.target.value;

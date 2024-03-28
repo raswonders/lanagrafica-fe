@@ -12,15 +12,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { Globe, LogOut } from "lucide-react";
+import { Globe, LogOut, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "./theme-provider";
 
 export function AccountDetails() {
   const { user, signOut } = useAuth();
   const { t, i18n } = useTranslation();
   const [lang, setLang] = useState(i18n.resolvedLanguage);
+  const { theme, setTheme } = useTheme();
 
   const handleLangChange = (newLang: string) => {
     setLang(newLang);
@@ -40,7 +42,7 @@ export function AccountDetails() {
       >
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Globe className="w-4 h-4 mr-2" />
+            <Globe className="w-6 h-6 lg:w-4 lg:h-4 mr-2" />
             <span>{t("account.language")}</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
@@ -59,13 +61,22 @@ export function AccountDetails() {
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>
+        <DropdownMenuItem
+          onClick={() =>
+            theme === "dark" ? setTheme("light") : setTheme("dark")
+          }
+        >
+          <Moon className="absolute w-6 h-6 lg:w-4 lg:h-4 mr-2 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <Sun className="w-6 h-6 lg:w-4 lg:h-4 mr-2 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <span>{t("account.theme")}</span>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
             signOut();
           }}
         >
-          <LogOut className="w-4 h-4 mr-2" />
+          <LogOut className="w-6 h-6 lg:w-4 lg:h-4 mr-2" />
           <span>{t("account.logout")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

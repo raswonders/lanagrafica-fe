@@ -4,43 +4,41 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { UserPlus } from "lucide-react";
+import { UserRoundPlus, UserRoundSearch } from "lucide-react";
+import { Logo } from "./logo";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const { user } = useAuth();
   const { t } = useTranslation();
 
   return (
-    <div className="fixed border-neutral-6 flex w-full justify-between p-3">
-      <ModeToggle />
+    <div className="min-h-20 absolute border-neutral-6 flex w-full justify-between p-3 items-center">
+      {user ? (
+        <NavLink to={"/"}>
+          <Logo />
+        </NavLink>
+      ) : (
+        <Logo />
+      )}
 
       <nav>
         {user && (
           <ul className="flex gap-3">
             <li>
-              <NavLink to={"/"} tabIndex={-1}>
-                {({ isActive }) => (
-                  <Button
-                    variant="ghost"
-                    className={
-                      isActive ? "text-accent-foreground bg-accent" : ""
-                    }
-                  >
-                    {t("navbar.home")}
-                  </Button>
-                )}
-              </NavLink>
-            </li>
-            <li>
               <NavLink to={"/members"} tabIndex={-1}>
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={
-                      isActive ? "text-accent-foreground bg-accent" : ""
-                    }
+                    className={cn(
+                      "rounded-lg py-7 sm:py-0",
+                      isActive && "text-accent-foreground bg-accent",
+                    )}
                   >
-                    {t("navbar.members")}
+                    <UserRoundSearch className="h-8 w-8 sm:mr-1 sm:h-6 sm:w-6" />
+                    <span className="hidden sm:inline">
+                      {t("navbar.members")}
+                    </span>
                   </Button>
                 )}
               </NavLink>
@@ -50,26 +48,15 @@ export function Navbar() {
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
-                    className={
-                      isActive ? "text-accent-foreground bg-accent" : ""
-                    }
+                    className={cn(
+                      "rounded-lg py-7 sm:py-0",
+                      isActive && "text-accent-foreground bg-accent",
+                    )}
                   >
-                    <UserPlus className="mr-1 h-6" />
-                    {t("navbar.addMember")}
-                  </Button>
-                )}
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/cards"} tabIndex={-1}>
-                {({ isActive }) => (
-                  <Button
-                    variant="ghost"
-                    className={
-                      isActive ? "text-accent-foreground bg-accent" : ""
-                    }
-                  >
-                    {t("navbar.cards")}
+                    <UserRoundPlus className="h-8 w-8 sm:mr-1 sm:h-6 sm:w-6" />
+                    <span className="hidden sm:inline">
+                      {t("navbar.addMember")}
+                    </span>
                   </Button>
                 )}
               </NavLink>
@@ -78,7 +65,7 @@ export function Navbar() {
         )}
       </nav>
 
-      {user && <AccountDetails />}
+      {user ? <AccountDetails /> : <ModeToggle />}
     </div>
   );
 }

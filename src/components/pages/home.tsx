@@ -1,27 +1,18 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageLayout } from "../layouts/page-layout";
+import { useTranslation } from "react-i18next";
 
 export function Home() {
+  const { t } = useTranslation();
+
   return (
-    <section className="p-8 pt-24">
+    <PageLayout>
       <Card>
         <CardHeader>
-          <CardTitle>Home</CardTitle>
-          <CardDescription>Home</CardDescription>
+          <CardTitle>{t("home.title")}</CardTitle>
         </CardHeader>
-        <CardContent>
-          <p>content</p>
-        </CardContent>
-        <CardFooter>
-          <p>footer</p>
-        </CardFooter>
+        <CardContent></CardContent>
       </Card>
-    </section>
+    </PageLayout>
   );
 }

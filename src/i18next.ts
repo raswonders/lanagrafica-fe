@@ -27,6 +27,7 @@ i18n
               it: "Italian",
               en: "English",
             },
+            theme: "Theme",
           },
           login: {
             title: "Sign in",
@@ -47,9 +48,17 @@ i18n
             cityFieldLabel: "Place of birth",
             docTypeFieldLabel: "Document type",
           },
+          members: {
+            title: "Members",
+          },
+          home: {
+            title: "Home",
+          },
           validation: {
             required: "is required",
             wrongDate: "is invalid date",
+            notAdult: "not an adult",
+            notInRange: "cannot be less than 0 or more than 120 years old",
           },
           combobox: {
             noItems: "No item found.",
@@ -81,6 +90,7 @@ i18n
               it: "Italiano",
               en: "Inglese",
             },
+            theme: "Tema",
           },
           login: {
             title: "Accedi",
@@ -101,14 +111,22 @@ i18n
             cityFieldLabel: "Luogo di nascita",
             docTypeFieldLabel: "Tipo di documento",
           },
+          members: {
+            title: "Membri",
+          },
+          home: {
+            title: "Casa",
+          },
           validation: {
             required: "è richiesto",
             wrongDate: "è una data non valida",
+            notAdult: "non un adulto",
+            notInRange: "non può essere inferiore a 0 o superiore a 120 anni",
           },
           combobox: {
             noItems: "Nessun elemento trovato.",
             commandPlaceholder: "Cerca elementi...",
-            buttonPlaceholder: "Seleziona posto", 
+            buttonPlaceholder: "Seleziona posto",
           },
           dateField: {
             day: "giorno",

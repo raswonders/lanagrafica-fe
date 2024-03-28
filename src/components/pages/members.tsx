@@ -1,12 +1,19 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageLayout } from "../layouts/page-layout";
+import { useTranslation } from "react-i18next";
 
 export function Members() {
+  const { t } = useTranslation();
+
   return (
-    <section className="p-8 pt-24">
+    <PageLayout>
       <Card>
-        <CardHeader></CardHeader>
-        <CardContent className="flex justify-center"></CardContent>
+        <CardHeader>
+          <CardTitle>{t("members.title")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+        </CardContent>
       </Card>
-    </section>
+    </PageLayout>
   );
 }
