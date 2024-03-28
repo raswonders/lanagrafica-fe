@@ -61,6 +61,7 @@ export function DateField({
                 inputMode="numeric"
                 value={day}
                 style={{ width: "calc(2ch + 1.5rem + 2px)" }}
+                onTouchStart={(e) => (e.target as HTMLInputElement).select()}
                 className="mt-2"
                 onChange={(e) => {
                   const nextValue = e.target.value;
@@ -86,6 +87,7 @@ export function DateField({
                 inputMode="numeric"
                 value={month}
                 style={{ width: "calc(2ch + 1.5rem + 2px)" }}
+                onTouchStart={(e) => (e.target as HTMLInputElement).select()}
                 ref={monthInputRef}
                 className="mt-2"
                 onChange={(e) => {
@@ -112,6 +114,7 @@ export function DateField({
                 inputMode="numeric"
                 value={year}
                 style={{ width: "calc(4ch + 1.5rem + 2px)" }}
+                onTouchStart={(e) => (e.target as HTMLInputElement).select()}
                 ref={yearInputRef}
                 className="mt-2"
                 onChange={(e) => {
