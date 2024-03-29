@@ -1,5 +1,9 @@
 [
   {
+    "en": "__Other__",
+    "it": "__Altro__"
+  },
+  {
     "en": "Id card",
     "it": "Carta identità"
   },
@@ -11,12 +15,8 @@
     "en": "Passport",
     "it": "Passaporto"
   },
-  { 
+  {
     "en": "Residence permit",
-    "it": "Permesso di soggiorno" 
-  },
-  { 
-    "en": "Other",
-    "it": "Altro" 
+    "it": "Permesso di soggiorno"
   }
 ]
