@@ -89,7 +89,7 @@ export function Combobox({
                   variant="select"
                   role="combobox"
                   className={cn(
-                    "w-[200px] justify-between",
+                    "w-[200px] justify-between px-3",
                     !field.value && "text-muted-foreground",
                   )}
                 >
