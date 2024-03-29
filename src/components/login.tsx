@@ -41,11 +41,11 @@ export function Login() {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <Card className="sm:max-w-md mx-auto flex-grow">
-        <CardHeader>
+      <Card className="mx-auto flex-grow flex flex-col items-center sm:max-w-md">
+        <CardHeader className="w-full max-w-md">
           <CardTitle>{t("login.title")}</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="w-full max-w-md">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
