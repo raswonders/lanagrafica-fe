@@ -1,5 +1,5 @@
 import {
-  ColumnDef,
+  createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -14,11 +14,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import rawData from "../assets/members-test.json";
-const data = rawData.map(({ surname, ...row }) => ({
-  ...row,
-  name: `${row.name} ${surname}`,
-}));
+import { useEffect, useState } from "react";
+import { supabase } from "@/components/supabase";
 
 type Member = {
   name: string;
@@ -31,23 +28,38 @@ type Member = {
   country: string;
 };
 
-const columns: ColumnDef<Member>[] = [
-  {
-    accessorKey: "name",
-    header: "Name",
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
+const columnHelper = createColumnHelper<Member>();
+export const columns = [
+  columnHelper.accessor("name", {
+    cell: (info) => info.getValue(),
+    header: () => <span>Name</span>,
+  }),
+  columnHelper.accessor("email", {
+    cell: (info) => info.getValue(),
+    header: () => <span>Email</span>,
+  }),
 ];
 
 export function DataTable() {
-  const table = useReactTable({
-    data,
+  const [data, setData] = useState<Member[]>([]);
+
+  const table = useReactTable<Member>({
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  useEffect(() => {
+    async function fetchMembers() {
+      const { data } = await supabase
+        .from("member")
+        .select();
+
+      if (data) setData(data);
+    }
+
+    fetchMembers();
+  }, []);
 
   return (
     <div className="rounded-md border">

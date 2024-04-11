@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageLayout } from "../layouts/page-layout";
 import { useTranslation } from "react-i18next";
-import { DataTable} from "../members-table";
-
+import { DataTable } from "../members-table";
 export function Members() {
   const { t } = useTranslation();
 
