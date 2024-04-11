@@ -14,8 +14,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
+import { useTranslation } from "react-i18next";
 
 type Member = {
   name: string;
@@ -30,20 +31,25 @@ type Member = {
 };
 
 const columnHelper = createColumnHelper<Member>();
-export const columns = [
-  columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
-    id: "fullName",
-    cell: (info) => info.getValue(),
-    header: () => <span>Name</span>,
-  }),
-  columnHelper.accessor("email", {
-    cell: (info) => info.getValue(),
-    header: () => <span>Email</span>,
-  }),
-];
 
 export function DataTable() {
   const [data, setData] = useState<Member[]>([]);
+  const { t } = useTranslation();
+
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
+        id: "fullName",
+        cell: (info) => info.getValue(),
+        header: () => <span>{t("membersTable.name")}</span>,
+      }),
+      columnHelper.accessor("email", {
+        cell: (info) => info.getValue(),
+        header: () => <span>{t("membersTable.email")}</span>,
+      }),
+    ],
+    [t],
+  );
 
   const table = useReactTable<Member>({
     columns,

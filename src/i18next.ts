@@ -73,6 +73,10 @@ i18n
           selectField: {
             placeholder: "Select document",
           },
+          membersTable: {
+            name: "Name",
+            email: "Email",
+          },
         },
       },
       it: {
@@ -135,6 +139,10 @@ i18n
           },
           selectField: {
             placeholder: "Seleziona documento",
+          },
+          membersTable: {
+            name: "Nome",
+            email: "Email",
           },
         },
       },
