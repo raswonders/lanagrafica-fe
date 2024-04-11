@@ -19,6 +19,7 @@ import { supabase } from "@/components/supabase";
 
 type Member = {
   name: string;
+  surname: string;
   province: string;
   birthDate: string;
   birthPlace: string;
@@ -30,7 +31,8 @@ type Member = {
 
 const columnHelper = createColumnHelper<Member>();
 export const columns = [
-  columnHelper.accessor("name", {
+  columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
+    id: "fullName",
     cell: (info) => info.getValue(),
     header: () => <span>Name</span>,
   }),
@@ -51,9 +53,7 @@ export function DataTable() {
 
   useEffect(() => {
     async function fetchMembers() {
-      const { data } = await supabase
-        .from("member")
-        .select();
+      const { data } = await supabase.from("member").select();
 
       if (data) setData(data);
     }
