@@ -54,3 +54,15 @@ export function getCustomDate(value: string) {
   return `${day}/${month}/${year}`;
 }
 
+export function fromSnakeToCamelCase(arr: object[]) {
+  return arr.map((row: object) => {
+    return Object.fromEntries(
+      Object.entries(row).map(([key, value]) => {
+        const newKey = key.replace(/_[a-z]/g, (group) =>
+          group.toUpperCase().replace("_", ""),
+        );
+        return [newKey, value];
+      }),
+    );
+  });
+}
