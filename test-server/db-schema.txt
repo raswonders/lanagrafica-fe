@@ -1,0 +1,24 @@
+                            Table "public.member"
+      Column       |          Type          | Collation | Nullable | Default 
+-------------------+------------------------+-----------+----------+---------
+ id                | integer                |           | not null | 
+ birth_date        | date                   |           | not null | 
+ birth_place       | character varying(255) |           |          | 
+ card_number       | character varying(255) |           |          | 
+ country           | character varying(255) |           |          | 
+ doc_id            | character varying(255) |           |          | 
+ doc_type          | character varying(255) |           |          | 
+ email             | character varying(255) |           |          | 
+ expiration_date   | date                   |           |          | 
+ is_active         | boolean                |           |          | 
+ is_deleted        | boolean                |           |          | 
+ measure           | character varying(255) |           |          | 
+ name              | character varying(255) |           |          | 
+ note              | character varying(400) |           |          | 
+ province          | character varying(255) |           |          | 
+ registration_date | date                   |           |          | 
+ surname           | character varying(255) |           |          | 
+ suspended_till    | date                   |           |          | 
+Indexes:
+    "member_pkey" PRIMARY KEY, btree (id)
+    "idx_memberentity_name_surname" btree (name, surname, birth_date)
