@@ -29,6 +29,7 @@ type Member = {
   docType: string;
   docId: string;
   country: string;
+  suspendedTill: string;
 };
 
 const columnHelper = createColumnHelper<Member>();
@@ -51,6 +52,13 @@ export function DataTable() {
       columnHelper.accessor("birthDate", {
         cell: (info) => getCustomDate(info.getValue()),
         header: () => <span>{t("membersTable.birthDate")}</span>,
+      }),
+      columnHelper.accessor("suspendedTill", {
+        cell: (info) => {
+          const result = getCustomDate(info.getValue());
+          return result ? result : "-";
+        },
+        header: () => <span>{t("membersTable.suspendedTill")}</span>,
       }),
     ],
     [t],

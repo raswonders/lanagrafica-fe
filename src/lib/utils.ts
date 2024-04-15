@@ -46,6 +46,8 @@ export function isAdult(value: string) {
 }
 
 export function getCustomDate(value: string) {
+  if (!value) return "";
+
   const date = new Date(value);
   const day = date.getDate().toString().padStart(2, "0");
   const month = date.getMonth().toString().padStart(2, "0");
