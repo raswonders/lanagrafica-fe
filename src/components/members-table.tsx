@@ -95,7 +95,6 @@ export function DataTable() {
     async function fetchMembers() {
       const { data } = await supabase.from("member").select();
 
-      console.log(data)
       const dataNormalized = data
         ? (fromSnakeToCamelCase(data) as Member[])
         : [];
