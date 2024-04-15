@@ -32,6 +32,7 @@ type Member = {
   suspendedTill: string;
   expirationDate: string;
   cardNumber: string;
+  isActive: boolean;
 };
 
 const columnHelper = createColumnHelper<Member>();
@@ -54,6 +55,10 @@ export function DataTable() {
       columnHelper.accessor("birthDate", {
         cell: (info) => getCustomDate(info.getValue()),
         header: () => <span>{t("membersTable.birthDate")}</span>,
+      }),
+      columnHelper.accessor("isActive", {
+        cell: (info) => info.getValue() ? t("membersTable.active") : t("membersTable.inactive"),
+        header: () => <span>{t("membersTable.status")}</span>,
       }),
       columnHelper.accessor("suspendedTill", {
         cell: (info) => {
@@ -90,6 +95,7 @@ export function DataTable() {
     async function fetchMembers() {
       const { data } = await supabase.from("member").select();
 
+      console.log(data)
       const dataNormalized = data
         ? (fromSnakeToCamelCase(data) as Member[])
         : [];
