@@ -30,6 +30,7 @@ type Member = {
   docId: string;
   country: string;
   suspendedTill: string;
+  expirationDate: string;
   cardNumber: string;
 };
 
@@ -60,6 +61,13 @@ export function DataTable() {
           return result ? result : "-";
         },
         header: () => <span>{t("membersTable.suspendedTill")}</span>,
+      }),
+      columnHelper.accessor("expirationDate", {
+        cell: (info) => {
+          const result = getCustomDate(info.getValue());
+          return result ? result : "-";
+        },
+        header: () => <span>{t("membersTable.expirationDate")}</span>,
       }),
       columnHelper.accessor("cardNumber", {
         cell: (info) => {
