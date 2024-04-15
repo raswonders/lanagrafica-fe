@@ -44,3 +44,13 @@ export function isAdult(value: string) {
   if (dayDiff > 0) return true;
   if (dayDiff <= 0) return false;
 }
+
+export function getCustomDate(value: string) {
+  const date = new Date(value);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = date.getMonth().toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+

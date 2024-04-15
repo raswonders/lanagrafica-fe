@@ -76,6 +76,7 @@ i18n
           membersTable: {
             name: "Name",
             email: "Email",
+            birthDate: "Date of birth",
           },
         },
       },
@@ -143,6 +144,7 @@ i18n
           membersTable: {
             name: "Nome",
             email: "Email",
+            birthDate: "Data di nascita",
           },
         },
       },

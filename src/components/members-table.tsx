@@ -17,6 +17,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
 import { useTranslation } from "react-i18next";
+import { getCustomDate } from "@/lib/utils";
 
 type Member = {
   name: string;
@@ -36,6 +37,7 @@ export function DataTable() {
   const [data, setData] = useState<Member[]>([]);
   const { t } = useTranslation();
 
+
   const columns = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
@@ -46,6 +48,10 @@ export function DataTable() {
       columnHelper.accessor("email", {
         cell: (info) => info.getValue(),
         header: () => <span>{t("membersTable.email")}</span>,
+      }),
+      columnHelper.accessor("birth_date", {
+        cell: (info) => getCustomDate(info.getValue()),
+        header: () => <span>{t("membersTable.birthDate")}</span>,
       }),
     ],
     [t],
@@ -60,7 +66,7 @@ export function DataTable() {
   useEffect(() => {
     async function fetchMembers() {
       const { data } = await supabase.from("member").select();
-
+      console.log(data); 
       if (data) setData(data);
     }
 
