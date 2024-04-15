@@ -73,6 +73,17 @@ i18n
           selectField: {
             placeholder: "Select document",
           },
+          membersTable: {
+            name: "Name",
+            email: "Email",
+            birthDate: "Date of birth",
+            suspendedTill: "Suspended till",
+            cardNumber: "Card no.",
+            expirationDate: "Expires",
+            status: "Status",
+            active: "active",
+            inactive: "inactive",
+          },
         },
       },
       it: {
@@ -135,6 +146,17 @@ i18n
           },
           selectField: {
             placeholder: "Seleziona documento",
+          },
+          membersTable: {
+            name: "Nome",
+            email: "Email",
+            birthDate: "Data di nascita",
+            suspendedTill: "Sospeso fino a",
+            cardNumber: "No. carta",
+            expirationDate: "Scade",
+            status: "Stato",
+            active: "Attivo",
+            inactive: "Inattivo",
           },
         },
       },
