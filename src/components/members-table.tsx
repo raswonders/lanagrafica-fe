@@ -30,6 +30,7 @@ type Member = {
   docId: string;
   country: string;
   suspendedTill: string;
+  cardNumber: string;
 };
 
 const columnHelper = createColumnHelper<Member>();
@@ -59,6 +60,13 @@ export function DataTable() {
           return result ? result : "-";
         },
         header: () => <span>{t("membersTable.suspendedTill")}</span>,
+      }),
+      columnHelper.accessor("cardNumber", {
+        cell: (info) => {
+          const result = info.getValue();
+          return result ? result : "-";
+        },
+        header: () => <span>{t("membersTable.cardNumber")}</span>,
       }),
     ],
     [t],
