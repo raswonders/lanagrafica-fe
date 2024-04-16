@@ -105,7 +105,20 @@ export function DataTable() {
     [t],
   );
 
+  const [columnVisibility, setColumnVisibility] = useState({
+    fullName: true,
+    email: true,
+    birthDate: true,
+    isActive: false,
+    suspendedTill: false,
+    expirationDate: false,
+    cardNumber: false,
+  });
+
   const table = useReactTable<Member>({
+    state: {
+      columnVisibility,
+    },
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
@@ -130,13 +143,26 @@ export function DataTable() {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="my-6">
-              <EyeOff className="w-4 mr-2"/>Hide fields
+              <EyeOff className="w-4 mr-2" />
+              Hide fields
             </Button>
           </PopoverTrigger>
           <PopoverContent className="">
             {table.getAllColumns().map((col) => (
               <div key={col.id} className="flex mb-4">
-                <Checkbox id={col.id} className="mr-4" />
+                <Checkbox
+                  id={col.id}
+                  checked={
+                    columnVisibility[col.id as keyof typeof columnVisibility]
+                  }
+                  onCheckedChange={(checked) => {
+                    setColumnVisibility((prev) => ({
+                      ...prev,
+                      [col.id]: checked,
+                    }));
+                  }}
+                  className="mr-4"
+                />
                 <Label htmlFor={col.id}>
                   {(col.columnDef.meta as string) || col.id}
                 </Label>
