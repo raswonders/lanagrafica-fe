@@ -166,7 +166,7 @@ export function DataTable() {
                   }}
                   className="mr-4"
                 />
-                <Label htmlFor={col.id} className="text-neutral-11">
+                <Label htmlFor={col.id} className="font-normal">
                   {(col.columnDef.meta as string) || col.id}
                 </Label>
               </div>
