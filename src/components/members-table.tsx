@@ -147,9 +147,12 @@ export function DataTable() {
               Hide fields
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="">
-            {table.getAllColumns().map((col) => (
-              <div key={col.id} className="flex mb-4">
+          <PopoverContent>
+            {table.getAllColumns().map((col, index, self) => (
+              <div
+                key={col.id}
+                className={`flex ${index === self.length - 1 ? "" : "mb-4"}`}
+              >
                 <Checkbox
                   id={col.id}
                   checked={
