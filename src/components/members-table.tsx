@@ -144,7 +144,7 @@ export function DataTable() {
           <PopoverTrigger asChild>
             <Button variant="outline" className="my-6">
               <EyeOff className="w-4 mr-2" />
-              Hide fields
+              {t("membersTable.hideFields")}
             </Button>
           </PopoverTrigger>
           <PopoverContent>
