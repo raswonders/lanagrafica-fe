@@ -1,7 +1,9 @@
 import {
+  ColumnFiltersState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -76,6 +78,7 @@ export function DataTable() {
             ? t("membersTable.active")
             : t("membersTable.inactive"),
         header: () => <span>{t("membersTable.status")}</span>,
+        filterFn: "equals",
       }),
       columnHelper.accessor("suspendedTill", {
         meta: t("membersTable.suspendedTill"),
@@ -115,13 +118,18 @@ export function DataTable() {
     cardNumber: false,
   });
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable<Member>({
     state: {
       columnVisibility,
+      columnFilters,
     },
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnFiltersChange: setColumnFilters,
   });
 
   useEffect(() => {
