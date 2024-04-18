@@ -51,7 +51,7 @@ export function getCustomDate(value: string) {
 
   const date = new Date(value);
   const day = date.getDate().toString().padStart(2, "0");
-  const month = date.getMonth().toString().padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   return `${day}/${month}/${year}`;
