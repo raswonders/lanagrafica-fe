@@ -19,10 +19,14 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
 import { useTranslation } from "react-i18next";
-import { fromSnakeToCamelCase, getCustomDate } from "@/lib/utils";
+import {
+  extendWithStatus,
+  fromSnakeToCamelCase,
+  getCustomDate,
+} from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-type Member = {
+export type Member = {
   name: string;
   surname: string;
   province: string;
@@ -36,6 +40,8 @@ type Member = {
   expirationDate: string;
   cardNumber: string;
   isActive: boolean;
+  isDeleted: boolean;
+  status: string;
 };
 
 import { Label } from "@/components/ui/label";
@@ -71,12 +77,9 @@ export function DataTable() {
         cell: (info) => getCustomDate(info.getValue()),
         header: () => <span>{t("membersTable.birthDate")}</span>,
       }),
-      columnHelper.accessor("isActive", {
+      columnHelper.accessor("status", {
         meta: t("membersTable.status"),
-        cell: (info) =>
-          info.getValue()
-            ? t("membersTable.active")
-            : t("membersTable.inactive"),
+        cell: (info) => info.getValue(),
         header: () => <span>{t("membersTable.status")}</span>,
         filterFn: "equals",
       }),
@@ -139,7 +142,9 @@ export function DataTable() {
       const dataNormalized = data
         ? (fromSnakeToCamelCase(data) as Member[])
         : [];
-      setData(dataNormalized);
+      const dataExtended = extendWithStatus(dataNormalized);
+      console.log(dataExtended);
+      setData(dataExtended);
     }
 
     fetchMembers();
