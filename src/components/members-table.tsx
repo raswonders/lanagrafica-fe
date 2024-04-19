@@ -52,7 +52,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff, Filter, Plus } from "lucide-react";
+import { EyeOff, Filter, Minus, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const columnHelper = createColumnHelper<Member>();
@@ -210,48 +210,96 @@ export function DataTable() {
   return (
     <>
       <div className="flex justify-between">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className="my-6">
-              <Filter className="w-4 mr-2" />
-              {t("membersTable.addFilter")}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <ul className="">
-              <li>
-                <Badge onClick={() => handleAddFilter("active")}>
-                  <Plus className="w-4 mr-1" />
-                  active
+        <div className="flex flex-wrap items-baseline">
+          <div className="mr-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="my-6">
+                  <Filter className="w-4 mr-2" />
+                  {t("membersTable.addFilter")}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <ul className="">
+                  <li>
+                    <Badge onClick={() => handleAddFilter("active")}>
+                      <Plus className="w-4 mr-1" />
+                      active
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge onClick={() => handleAddFilter("inactive")}>
+                      <Plus className="w-4 mr-1" />
+                      inactive
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge onClick={() => handleAddFilter("expired")}>
+                      <Plus className="w-4 mr-1" />
+                      expired
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge onClick={() => handleAddFilter("suspended")}>
+                      <Plus className="w-4 mr-1" />
+                      suspended
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge onClick={() => handleAddFilter("deleted")}>
+                      <Plus className="w-4 mr-1" />
+                      deleted
+                    </Badge>
+                  </li>
+                </ul>
+              </PopoverContent>
+            </Popover>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {columnFilters.map((filter) => {
+              let filterName = "";
+              let filterVariant = "";
+
+              if (filter.id === "isActive" && filter.value === true) {
+                filterName = "active";
+                filterVariant = "active";
+              }
+
+              if (filter.id === "isActive" && filter.value === false) {
+                filterName = "inactive";
+                filterVariant = "inactive";
+              }
+
+              if (filter.id === "expirationDate") {
+                filterName = "expired";
+                filterVariant = "inactive";
+              }
+
+              if (filter.id === "suspendedTill") {
+                filterName = "suspended";
+                filterVariant = "suspended";
+              }
+
+              if (filter.id === "isDeleted") {
+                filterName = "deleted";
+                filterVariant = "deleted";
+              }
+
+              return (
+                <Badge
+                  // variant={filterVariant}
+                  key={filterName}
+                  className="py-1 px-4 rounded-lg"
+                >
+                  {filterName}
                 </Badge>
-              </li>
-              <li>
-                <Badge onClick={() => handleAddFilter("inactive")}>
-                  <Plus className="w-4 mr-1" />
-                  inactive
-                </Badge>
-              </li>
-              <li>
-                <Badge onClick={() => handleAddFilter("expired")}>
-                  <Plus className="w-4 mr-1" />
-                  expired
-                </Badge>
-              </li>
-              <li>
-                <Badge onClick={() => handleAddFilter("suspended")}>
-                  <Plus className="w-4 mr-1" />
-                  suspended
-                </Badge>
-              </li>
-              <li>
-                <Badge onClick={() => handleAddFilter("deleted")}>
-                  <Plus className="w-4 mr-1" />
-                  deleted
-                </Badge>
-              </li>
-            </ul>
-          </PopoverContent>
-        </Popover>
+              );
+            })}
+            {columnFilters.length !== 0 && (
+              <Badge variant="outline" className="py-1 px-4 rounded-lg">clear all</Badge>
+            )}
+          </div>
+        </div>
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="my-6">
