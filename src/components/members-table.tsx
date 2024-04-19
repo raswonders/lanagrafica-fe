@@ -296,7 +296,13 @@ export function DataTable() {
               );
             })}
             {columnFilters.length !== 0 && (
-              <Badge variant="outline" className="py-1 px-4 rounded-lg">clear all</Badge>
+              <Badge
+                variant="outline"
+                className="py-1 px-4 rounded-lg"
+                onClick={() => setColumnFilters([])}
+              >
+                clear all
+              </Badge>
             )}
           </div>
         </div>
