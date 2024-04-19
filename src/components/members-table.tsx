@@ -115,7 +115,7 @@ export function DataTable() {
     fullName: true,
     email: true,
     birthDate: true,
-    isActive: false,
+    status: false, 
     suspendedTill: false,
     expirationDate: false,
     cardNumber: false,
