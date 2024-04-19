@@ -143,7 +143,6 @@ export function DataTable() {
         ? (fromSnakeToCamelCase(data) as Member[])
         : [];
       const dataExtended = extendWithStatus(dataNormalized);
-      console.log(dataExtended);
       setData(dataExtended);
     }
 
