@@ -23,6 +23,7 @@ import {
   extendWithStatus,
   fromSnakeToCamelCase,
   getCustomDate,
+  hasExpired,
 } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -91,6 +92,10 @@ export function DataTable() {
           return result ? result : "-";
         },
         header: () => <span>{t("membersTable.suspendedTill")}</span>,
+        filterFn: (row, columnId) => {
+          const cellValue = row.getValue(columnId);
+          return cellValue ? !hasExpired(new Date(cellValue as string)) : false;
+        },
       }),
       columnHelper.accessor("expirationDate", {
         meta: t("membersTable.expirationDate"),
@@ -99,6 +104,9 @@ export function DataTable() {
           return result ? result : "-";
         },
         header: () => <span>{t("membersTable.expirationDate")}</span>,
+        filterFn: (row, columnId) => {
+          return hasExpired(new Date(row.getValue(columnId)));
+        },
       }),
       columnHelper.accessor("isActive", {
         meta: t("membersTable.isActive"),
@@ -134,12 +142,7 @@ export function DataTable() {
     isDeleted: false,
   });
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-    {
-      id: "status",
-      value: "inactive",
-    },
-  ]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable<Member>({
     state: {
@@ -168,6 +171,42 @@ export function DataTable() {
     fetchMembers();
   }, []);
 
+  function handleAddFilter(filter: string) {
+    let filterId: string;
+    let filterValue: string | boolean;
+
+    if (filter === "active") {
+      filterId = "isActive";
+      filterValue = true;
+    }
+    if (filter === "inactive") {
+      filterId = "isActive";
+      filterValue = false;
+    }
+    if (filter === "deleted") {
+      filterId = "isDeleted";
+      filterValue = true;
+    }
+
+    if (filter === "expired") {
+      filterId = "expirationDate";
+      filterValue = filter;
+    }
+
+    if (filter === "suspended") {
+      filterId = "suspendedTill";
+      filterValue = filter;
+    }
+
+    setColumnFilters((prev) => [
+      ...prev.filter((f) => f.id !== filterId),
+      {
+        id: filterId,
+        value: filterValue,
+      },
+    ]);
+  }
+
   return (
     <>
       <div className="flex justify-between">
@@ -181,31 +220,31 @@ export function DataTable() {
           <PopoverContent>
             <ul className="">
               <li>
-                <Badge>
+                <Badge onClick={() => handleAddFilter("active")}>
                   <Plus className="w-4 mr-1" />
                   active
                 </Badge>
               </li>
               <li>
-                <Badge>
+                <Badge onClick={() => handleAddFilter("inactive")}>
                   <Plus className="w-4 mr-1" />
                   inactive
                 </Badge>
               </li>
               <li>
-                <Badge>
+                <Badge onClick={() => handleAddFilter("expired")}>
                   <Plus className="w-4 mr-1" />
                   expired
                 </Badge>
               </li>
               <li>
-                <Badge>
+                <Badge onClick={() => handleAddFilter("suspended")}>
                   <Plus className="w-4 mr-1" />
                   suspended
                 </Badge>
               </li>
               <li>
-                <Badge>
+                <Badge onClick={() => handleAddFilter("deleted")}>
                   <Plus className="w-4 mr-1" />
                   deleted
                 </Badge>
