@@ -51,7 +51,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff, Filter } from "lucide-react";
+import { EyeOff, Filter, Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const columnHelper = createColumnHelper<Member>();
 
@@ -99,6 +100,16 @@ export function DataTable() {
         },
         header: () => <span>{t("membersTable.expirationDate")}</span>,
       }),
+      columnHelper.accessor("isActive", {
+        meta: t("membersTable.isActive"),
+        header: () => <span>{t("membersTable.isActive")}</span>,
+        filterFn: "equals",
+      }),
+      columnHelper.accessor("isDeleted", {
+        meta: t("membersTable.isDeleted"),
+        header: () => <span>{t("membersTable.isDeleted")}</span>,
+        filterFn: "equals",
+      }),
       columnHelper.accessor("cardNumber", {
         meta: t("membersTable.cardNumber"),
         cell: (info) => {
@@ -113,15 +124,22 @@ export function DataTable() {
 
   const [columnVisibility, setColumnVisibility] = useState({
     fullName: true,
-    email: true,
     birthDate: true,
-    status: false, 
+    status: true,
+    email: true,
     suspendedTill: false,
     expirationDate: false,
     cardNumber: false,
+    isActive: false,
+    isDeleted: false,
   });
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
+    {
+      id: "status",
+      value: "inactive",
+    },
+  ]);
 
   const table = useReactTable<Member>({
     state: {
@@ -143,6 +161,7 @@ export function DataTable() {
         ? (fromSnakeToCamelCase(data) as Member[])
         : [];
       const dataExtended = extendWithStatus(dataNormalized);
+      console.log(dataExtended);
       setData(dataExtended);
     }
 
@@ -155,11 +174,43 @@ export function DataTable() {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="my-6">
-              <Filter className="w-4 mr-2"/>
+              <Filter className="w-4 mr-2" />
               {t("membersTable.addFilter")}
             </Button>
           </PopoverTrigger>
           <PopoverContent>
+            <ul className="">
+              <li>
+                <Badge>
+                  <Plus className="w-4 mr-1" />
+                  active
+                </Badge>
+              </li>
+              <li>
+                <Badge>
+                  <Plus className="w-4 mr-1" />
+                  inactive
+                </Badge>
+              </li>
+              <li>
+                <Badge>
+                  <Plus className="w-4 mr-1" />
+                  expired
+                </Badge>
+              </li>
+              <li>
+                <Badge>
+                  <Plus className="w-4 mr-1" />
+                  suspended
+                </Badge>
+              </li>
+              <li>
+                <Badge>
+                  <Plus className="w-4 mr-1" />
+                  deleted
+                </Badge>
+              </li>
+            </ul>
           </PopoverContent>
         </Popover>
         <Popover>
@@ -170,29 +221,33 @@ export function DataTable() {
             </Button>
           </PopoverTrigger>
           <PopoverContent>
-            {table.getAllColumns().map((col, index, self) => (
-              <div
-                key={col.id}
-                className={`flex ${index === self.length - 1 ? "" : "mb-4"}`}
-              >
-                <Checkbox
-                  id={col.id}
-                  checked={
-                    columnVisibility[col.id as keyof typeof columnVisibility]
-                  }
-                  onCheckedChange={(checked) => {
-                    setColumnVisibility((prev) => ({
-                      ...prev,
-                      [col.id]: checked,
-                    }));
-                  }}
-                  className="mr-4"
-                />
-                <Label htmlFor={col.id} className="font-normal">
-                  {(col.columnDef.meta as string) || col.id}
-                </Label>
-              </div>
-            ))}
+            {table.getAllColumns().map((col, index, self) => {
+              if (col.id === "isActive" || col.id === "isDeleted") return null;
+
+              return (
+                <div
+                  key={col.id}
+                  className={`flex ${index === self.length - 1 ? "" : "mb-4"}`}
+                >
+                  <Checkbox
+                    id={col.id}
+                    checked={
+                      columnVisibility[col.id as keyof typeof columnVisibility]
+                    }
+                    onCheckedChange={(checked) => {
+                      setColumnVisibility((prev) => ({
+                        ...prev,
+                        [col.id]: checked,
+                      }));
+                    }}
+                    className="mr-4"
+                  />
+                  <Label htmlFor={col.id} className="font-normal">
+                    {(col.columnDef.meta as string) || col.id}
+                  </Label>
+                </div>
+              );
+            })}
           </PopoverContent>
         </Popover>
       </div>
