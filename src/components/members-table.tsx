@@ -51,7 +51,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff } from "lucide-react";
+import { EyeOff, Filter } from "lucide-react";
 
 const columnHelper = createColumnHelper<Member>();
 
@@ -151,7 +151,17 @@ export function DataTable() {
 
   return (
     <>
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="my-6">
+              <Filter className="w-4 mr-2"/>
+              {t("membersTable.addFilter")}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+          </PopoverContent>
+        </Popover>
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="my-6">
