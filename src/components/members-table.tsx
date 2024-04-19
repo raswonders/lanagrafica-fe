@@ -171,7 +171,11 @@ export function DataTable() {
     fetchMembers();
   }, []);
 
-  function handleAddFilter(filter: string) {
+  function handleFilterBadgeRemoval(index: number) {
+    setColumnFilters((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function handleFilterBadgeAddition(filter: string) {
     let filterId: string;
     let filterValue: string | boolean;
 
@@ -222,31 +226,35 @@ export function DataTable() {
               <PopoverContent>
                 <ul className="">
                   <li>
-                    <Badge onClick={() => handleAddFilter("active")}>
+                    <Badge onClick={() => handleFilterBadgeAddition("active")}>
                       <Plus className="w-4 mr-1" />
                       active
                     </Badge>
                   </li>
                   <li>
-                    <Badge onClick={() => handleAddFilter("inactive")}>
+                    <Badge
+                      onClick={() => handleFilterBadgeAddition("inactive")}
+                    >
                       <Plus className="w-4 mr-1" />
                       inactive
                     </Badge>
                   </li>
                   <li>
-                    <Badge onClick={() => handleAddFilter("expired")}>
+                    <Badge onClick={() => handleFilterBadgeAddition("expired")}>
                       <Plus className="w-4 mr-1" />
                       expired
                     </Badge>
                   </li>
                   <li>
-                    <Badge onClick={() => handleAddFilter("suspended")}>
+                    <Badge
+                      onClick={() => handleFilterBadgeAddition("suspended")}
+                    >
                       <Plus className="w-4 mr-1" />
                       suspended
                     </Badge>
                   </li>
                   <li>
-                    <Badge onClick={() => handleAddFilter("deleted")}>
+                    <Badge onClick={() => handleFilterBadgeAddition("deleted")}>
                       <Plus className="w-4 mr-1" />
                       deleted
                     </Badge>
@@ -256,7 +264,7 @@ export function DataTable() {
             </Popover>
           </div>
           <div className="flex flex-wrap gap-2 mb-6">
-            {columnFilters.map((filter) => {
+            {columnFilters.map((filter, index) => {
               let filterName = "";
               let filterVariant = "";
 
@@ -290,6 +298,7 @@ export function DataTable() {
                   // variant={filterVariant}
                   key={filterName}
                   className="py-1 px-4 rounded-lg"
+                  onClick={() => handleFilterBadgeRemoval(index)}
                 >
                   {filterName}
                 </Badge>
