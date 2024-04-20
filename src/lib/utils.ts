@@ -1,3 +1,4 @@
+import { Member } from "@/components/members-table";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -50,7 +51,7 @@ export function getCustomDate(value: string) {
 
   const date = new Date(value);
   const day = date.getDate().toString().padStart(2, "0");
-  const month = date.getMonth().toString().padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   return `${day}/${month}/${year}`;
@@ -67,4 +68,23 @@ export function fromSnakeToCamelCase(arr: object[]) {
       }),
     );
   });
+}
+
+export function extendWithStatus(data: Member[]) {
+  return data.map((row) => {
+    let status = "inactive";
+    if (row.isActive) status = "active";
+    if (hasExpired(new Date(row.expirationDate))) status = "expired";
+    if (isSuspended(new Date(row.suspendedTill))) status = "suspended";
+    if (row.isDeleted) status = "deleted";
+    return { ...row, status };
+  });
+}
+
+export function hasExpired(date: Date) {
+  return new Date() > date;
+}
+
+export function isSuspended(date: Date) {
+  return date ? new Date() < date : false;
 }

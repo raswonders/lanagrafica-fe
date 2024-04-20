@@ -21,10 +21,23 @@ const buttonVariants = cva(
         link: "text-accent-11 underline-offset-2 hover:underline",
         select:
           "bg-accent-1 placeholder:text-neutral-11 border placeholder:text-neutral-11 font-normal",
+        active: "bg-success-3 text-success-11 hover:bg-success-4",
+        activeOutline:
+          "border border-success-7 text-success-11 hover:border-success-8 hover:bg-success-3 dark:hover:bg-success-2",
+        inactive: "bg-warning-4 text-warning-11 hover:bg-warning-5",
+        inactiveOutline:
+          "border border-warning-7 text-warning-11 hover:border-warning-8 hover:bg-warning-3 dark:hover:bg-warning-2",
+        suspended: "bg-danger-3 text-danger-11 hover:bg-danger-4",
+        suspendedOutline:
+          "border border-danger-7 text-danger-11 hover:border-danger-8 hover:bg-danger-3 dark:hover:bg-danger-2",
+        deleted: "bg-neutral-6 text-neutral-11 hover:bg-neutral-7",
+        deletedOutline:
+          "border border-neutral-7 text-neutral-11 hover:border-neutral-8 hover:bg-neutral-3 dark:hover:bg-neutral-2",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
+        sm: "h-9 rounded-md px-4",
+        xs: "h-6 rounded-md px-4 py-1 text-xs",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
       },

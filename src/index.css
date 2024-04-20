@@ -10,6 +10,18 @@
 @import "@radix-ui/colors/ruby-alpha";
 @import "@radix-ui/colors/ruby-dark";
 @import "@radix-ui/colors/ruby-dark-alpha";
+@import "@radix-ui/colors/jade";
+@import "@radix-ui/colors/jade-alpha";
+@import "@radix-ui/colors/jade-dark";
+@import "@radix-ui/colors/jade-dark-alpha";
+@import "@radix-ui/colors/amber";
+@import "@radix-ui/colors/amber-alpha";
+@import "@radix-ui/colors/amber-dark";
+@import "@radix-ui/colors/amber-dark-alpha";
+@import "@radix-ui/colors/indigo";
+@import "@radix-ui/colors/indigo-alpha";
+@import "@radix-ui/colors/indigo-dark";
+@import "@radix-ui/colors/indigo-dark-alpha";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -89,7 +101,7 @@
     --danger-11: var(--ruby-11);
     --danger-12: var(--ruby-12);
 
-    /* danger color with alpha
+    /* danger color with alpha */
     --danger-a1: var(--ruby-a1);
     --danger-a2: var(--ruby-a2);
     --danger-a3: var(--ruby-a3);
@@ -102,6 +114,90 @@
     --danger-a10: var(--ruby-a10);
     --danger-a11: var(--ruby-a11);
     --danger-a12: var(--ruby-a12);
+
+    /* success color */
+    --success-1: var(--jade-1);
+    --success-2: var(--jade-2);
+    --success-3: var(--jade-3);
+    --success-4: var(--jade-4);
+    --success-5: var(--jade-5);
+    --success-6: var(--jade-6);
+    --success-7: var(--jade-7);
+    --success-8: var(--jade-8);
+    --success-9: var(--jade-9);
+    --success-10: var(--jade-10);
+    --success-11: var(--jade-11);
+    --success-12: var(--jade-12);
+
+    /* success color with alpha */
+    --success-a1: var(--jade-a1);
+    --success-a2: var(--jade-a2);
+    --success-a3: var(--jade-a3);
+    --success-a4: var(--jade-a4);
+    --success-a5: var(--jade-a5);
+    --success-a6: var(--jade-a6);
+    --success-a7: var(--jade-a7);
+    --success-a8: var(--jade-a8);
+    --success-a9: var(--jade-a9);
+    --success-a10: var(--jade-a10);
+    --success-a11: var(--jade-a11);
+    --success-a12: var(--jade-a12);
+
+    /* warning color */
+    --warning-1: var(--amber-1);
+    --warning-2: var(--amber-2);
+    --warning-3: var(--amber-3);
+    --warning-4: var(--amber-4);
+    --warning-5: var(--amber-5);
+    --warning-6: var(--amber-6);
+    --warning-7: var(--amber-7);
+    --warning-8: var(--amber-8);
+    --warning-9: var(--amber-9);
+    --warning-10: var(--amber-10);
+    --warning-11: var(--amber-11);
+    --warning-12: var(--amber-12);
+
+    /* warning color with alpha */
+    --warning-a1: var(--amber-a1);
+    --warning-a2: var(--amber-a2);
+    --warning-a3: var(--amber-a3);
+    --warning-a4: var(--amber-a4);
+    --warning-a5: var(--amber-a5);
+    --warning-a6: var(--amber-a6);
+    --warning-a7: var(--amber-a7);
+    --warning-a8: var(--amber-a8);
+    --warning-a9: var(--amber-a9);
+    --warning-a10: var(--amber-a10);
+    --warning-a11: var(--amber-a11);
+    --warning-a12: var(--amber-a12);
+
+    /* info color */
+    --info-1: var(--indigo-1);
+    --info-2: var(--indigo-2);
+    --info-3: var(--indigo-3);
+    --info-4: var(--indigo-4);
+    --info-5: var(--indigo-5);
+    --info-6: var(--indigo-6);
+    --info-7: var(--indigo-7);
+    --info-8: var(--indigo-8);
+    --info-9: var(--indigo-9);
+    --info-10: var(--indigo-10);
+    --info-11: var(--indigo-11);
+    --info-12: var(--indigo-12);
+
+    /* info color with alpha */
+    --info-a1: var(--indigo-a1);
+    --info-a2: var(--indigo-a2);
+    --info-a3: var(--indigo-a3);
+    --info-a4: var(--indigo-a4);
+    --info-a5: var(--indigo-a5);
+    --info-a6: var(--indigo-a6);
+    --info-a7: var(--indigo-a7);
+    --info-a8: var(--indigo-a8);
+    --info-a9: var(--indigo-a9);
+    --info-a10: var(--indigo-a10);
+    --info-a11: var(--indigo-a11);
+    --info-a12: var(--indigo-a12);
 
     /* shadcn/ui b&w theme */
     --background: 0 0% 100%;
