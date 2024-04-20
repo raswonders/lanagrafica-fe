@@ -256,44 +256,49 @@ export function DataTable() {
               <PopoverContent>
                 <ul className="space-y-2">
                   <li>
-                    <Badge
-                      className="px-3 py-1.5"
+                    <Button
+                      size="sm"
+                      variant="active"
                       onClick={() => handleFilterBadgeAddition("active")}
                     >
                       active
-                    </Badge>
+                    </Button>
                   </li>
                   <li>
-                    <Badge
-                      className="px-3 py-1.5"
+                    <Button
+                      size="sm"
+                      variant="inactive"
                       onClick={() => handleFilterBadgeAddition("inactive")}
                     >
                       inactive
-                    </Badge>
+                    </Button>
                   </li>
                   <li>
-                    <Badge
-                      className="px-3 py-1.5"
+                    <Button
+                      size="sm"
+                      variant="inactive"
                       onClick={() => handleFilterBadgeAddition("expired")}
                     >
                       expired
-                    </Badge>
+                    </Button>
                   </li>
                   <li>
-                    <Badge
-                      className="px-3 py-1.5"
+                    <Button
+                      size="sm"
+                      variant="suspended"
                       onClick={() => handleFilterBadgeAddition("suspended")}
                     >
                       suspended
-                    </Badge>
+                    </Button>
                   </li>
                   <li>
-                    <Badge
-                      className="px-3 py-1.5"
+                    <Button
+                      size="sm"
+                      variant="deleted"
                       onClick={() => handleFilterBadgeAddition("deleted")}
                     >
                       deleted
-                    </Badge>
+                    </Button>
                   </li>
                 </ul>
               </PopoverContent>
@@ -330,24 +335,30 @@ export function DataTable() {
               }
 
               return (
-                <Badge
-                  variant={filterVariant}
+                <Button
+                  variant={
+                    filterVariant as
+                      | "active"
+                      | "inactive"
+                      | "suspended"
+                      | "deleted"
+                  }
+                  size="xs"
                   key={filterName}
-                  className="py-1 px-4"
                   onClick={() => handleFilterBadgeRemoval(index)}
                 >
                   {filterName}
-                </Badge>
+                </Button>
               );
             })}
             {columnFilters.length !== 0 && (
-              <Badge
-                variant="outline"
-                className="py-1 px-4"
+              <Button
+                variant="secondary"
+                size="xs"
                 onClick={() => setColumnFilters([])}
               >
                 clear all
-              </Badge>
+              </Button>
             )}
           </div>
         </div>
