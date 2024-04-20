@@ -100,7 +100,7 @@ export function DataTable() {
                 "deleted"
               }
             >
-              {name}
+              {t("membersTable." + name)}
             </Badge>
           );
         },
@@ -261,7 +261,7 @@ export function DataTable() {
                       variant="active"
                       onClick={() => handleFilterBadgeAddition("active")}
                     >
-                      active
+                      {t("membersTable.active")}
                     </Button>
                   </li>
                   <li>
@@ -270,7 +270,7 @@ export function DataTable() {
                       variant="inactive"
                       onClick={() => handleFilterBadgeAddition("inactive")}
                     >
-                      inactive
+                      {t("membersTable.inactive")}
                     </Button>
                   </li>
                   <li>
@@ -279,7 +279,7 @@ export function DataTable() {
                       variant="inactive"
                       onClick={() => handleFilterBadgeAddition("expired")}
                     >
-                      expired
+                      {t("membersTable.expired")}
                     </Button>
                   </li>
                   <li>
@@ -288,7 +288,7 @@ export function DataTable() {
                       variant="suspended"
                       onClick={() => handleFilterBadgeAddition("suspended")}
                     >
-                      suspended
+                      {t("membersTable.suspended")}
                     </Button>
                   </li>
                   <li>
@@ -297,7 +297,7 @@ export function DataTable() {
                       variant="deleted"
                       onClick={() => handleFilterBadgeAddition("deleted")}
                     >
-                      deleted
+                      {t("membersTable.deleted")}
                     </Button>
                   </li>
                 </ul>
@@ -347,7 +347,7 @@ export function DataTable() {
                   key={filterName}
                   onClick={() => handleFilterBadgeRemoval(index)}
                 >
-                  {filterName}
+                  {t("membersTable." + filterName)}
                 </Button>
               );
             })}
@@ -357,7 +357,7 @@ export function DataTable() {
                 size="xs"
                 onClick={() => setColumnFilters([])}
               >
-                clear all
+                {t("membersTable.clearAll")}
               </Button>
             )}
           </div>
