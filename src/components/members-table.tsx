@@ -202,13 +202,21 @@ export function DataTable() {
       filterValue = filter;
     }
 
-    setColumnFilters((prev) => [
-      ...prev.filter((f) => f.id !== filterId),
-      {
-        id: filterId,
-        value: filterValue,
-      },
-    ]);
+    setColumnFilters((prev) => {
+      if (
+        prev.find((item) => item.id === filterId && item.value === filterValue)
+      ) {
+        return prev;
+      }
+
+      return [
+        ...prev.filter((f) => f.id !== filterId),
+        {
+          id: filterId,
+          value: filterValue,
+        },
+      ];
+    });
   }
 
   return (
