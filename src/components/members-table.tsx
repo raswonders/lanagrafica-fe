@@ -81,7 +81,29 @@ export function DataTable() {
       }),
       columnHelper.accessor("status", {
         meta: t("membersTable.status"),
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          const name = info.getValue();
+          let variantName;
+
+          if (name === "expired") {
+            variantName = "inactive";
+          } else {
+            variantName = name;
+          }
+
+          return (
+            <Badge
+              variant={
+                (variantName as "active") ||
+                "inactive" ||
+                "suspended" ||
+                "deleted"
+              }
+            >
+              {name}
+            </Badge>
+          );
+        },
         header: () => <span>{t("membersTable.status")}</span>,
         filterFn: "equals",
       }),
@@ -232,38 +254,44 @@ export function DataTable() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent>
-                <ul className="">
+                <ul className="space-y-2">
                   <li>
-                    <Badge onClick={() => handleFilterBadgeAddition("active")}>
-                      <Plus className="w-4 mr-1" />
+                    <Badge
+                      className="px-3 py-1.5"
+                      onClick={() => handleFilterBadgeAddition("active")}
+                    >
                       active
                     </Badge>
                   </li>
                   <li>
                     <Badge
+                      className="px-3 py-1.5"
                       onClick={() => handleFilterBadgeAddition("inactive")}
                     >
-                      <Plus className="w-4 mr-1" />
                       inactive
                     </Badge>
                   </li>
                   <li>
-                    <Badge onClick={() => handleFilterBadgeAddition("expired")}>
-                      <Plus className="w-4 mr-1" />
+                    <Badge
+                      className="px-3 py-1.5"
+                      onClick={() => handleFilterBadgeAddition("expired")}
+                    >
                       expired
                     </Badge>
                   </li>
                   <li>
                     <Badge
+                      className="px-3 py-1.5"
                       onClick={() => handleFilterBadgeAddition("suspended")}
                     >
-                      <Plus className="w-4 mr-1" />
                       suspended
                     </Badge>
                   </li>
                   <li>
-                    <Badge onClick={() => handleFilterBadgeAddition("deleted")}>
-                      <Plus className="w-4 mr-1" />
+                    <Badge
+                      className="px-3 py-1.5"
+                      onClick={() => handleFilterBadgeAddition("deleted")}
+                    >
                       deleted
                     </Badge>
                   </li>
@@ -303,9 +331,9 @@ export function DataTable() {
 
               return (
                 <Badge
-                  // variant={filterVariant}
+                  variant={filterVariant}
                   key={filterName}
-                  className="py-1 px-4 rounded-lg"
+                  className="py-1 px-4"
                   onClick={() => handleFilterBadgeRemoval(index)}
                 >
                   {filterName}
@@ -315,7 +343,7 @@ export function DataTable() {
             {columnFilters.length !== 0 && (
               <Badge
                 variant="outline"
-                className="py-1 px-4 rounded-lg"
+                className="py-1 px-4"
                 onClick={() => setColumnFilters([])}
               >
                 clear all
