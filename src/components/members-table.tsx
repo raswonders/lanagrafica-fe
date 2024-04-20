@@ -52,7 +52,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff, Filter, Minus, Plus } from "lucide-react";
+import { EyeOff, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const columnHelper = createColumnHelper<Member>();
