@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
 import { useTranslation } from "react-i18next";
 import {
@@ -54,11 +54,11 @@ import {
 import { Checkbox } from "./ui/checkbox";
 import { EyeOff, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
 
 const columnHelper = createColumnHelper<Member>();
 
 export function DataTable() {
-  const [data, setData] = useState<Member[]>([]);
   const { t } = useTranslation();
 
   const columns = useMemo(
@@ -166,6 +166,18 @@ export function DataTable() {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+  const { isPending, error, data } = useQuery({
+    queryKey: ["members"],
+    queryFn: async (): Promise<Member[]> => {
+      const { data } = await supabase.from("member").select();
+      const dataNormalized = data
+        ? (fromSnakeToCamelCase(data) as Member[])
+        : [];
+
+      return extendWithStatus(dataNormalized);
+    },
+  });
+
   const table = useReactTable<Member>({
     state: {
       columnVisibility,
@@ -177,21 +189,6 @@ export function DataTable() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
   });
-
-  useEffect(() => {
-    async function fetchMembers() {
-      const { data } = await supabase.from("member").select();
-
-      const dataNormalized = data
-        ? (fromSnakeToCamelCase(data) as Member[])
-        : [];
-      const dataExtended = extendWithStatus(dataNormalized);
-      console.log(dataExtended);
-      setData(dataExtended);
-    }
-
-    fetchMembers();
-  }, []);
 
   function handleFilterBadgeRemoval(index: number) {
     setColumnFilters((prev) => prev.filter((_, i) => i !== index));
@@ -422,7 +419,9 @@ export function DataTable() {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isPending ? (
+              "loading"
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
