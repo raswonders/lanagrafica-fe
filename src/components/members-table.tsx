@@ -55,6 +55,7 @@ import { Checkbox } from "./ui/checkbox";
 import { EyeOff, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "./ui/skeleton";
 
 const columnHelper = createColumnHelper<Member>();
 
@@ -178,13 +179,22 @@ export function DataTable() {
     },
   });
 
-  const table = useReactTable<Member>({
+  const tableData = isPending ? Array(20).fill({}) : data || [];
+
+  const tableColumns = isPending
+    ? columns.map((row) => ({
+        ...row,
+        cell: () => <Skeleton className="w-[150px] h-[24px] rounded-full" />,
+      }))
+    : columns;
+
+  const table = useReactTable({
     state: {
       columnVisibility,
       columnFilters,
     },
-    columns,
-    data,
+    columns: tableColumns,
+    data: tableData,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -419,9 +429,7 @@ export function DataTable() {
             ))}
           </TableHeader>
           <TableBody>
-            {isPending ? (
-              "loading"
-            ) : table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
