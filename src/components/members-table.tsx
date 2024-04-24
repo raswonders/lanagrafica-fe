@@ -56,8 +56,10 @@ import { EyeOff, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const columnHelper = createColumnHelper<Member>();
+const membersPerPage = 20;
 
 export function DataTable() {
   const { t } = useTranslation();
@@ -167,14 +169,15 @@ export function DataTable() {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const { isPending, error, data } = useInfiniteQuery({
-    queryKey: ["members"],
-    queryFn: queryMembers,
-    getNextPageParam: (lastPage, _, lastPageParam) => {
-      return lastPageParam < lastPage.maxPageParam ? lastPageParam + 1 : null;
-    },
-    initialPageParam: 0,
-  });
+  const { isPending, error, data, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ["members"],
+      queryFn: queryMembers,
+      getNextPageParam: (lastPage, _, lastPageParam) => {
+        return lastPageParam < lastPage.maxPageParam ? lastPageParam + 1 : null;
+      },
+      initialPageParam: 0,
+    });
 
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
@@ -192,7 +195,6 @@ export function DataTable() {
   }: {
     pageParam: number;
   }): Promise<QueryMembersResult> {
-    const membersPerPage = 10;
     const pageStart = pageParam * membersPerPage;
     const pageEnd = pageStart + membersPerPage - 1;
     const { data, error, count } = await supabase
@@ -211,7 +213,7 @@ export function DataTable() {
     };
   }
 
-  const tableData = isPending ? Array(10).fill({}) : members;
+  const tableRows = isPending ? Array(membersPerPage).fill({}) : members;
   const tableColumns = isPending
     ? columns.map((row) => ({
         ...row,
@@ -225,7 +227,7 @@ export function DataTable() {
       columnFilters,
     },
     columns: tableColumns,
-    data: tableData,
+    data: tableRows,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -447,54 +449,61 @@ export function DataTable() {
             </div>
           </div>
         ) : (
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
+          <InfiniteScroll
+            dataLength={tableRows ? tableRows.length : 0}
+            next={() => fetchNextPage()}
+            hasMore={hasNextPage}
+            loader={<div className="h-24">Loading...</div>}
+          >
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      );
+                    })}
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </InfiniteScroll>
         )}
       </div>
     </>
