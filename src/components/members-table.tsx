@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
 import { useTranslation } from "react-i18next";
 import {
@@ -54,11 +54,14 @@ import {
 import { Checkbox } from "./ui/checkbox";
 import { EyeOff, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { Skeleton } from "./ui/skeleton";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const columnHelper = createColumnHelper<Member>();
+const membersPerPage = 20;
 
 export function DataTable() {
-  const [data, setData] = useState<Member[]>([]);
   const { t } = useTranslation();
 
   const columns = useMemo(
@@ -166,32 +169,69 @@ export function DataTable() {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const table = useReactTable<Member>({
+  const { isPending, error, data, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ["members"],
+      queryFn: queryMembers,
+      getNextPageParam: (lastPage, _, lastPageParam) => {
+        return lastPageParam < lastPage.maxPageParam ? lastPageParam + 1 : null;
+      },
+      initialPageParam: 0,
+    });
+
+  const members = useMemo(() => {
+    return data?.pages.reduce<Member[]>((acc, page) => {
+      return [...acc, ...page.members];
+    }, []);
+  }, [data]);
+
+  type QueryMembersResult = {
+    members: Member[];
+    maxPageParam: number;
+  };
+
+  async function queryMembers({
+    pageParam,
+  }: {
+    pageParam: number;
+  }): Promise<QueryMembersResult> {
+    const pageStart = pageParam * membersPerPage;
+    const pageEnd = pageStart + membersPerPage - 1;
+    const { data, error, count } = await supabase
+      .from("member")
+      .select("*", { count: "exact" })
+      .range(pageStart, pageEnd);
+
+    const total = count || 0;
+    if (error) throw error;
+
+    const dataNormalized = data ? (fromSnakeToCamelCase(data) as Member[]) : [];
+
+    return {
+      members: extendWithStatus(dataNormalized),
+      maxPageParam: Math.floor(total / membersPerPage),
+    };
+  }
+
+  const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
+  const tableColumns = isPending
+    ? columns.map((row) => ({
+        ...row,
+        cell: () => <Skeleton className="w-[150px] h-[24px] rounded-full" />,
+      }))
+    : columns;
+
+  const table = useReactTable({
     state: {
       columnVisibility,
       columnFilters,
     },
-    columns,
-    data,
+    columns: tableColumns,
+    data: tableRows,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
   });
-
-  useEffect(() => {
-    async function fetchMembers() {
-      const { data } = await supabase.from("member").select();
-
-      const dataNormalized = data
-        ? (fromSnakeToCamelCase(data) as Member[])
-        : [];
-      const dataExtended = extendWithStatus(dataNormalized);
-      console.log(dataExtended);
-      setData(dataExtended);
-    }
-
-    fetchMembers();
-  }, []);
 
   function handleFilterBadgeRemoval(index: number) {
     setColumnFilters((prev) => prev.filter((_, i) => i !== index));
@@ -402,54 +442,69 @@ export function DataTable() {
       </div>
 
       <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
+        {error ? (
+          <div className="flex items-center justify-center">
+            <div>
+              {t("errors.membersDidNotLoad")}: {error.name}: {error.message}
+            </div>
+          </div>
+        ) : (
+          <InfiniteScroll
+            dataLength={tableRows ? tableRows.length : 0}
+            next={() => fetchNextPage()}
+            hasMore={hasNextPage}
+            loader={<div className="h-24">Loading...</div>}
+          >
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
                           )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results.
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </InfiniteScroll>
+        )}
       </div>
     </>
   );
