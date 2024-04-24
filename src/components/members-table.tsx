@@ -54,7 +54,7 @@ import {
 import { Checkbox } from "./ui/checkbox";
 import { EyeOff, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
 
 const columnHelper = createColumnHelper<Member>();
@@ -167,20 +167,51 @@ export function DataTable() {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data } = useInfiniteQuery({
     queryKey: ["members"],
-    queryFn: async (): Promise<Member[]> => {
-      const { data } = await supabase.from("member").select();
-      const dataNormalized = data
-        ? (fromSnakeToCamelCase(data) as Member[])
-        : [];
-
-      return extendWithStatus(dataNormalized);
+    queryFn: queryMembers,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      return lastPageParam < lastPage.maxPageParam ? lastPageParam + 1 : null;
     },
+    initialPageParam: 0,
   });
 
-  const tableData = isPending ? Array(20).fill({}) : data || [];
+  const members = useMemo(() => {
+    return data?.pages.reduce<Member[]>((acc, page) => {
+      return [...acc, ...page.members];
+    }, []);
+  }, [data]);
 
+  type QueryMembersResult = {
+    members: Member[];
+    maxPageParam: number;
+  };
+
+  async function queryMembers({
+    pageParam,
+  }: {
+    pageParam: number;
+  }): Promise<QueryMembersResult> {
+    const membersPerPage = 10;
+    const pageStart = pageParam * membersPerPage;
+    const pageEnd = pageStart + membersPerPage - 1;
+    const { data, error, count } = await supabase
+      .from("member")
+      .select("*", { count: "exact" })
+      .range(pageStart, pageEnd);
+
+    const total = count || 0;
+    if (error) throw error;
+
+    const dataNormalized = data ? (fromSnakeToCamelCase(data) as Member[]) : [];
+
+    return {
+      members: extendWithStatus(dataNormalized),
+      maxPageParam: Math.floor(total / membersPerPage),
+    };
+  }
+
+  const tableData = isPending ? Array(10).fill({}) : members;
   const tableColumns = isPending
     ? columns.map((row) => ({
         ...row,
