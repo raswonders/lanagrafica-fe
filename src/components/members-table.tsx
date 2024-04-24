@@ -213,7 +213,7 @@ export function DataTable() {
     };
   }
 
-  const tableRows = isPending ? Array(membersPerPage).fill({}) : members;
+  const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
   const tableColumns = isPending
     ? columns.map((row) => ({
         ...row,
