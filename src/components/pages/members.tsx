@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 export function Members() {
   const { t } = useTranslation();
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState<string | null>(null);
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export function Members() {
             <Input
               id="searchInput"
               placeholder={t("members.searchPlaceholder")}
-              value={search}
+              value={search || ""}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10"
             />

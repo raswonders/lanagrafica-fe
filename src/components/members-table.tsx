@@ -61,7 +61,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
-export function DataTable({ search }: { search: string }) {
+export function DataTable({ search }: { search: string | null}) {
   const { t } = useTranslation();
 
   const columns = useMemo(
