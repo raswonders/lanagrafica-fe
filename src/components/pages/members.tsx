@@ -5,11 +5,22 @@ import { DataTable } from "../members-table";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Members() {
   const { t } = useTranslation();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search]);
 
   return (
     <PageLayout>
@@ -34,7 +45,7 @@ export function Members() {
         </CardHeader>
         <CardContent>
           <Separator />
-          <DataTable />
+          <DataTable search={debouncedSearch} />
         </CardContent>
       </Card>
     </PageLayout>
