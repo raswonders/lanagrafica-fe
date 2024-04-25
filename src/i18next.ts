@@ -50,6 +50,7 @@ i18n
           },
           members: {
             title: "Members",
+            searchPlaceholder: "Search name",
           },
           home: {
             title: "Home",
@@ -134,7 +135,8 @@ i18n
             docTypeFieldLabel: "Tipo di documento",
           },
           members: {
-            title: "Membri",
+            title: "Members",
+            searchPlaceholder: "Cerca nome",
           },
           home: {
             title: "Casa",

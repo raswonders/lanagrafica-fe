@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
 import { useTranslation } from "react-i18next";
 import {
@@ -61,7 +61,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
-export function DataTable() {
+export function DataTable({ search }: { search: string | null}) {
   const { t } = useTranslation();
 
   const columns = useMemo(
@@ -169,7 +169,7 @@ export function DataTable() {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const { isPending, error, data, fetchNextPage, hasNextPage } =
+  const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
       queryKey: ["members"],
       queryFn: queryMembers,
@@ -178,6 +178,10 @@ export function DataTable() {
       },
       initialPageParam: 0,
     });
+
+  useEffect(() => {
+    if (search !== null) refetch();
+  }, [refetch, search]);
 
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
@@ -197,14 +201,26 @@ export function DataTable() {
   }): Promise<QueryMembersResult> {
     const pageStart = pageParam * membersPerPage;
     const pageEnd = pageStart + membersPerPage - 1;
-    const { data, error, count } = await supabase
-      .from("member")
-      .select("*", { count: "exact" })
-      .range(pageStart, pageEnd);
 
-    const total = count || 0;
+    let data, count, error;
+    if (search) {
+      const searchWords = search.trim().split(/\s+/).filter(Boolean);
+      const searchParam = searchWords.join(" & ");
+      ({ data, count, error } = await supabase
+        .from("member")
+        .select("*", { count: "exact" })
+        .textSearch("name_surname", searchParam)
+        .range(pageStart, pageEnd));
+    } else {
+      ({ data, count, error } = await supabase
+        .from("member")
+        .select("*", { count: "exact" })
+        .range(pageStart, pageEnd));
+    }
+
     if (error) throw error;
 
+    const total = count || 0;
     const dataNormalized = data ? (fromSnakeToCamelCase(data) as Member[]) : [];
 
     return {
