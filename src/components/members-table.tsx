@@ -205,7 +205,7 @@ export function DataTable({ search }: { search: string }) {
     let data, count, error;
     if (search) {
       const searchWords = search.trim().split(/\s+/).filter(Boolean);
-      const searchParam = searchWords.join(" | ");
+      const searchParam = searchWords.join(" & ");
       ({ data, count, error } = await supabase
         .from("member")
         .select("*", { count: "exact" })
