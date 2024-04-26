@@ -52,7 +52,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff, Filter } from "lucide-react";
+import { EyeOff, Filter, RefreshCcw, SquarePen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
@@ -61,7 +61,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
-export function DataTable({ search }: { search: string | null}) {
+export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
 
   const columns = useMemo(
@@ -151,6 +151,21 @@ export function DataTable({ search }: { search: string | null}) {
         },
         header: () => <span>{t("membersTable.cardNumber")}</span>,
       }),
+      {
+        meta: t("membersTable.actions"),
+        id: "actions",
+        header: () => <span className="ml-3">{t("membersTable.actions")}</span>,
+        cell: ({ row }) => (
+          <div className="flex">
+            <Button size="icon" variant="ghost">
+              <SquarePen className="w-5" />
+            </Button>
+            <Button size="icon" variant="ghost">
+              <RefreshCcw className="w-5" />
+            </Button>
+          </div>
+        ),
+      },
     ],
     [t],
   );

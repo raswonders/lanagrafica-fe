@@ -92,6 +92,7 @@ i18n
             addFilter: "Add Filter",
             isActive: "Is Active",
             isDeleted: "Is Deleted",
+            actions: "Actions",
           },
           errors: {
             membersDidNotLoad: "Members list couldn't load",
@@ -178,6 +179,7 @@ i18n
             addFilter: "Aggiungi Filtro",
             isActive: "È Attivo",
             isDeleted: "È Eliminato",
+            actions: "Azioni",
           },
           errors: {
             membersDidNotLoad: "Impossibile caricare l'elenco dei membri",
