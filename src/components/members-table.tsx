@@ -63,6 +63,7 @@ const membersPerPage = 20;
 
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
+  const [processing, setProcessing] = useState({});
 
   const columns = useMemo(
     () => [
@@ -160,14 +161,26 @@ export function DataTable({ search }: { search: string | null }) {
             <Button size="icon" variant="ghost">
               <SquarePen className="w-5" />
             </Button>
-            <Button size="icon" variant="ghost">
-              <RefreshCcw className="w-5" />
+            <Button
+              size="icon"
+              disabled={processing[row.original.id]}
+              variant="ghost"
+              onClick={() => {
+                setProcessing((prev) => ({
+                  ...prev,
+                  [row.original.id]: true,
+                }));
+              }}
+            >
+              <RefreshCcw
+                className={`w-5 ${processing[row.original.id] ? "spin" : ""}`}
+              />
             </Button>
           </div>
         ),
       },
     ],
-    [t],
+    [t, processing],
   );
 
   const [columnVisibility, setColumnVisibility] = useState({
@@ -197,6 +210,10 @@ export function DataTable({ search }: { search: string | null }) {
   useEffect(() => {
     if (search !== null) refetch();
   }, [refetch, search]);
+
+  useEffect(() => {
+    console.log(processing);
+  }, [processing]);
 
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
