@@ -104,6 +104,25 @@ export function DataTable({ search }: { search: string | null }) {
         cell: (info) => getCustomDate(info.getValue()),
         header: () => <span>{t("membersTable.birthDate")}</span>,
       }),
+      columnHelper.accessor("cardNumber", {
+        meta: t("membersTable.cardNumber"),
+        cell: (info) => {
+          const result = info.getValue();
+          return result ? result : "-";
+        },
+        header: () => <span>{t("membersTable.cardNumber")}</span>,
+      }),
+      columnHelper.accessor("expirationDate", {
+        meta: t("membersTable.expirationDate"),
+        cell: (info) => {
+          const result = getCustomDate(info.getValue());
+          return result ? result : "-";
+        },
+        header: () => <span>{t("membersTable.expirationDate")}</span>,
+        filterFn: (row, columnId) => {
+          return hasExpired(new Date(row.getValue(columnId)));
+        },
+      }),
       columnHelper.accessor("status", {
         meta: t("membersTable.status"),
         cell: (info) => {
@@ -144,17 +163,6 @@ export function DataTable({ search }: { search: string | null }) {
           return cellValue ? !hasExpired(new Date(cellValue as string)) : false;
         },
       }),
-      columnHelper.accessor("expirationDate", {
-        meta: t("membersTable.expirationDate"),
-        cell: (info) => {
-          const result = getCustomDate(info.getValue());
-          return result ? result : "-";
-        },
-        header: () => <span>{t("membersTable.expirationDate")}</span>,
-        filterFn: (row, columnId) => {
-          return hasExpired(new Date(row.getValue(columnId)));
-        },
-      }),
       columnHelper.accessor("isActive", {
         meta: t("membersTable.isActive"),
         header: () => <span>{t("membersTable.isActive")}</span>,
@@ -164,14 +172,6 @@ export function DataTable({ search }: { search: string | null }) {
         meta: t("membersTable.isDeleted"),
         header: () => <span>{t("membersTable.isDeleted")}</span>,
         filterFn: "equals",
-      }),
-      columnHelper.accessor("cardNumber", {
-        meta: t("membersTable.cardNumber"),
-        cell: (info) => {
-          const result = info.getValue();
-          return result ? result : "-";
-        },
-        header: () => <span>{t("membersTable.cardNumber")}</span>,
       }),
       {
         meta: t("membersTable.actions"),
@@ -216,10 +216,10 @@ export function DataTable({ search }: { search: string | null }) {
     fullName: true,
     birthDate: true,
     status: true,
-    email: true,
+    email: false,
     suspendedTill: false,
-    expirationDate: false,
-    cardNumber: false,
+    expirationDate: true,
+    cardNumber: true,
     isActive: false,
     isDeleted: false,
   });
