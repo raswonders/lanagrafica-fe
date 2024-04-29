@@ -212,6 +212,7 @@ export function DataTable({ search }: { search: string | null }) {
               size="icon"
               disabled={
                 isRenewing[row.original.id] ||
+                row.original.isActive ||
                 row.original.isDeleted ||
                 row.original.suspendedTill
               }
@@ -288,14 +289,14 @@ export function DataTable({ search }: { search: string | null }) {
       ({ data, count, error } = await supabase
         .from("member")
         .select("*", { count: "exact" })
-        .order('id', { ascending: true })
+        .order("id", { ascending: true })
         .textSearch("name_surname", searchParam)
         .range(pageStart, pageEnd));
     } else {
       ({ data, count, error } = await supabase
         .from("member")
         .select("*", { count: "exact" })
-        .order('id', { ascending: true })
+        .order("id", { ascending: true })
         .range(pageStart, pageEnd));
     }
 
