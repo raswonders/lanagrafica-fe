@@ -288,12 +288,14 @@ export function DataTable({ search }: { search: string | null }) {
       ({ data, count, error } = await supabase
         .from("member")
         .select("*", { count: "exact" })
+        .order('id', { ascending: true })
         .textSearch("name_surname", searchParam)
         .range(pageStart, pageEnd));
     } else {
       ({ data, count, error } = await supabase
         .from("member")
         .select("*", { count: "exact" })
+        .order('id', { ascending: true })
         .range(pageStart, pageEnd));
     }
 
