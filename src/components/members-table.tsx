@@ -20,6 +20,7 @@ import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
 import { useTranslation } from "react-i18next";
 import {
+  extendDate,
   extendWithStatus,
   fromSnakeToCamelCase,
   getCustomDate,
@@ -60,6 +61,26 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
+
+async function renewMemberCard(id: number, expirationDate: string): Promise {
+  const cardNumber = String(Math.floor(Math.random() * 10000));
+  const nextExpiration = extendDate(new Date(expirationDate));
+
+  const { data, error } = await supabase
+    .from("member")
+    .update({
+      card_number: String(cardNumber),
+      expiration_date: nextExpiration,
+      is_active: true,
+    })
+    .eq("id", id);
+
+  if (error) throw error;
+
+  console.log("data", data);
+
+  return data;
+}
 
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
@@ -165,10 +186,18 @@ export function DataTable({ search }: { search: string | null }) {
               size="icon"
               disabled={processing[row.original.id]}
               variant="ghost"
-              onClick={() => {
+              onClick={async () => {
                 setProcessing((prev) => ({
                   ...prev,
                   [row.original.id]: true,
+                }));
+                await renewMemberCard(
+                  row.original.id,
+                  row.original.expirationDate,
+                );
+                setProcessing((prev) => ({
+                  ...prev,
+                  [row.original.id]: false,
                 }));
               }}
             >
