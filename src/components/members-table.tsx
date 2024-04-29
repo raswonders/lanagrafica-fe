@@ -184,7 +184,7 @@ export function DataTable({ search }: { search: string | null }) {
             </Button>
             <Button
               size="icon"
-              disabled={processing[row.original.id]}
+              disabled={processing[row.original.id] || row.original.isDeleted || row.original.suspendedTill}
               variant="ghost"
               onClick={async () => {
                 setProcessing((prev) => ({
