@@ -55,7 +55,11 @@ import {
 import { Checkbox } from "./ui/checkbox";
 import { EyeOff, Filter, RefreshCcw, SquarePen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -77,14 +81,24 @@ async function renewMemberCard(id: number, expirationDate: string): Promise {
 
   if (error) throw error;
 
-  console.log("data", data);
-
   return data;
 }
 
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
   const [processing, setProcessing] = useState({});
+
+  const queryClient = useQueryClient();
+  const renewCardMutation = useMutation({
+    mutationFn: (param: { id: number; expirationDate: string }) =>
+      renewMemberCard(param.id, param.expirationDate),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+    },
+    onError: () => {
+      // TODO inform user renewal failed
+    },
+  });
 
   const columns = useMemo(
     () => [
@@ -184,17 +198,23 @@ export function DataTable({ search }: { search: string | null }) {
             </Button>
             <Button
               size="icon"
-              disabled={processing[row.original.id] || row.original.isDeleted || row.original.suspendedTill}
+              disabled={
+                processing[row.original.id] ||
+                row.original.isDeleted ||
+                row.original.suspendedTill
+              }
               variant="ghost"
-              onClick={async () => {
+              onClick={() => {
                 setProcessing((prev) => ({
                   ...prev,
                   [row.original.id]: true,
                 }));
-                await renewMemberCard(
-                  row.original.id,
-                  row.original.expirationDate,
-                );
+
+                renewCardMutation.mutate({
+                  id: row.original.id,
+                  expirationDate: row.original.expirationDate,
+                });
+
                 setProcessing((prev) => ({
                   ...prev,
                   [row.original.id]: false,
