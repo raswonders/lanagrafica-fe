@@ -86,17 +86,29 @@ async function renewMemberCard(id: number, expirationDate: string): Promise {
 
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
-  const [processing, setProcessing] = useState({});
-
+  const [isRenewing, setIsRenewing] = useState({});
   const queryClient = useQueryClient();
+
   const renewCardMutation = useMutation({
-    mutationFn: (param: { id: number; expirationDate: string }) =>
-      renewMemberCard(param.id, param.expirationDate),
+    mutationFn: (variables: { id: number; expirationDate: string }) =>
+      renewMemberCard(variables.id, variables.expirationDate),
+    onMutate: (variables) => {
+      setIsRenewing((prev) => ({
+        ...prev,
+        [variables.id]: true,
+      }));
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["members"] });
     },
     onError: () => {
       // TODO inform user renewal failed
+    },
+    onSettled: (_, __, variables) => {
+      setIsRenewing((prev) => ({
+        ...prev,
+        [variables.id]: false,
+      }));
     },
   });
 
@@ -199,37 +211,27 @@ export function DataTable({ search }: { search: string | null }) {
             <Button
               size="icon"
               disabled={
-                processing[row.original.id] ||
+                isRenewing[row.original.id] ||
                 row.original.isDeleted ||
                 row.original.suspendedTill
               }
               variant="ghost"
               onClick={() => {
-                setProcessing((prev) => ({
-                  ...prev,
-                  [row.original.id]: true,
-                }));
-
                 renewCardMutation.mutate({
                   id: row.original.id,
                   expirationDate: row.original.expirationDate,
                 });
-
-                setProcessing((prev) => ({
-                  ...prev,
-                  [row.original.id]: false,
-                }));
               }}
             >
               <RefreshCcw
-                className={`w-5 ${processing[row.original.id] ? "spin" : ""}`}
+                className={`w-5 ${isRenewing[row.original.id] ? "spin" : ""}`}
               />
             </Button>
           </div>
         ),
       },
     ],
-    [t, processing],
+    [t, isRenewing],
   );
 
   const [columnVisibility, setColumnVisibility] = useState({
@@ -259,10 +261,6 @@ export function DataTable({ search }: { search: string | null }) {
   useEffect(() => {
     if (search !== null) refetch();
   }, [refetch, search]);
-
-  useEffect(() => {
-    console.log(processing);
-  }, [processing]);
 
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
