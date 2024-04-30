@@ -194,6 +194,12 @@ i18n
           errors: {
             membersDidNotLoad: "Impossibile caricare l'elenco dei membri",
           },
+          renewConfirm: {
+            title: "Sei sicuro di voler rinnovare",
+            description: "verrà assegnato un nuovo numero di carta.",
+            renew: "Rinnova",
+            cancel: "Annulla",
+          },
         },
       },
     },
