@@ -80,7 +80,7 @@ export function ThemeShowcase() {
           <Input />
         </label>
         <label>
-          Buttons 
+          Buttons
           <ul>
             <li>--primary</li>
             <li>--primary-foreground</li>
@@ -89,12 +89,24 @@ export function ThemeShowcase() {
             <li>--destructive</li>
             <li>--destructive-foreground</li>
           </ul>
-          <Button className="mr-2" variant="default">Primary</Button>
-          <Button className="mr-2" variant="secondary">Secondary</Button>
-          <Button className="mr-2" variant="destructive">Destrutive</Button>
-          <Button className="mr-2" variant="outline">Outline</Button>
-          <Button className="mr-2" variant="ghost">Ghost</Button>
-          <Button className="mr-2" variant="link">Link me somewhere</Button>
+          <Button className="mr-2" variant="default">
+            Primary
+          </Button>
+          <Button className="mr-2" variant="secondary">
+            Secondary
+          </Button>
+          <Button className="mr-2" variant="destructive">
+            Destrutive
+          </Button>
+          <Button className="mr-2" variant="outline">
+            Outline
+          </Button>
+          <Button className="mr-2" variant="ghost">
+            Ghost
+          </Button>
+          <Button className="mr-2" variant="link">
+            Link me somewhere
+          </Button>
         </label>
         <label>
           Used for accents such as hover effects on DropdownMenuItem,

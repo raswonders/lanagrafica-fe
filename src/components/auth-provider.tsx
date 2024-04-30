@@ -28,13 +28,12 @@ interface Credentials {
 export const AuthProvider = ({ children }: Node) => {
   const [user, setUser] = useLocalUser(null);
 
-
   const navigate = useNavigate();
 
   const signIn = async ({ username, password }: Credentials): Promise<void> => {
     await delay(1500); // TODO remove delay and naive login before production
     if (username === "user" && password === "user") {
-      setUser({username: "user", jwt: "user"});
+      setUser({ username: "user", jwt: "user" });
       navigate("/");
     }
   };
