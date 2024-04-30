@@ -29,6 +29,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export type Member = {
+  id: string;
   name: string;
   surname: string;
   province: string;
@@ -74,7 +75,17 @@ import {
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
-async function renewMemberCard(id: number, expirationDate: string): Promise {
+export type RenewMutation = {
+  mutate: (args: { id: string; expirationDate: string; name: string }) => void;
+};
+interface Row {
+  original: Member;
+}
+
+async function renewMemberCard(
+  id: number,
+  expirationDate: string,
+): Promise<Member | null> {
   const cardNumber = String(Math.floor(Math.random() * 10000));
   const nextExpiration = extendDate(new Date(expirationDate));
 
@@ -94,7 +105,7 @@ async function renewMemberCard(id: number, expirationDate: string): Promise {
 
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
-  const [isRenewing, setIsRenewing] = useState({});
+  const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
   const queryClient = useQueryClient();
 
   const renewMutation = useMutation({
@@ -220,7 +231,7 @@ export function DataTable({ search }: { search: string | null }) {
         meta: t("membersTable.actions"),
         id: "actions",
         header: () => <span className="ml-3">{t("membersTable.actions")}</span>,
-        cell: ({ row }) => {
+        cell: ({ row }: { row: Row }) => {
           const isRenewForbidden =
             isRenewing[row.original.id] ||
             row.original.status === "active" ||

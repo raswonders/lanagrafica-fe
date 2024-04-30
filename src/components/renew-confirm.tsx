@@ -9,8 +9,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { RenewMutation } from "./members-table";
+
+type RenewConfirmProps = {
+  children: ReactNode;
+  isOpenForbidden: boolean;
+  id: string;
+  expirationDate: string;
+  name: string;
+  renewMutation: RenewMutation;
+};
 
 export function RenewConfirm({
   children,
@@ -19,7 +29,7 @@ export function RenewConfirm({
   expirationDate,
   name,
   renewMutation,
-}) {
+}: RenewConfirmProps) {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
