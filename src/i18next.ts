@@ -96,6 +96,8 @@ i18n
             renewSuccess: "Renewal successful for {{name}}",
             renewError: "Renewal failed for {{name}}",
             noResults: "No results.",
+            editMember: "Edit member",
+            renewMember: "Renew member",
           },
           errors: {
             membersDidNotLoad: "Members list couldn't load",
@@ -192,6 +194,8 @@ i18n
             renewSuccess: "Rinnovo riuscito per {{name}}",
             renewError: "Rinnovo fallito per {{name}}",
             noResults: "Nessun risultato.",
+            editMember: "Modifica membro",
+            renewMember: "Rinnova membro",
           },
           errors: {
             membersDidNotLoad: "Impossibile caricare l'elenco dei membri",

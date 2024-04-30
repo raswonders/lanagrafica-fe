@@ -64,6 +64,12 @@ import { Skeleton } from "./ui/skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RenewConfirm } from "./renew-confirm";
 import { toast } from "sonner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -223,20 +229,43 @@ export function DataTable({ search }: { search: string | null }) {
 
           return (
             <div className="flex">
-              <Button size="icon" variant="ghost">
-                <SquarePen className="w-5" />
-              </Button>
-              <RenewConfirm
-                isOpenForbidden={isRenewForbidden}
-                id={row.original.id}
-                name={`${row.original.name} ${row.original.surname}`}
-                expirationDate={row.original.expirationDate}
-                renewMutation={renewMutation}
-              >
-                <Button size="icon" variant="ghost" disabled={isRenewForbidden}>
-                  <RefreshCcw className={`w-5`} />
-                </Button>
-              </RenewConfirm>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button size="icon" variant="ghost">
+                      <SquarePen className="w-5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {t("membersTable.editMember")}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <RenewConfirm
+                      isOpenForbidden={isRenewForbidden}
+                      id={row.original.id}
+                      name={`${row.original.name} ${row.original.surname}`}
+                      expirationDate={row.original.expirationDate}
+                      renewMutation={renewMutation}
+                    >
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        disabled={isRenewForbidden}
+                      >
+                        <RefreshCcw className={`w-5`} />
+                      </Button>
+                    </RenewConfirm>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {t("membersTable.renewMember")}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           );
         },
