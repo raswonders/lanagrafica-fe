@@ -108,11 +108,10 @@ export function DataTable({ search }: { search: string | null }) {
       toast.success(t("membersTable.renewSuccess", { name: variables.name }));
     },
     onError: (error, variables) => {
-      console.error(error);
+      console.error(t("membersTable.renewError"), error);
       toast.error(
         t("membersTable.renewError", {
           name: variables.name,
-          errorMsg: error.message,
         }),
       );
     },

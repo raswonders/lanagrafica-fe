@@ -94,7 +94,7 @@ i18n
             isDeleted: "Is Deleted",
             actions: "Actions",
             renewSuccess: "Renewal successful for {{name}}",
-            renewError: "Renewal failed for {{name}} Error: {{errorMsg}}",
+            renewError: "Renewal failed for {{name}}",
           },
           errors: {
             membersDidNotLoad: "Members list couldn't load",
@@ -189,7 +189,7 @@ i18n
             isDeleted: "È Eliminato",
             actions: "Azioni",
             renewSuccess: "Rinnovo riuscito per {{name}}",
-            renewError: "Rinnovo fallito per {{name}} Errore: {{errorMsg}}",
+            renewError: "Rinnovo fallito per {{name}}",
           },
           errors: {
             membersDidNotLoad: "Impossibile caricare l'elenco dei membri",
