@@ -156,7 +156,7 @@ export default {
           a11: "var(--warning-a11)",
           a12: "var(--warning-a12)",
         },
-        
+
         info: {
           1: "var(--info-1)",
           2: "var(--info-2)",

@@ -20,14 +20,17 @@ import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/components/supabase";
 import { useTranslation } from "react-i18next";
 import {
+  extendDate,
   extendWithStatus,
   fromSnakeToCamelCase,
+  genCardNumber,
   getCustomDate,
   hasExpired,
 } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export type Member = {
+  id: number;
   name: string;
   surname: string;
   province: string;
@@ -52,17 +55,91 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff, Filter } from "lucide-react";
+import { EyeOff, Filter, RefreshCcw, SquarePen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { RenewConfirm } from "./renew-confirm";
+import { toast } from "sonner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
-export function DataTable({ search }: { search: string | null}) {
+export type RenewMutation = {
+  mutate: (args: { id: number; expirationDate: string; name: string }) => void;
+};
+interface Row {
+  original: Member;
+}
+
+async function renewMemberCard(
+  id: number,
+  expirationDate: string,
+): Promise<Member | null> {
+  const cardNumber = genCardNumber();
+  const nextExpiration = extendDate(new Date(expirationDate));
+
+  const { data, error } = await supabase
+    .from("member")
+    .update({
+      card_number: String(cardNumber),
+      expiration_date: nextExpiration,
+      is_active: true,
+    })
+    .eq("id", id);
+
+  if (error) throw error;
+
+  return data;
+}
+
+export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
+  const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
+  const queryClient = useQueryClient();
+
+  const renewMutation = useMutation({
+    mutationFn: (variables: {
+      id: number;
+      expirationDate: string;
+      name: string;
+    }) => renewMemberCard(variables.id, variables.expirationDate),
+    onMutate: (variables) => {
+      setIsRenewing((prev) => ({
+        ...prev,
+        [variables.id]: true,
+      }));
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      toast.success(t("membersTable.renewSuccess", { name: variables.name }));
+    },
+    onError: (error, variables) => {
+      console.error(t("membersTable.renewError"), error);
+      toast.error(
+        t("membersTable.renewError", {
+          name: variables.name,
+        }),
+      );
+    },
+    onSettled: (_, __, variables) => {
+      setIsRenewing((prev) => ({
+        ...prev,
+        [variables.id]: false,
+      }));
+    },
+  });
 
   const columns = useMemo(
     () => [
@@ -81,6 +158,25 @@ export function DataTable({ search }: { search: string | null}) {
         meta: t("membersTable.birthDate"),
         cell: (info) => getCustomDate(info.getValue()),
         header: () => <span>{t("membersTable.birthDate")}</span>,
+      }),
+      columnHelper.accessor("cardNumber", {
+        meta: t("membersTable.cardNumber"),
+        cell: (info) => {
+          const result = info.getValue();
+          return result ? result : "-";
+        },
+        header: () => <span>{t("membersTable.cardNumber")}</span>,
+      }),
+      columnHelper.accessor("expirationDate", {
+        meta: t("membersTable.expirationDate"),
+        cell: (info) => {
+          const result = getCustomDate(info.getValue());
+          return result ? result : "-";
+        },
+        header: () => <span>{t("membersTable.expirationDate")}</span>,
+        filterFn: (row, columnId) => {
+          return hasExpired(new Date(row.getValue(columnId)));
+        },
       }),
       columnHelper.accessor("status", {
         meta: t("membersTable.status"),
@@ -122,17 +218,6 @@ export function DataTable({ search }: { search: string | null}) {
           return cellValue ? !hasExpired(new Date(cellValue as string)) : false;
         },
       }),
-      columnHelper.accessor("expirationDate", {
-        meta: t("membersTable.expirationDate"),
-        cell: (info) => {
-          const result = getCustomDate(info.getValue());
-          return result ? result : "-";
-        },
-        header: () => <span>{t("membersTable.expirationDate")}</span>,
-        filterFn: (row, columnId) => {
-          return hasExpired(new Date(row.getValue(columnId)));
-        },
-      }),
       columnHelper.accessor("isActive", {
         meta: t("membersTable.isActive"),
         header: () => <span>{t("membersTable.isActive")}</span>,
@@ -143,26 +228,72 @@ export function DataTable({ search }: { search: string | null}) {
         header: () => <span>{t("membersTable.isDeleted")}</span>,
         filterFn: "equals",
       }),
-      columnHelper.accessor("cardNumber", {
-        meta: t("membersTable.cardNumber"),
-        cell: (info) => {
-          const result = info.getValue();
-          return result ? result : "-";
+      {
+        meta: t("membersTable.actions"),
+        id: "actions",
+        header: () => <span className="ml-3">{t("membersTable.actions")}</span>,
+        cell: ({ row }: { row: Row }) => {
+          const isRenewForbidden =
+            isRenewing[row.original.id] ||
+            row.original.status === "active" ||
+            row.original.status === "suspended" ||
+            row.original.status === "deleted";
+
+          return (
+            <div className="flex">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button size="icon" variant="ghost">
+                      <SquarePen className="w-5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {t("membersTable.editMember")}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <RenewConfirm
+                      isOpenForbidden={isRenewForbidden}
+                      id={row.original.id}
+                      name={`${row.original.name} ${row.original.surname}`}
+                      expirationDate={row.original.expirationDate}
+                      renewMutation={renewMutation}
+                    >
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        disabled={isRenewForbidden}
+                      >
+                        <RefreshCcw className={`w-5`} />
+                      </Button>
+                    </RenewConfirm>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {t("membersTable.renewMember")}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          );
         },
-        header: () => <span>{t("membersTable.cardNumber")}</span>,
-      }),
+      },
     ],
-    [t],
+    [t, isRenewing],
   );
 
   const [columnVisibility, setColumnVisibility] = useState({
     fullName: true,
     birthDate: true,
     status: true,
-    email: true,
+    email: false,
     suspendedTill: false,
-    expirationDate: false,
-    cardNumber: false,
+    expirationDate: true,
+    cardNumber: true,
     isActive: false,
     isDeleted: false,
   });
@@ -209,12 +340,14 @@ export function DataTable({ search }: { search: string | null}) {
       ({ data, count, error } = await supabase
         .from("member")
         .select("*", { count: "exact" })
+        .order("id", { ascending: true })
         .textSearch("name_surname", searchParam)
         .range(pageStart, pageEnd));
     } else {
       ({ data, count, error } = await supabase
         .from("member")
         .select("*", { count: "exact" })
+        .order("id", { ascending: true })
         .range(pageStart, pageEnd));
     }
 
@@ -513,7 +646,7 @@ export function DataTable({ search }: { search: string | null}) {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("membersTable.noResults")}
                     </TableCell>
                   </TableRow>
                 )}

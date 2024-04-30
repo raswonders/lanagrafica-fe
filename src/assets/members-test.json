@@ -13,7 +13,8 @@
     "registration_date": "2023-05-20",
     "expiration_date": "2024-05-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "92891645"
   },
   {
     "name": "Luca",
@@ -29,7 +30,8 @@
     "registration_date": "2022-12-10",
     "expiration_date": "2023-12-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Alessia",
@@ -45,7 +47,8 @@
     "registration_date": "2023-08-15",
     "expiration_date": "2024-08-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "20799046"
   },
   {
     "name": "Marco",
@@ -61,7 +64,8 @@
     "registration_date": "2023-02-28",
     "expiration_date": "2024-02-28",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Chiara",
@@ -77,7 +81,8 @@
     "registration_date": "2022-11-05",
     "expiration_date": "2023-11-05",
     "suspended_till": "",
-    "is_deleted": true
+    "is_deleted": true,
+    "card_number": ""
   },
   {
     "name": "Paolo",
@@ -93,7 +98,8 @@
     "registration_date": "2023-04-18",
     "expiration_date": "2024-04-18",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Sara",
@@ -109,7 +115,8 @@
     "registration_date": "2023-10-22",
     "expiration_date": "2024-10-22",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "37625559"
   },
   {
     "name": "Riccardo",
@@ -125,7 +132,8 @@
     "registration_date": "2023-07-12",
     "expiration_date": "2024-07-12",
     "suspended_till": "2024-05-12",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Elisa",
@@ -141,7 +149,8 @@
     "registration_date": "2023-01-30",
     "expiration_date": "2024-01-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Davide",
@@ -157,7 +166,8 @@
     "registration_date": "2023-06-25",
     "expiration_date": "2024-06-25",
     "suspended_till": "2024-05-13",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Anna",
@@ -173,7 +183,8 @@
     "registration_date": "2023-09-10",
     "expiration_date": "2024-09-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "46810545"
   },
   {
     "name": "Michele",
@@ -189,7 +200,8 @@
     "registration_date": "2023-03-28",
     "expiration_date": "2024-03-28",
     "suspended_till": "2024-08-12",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Federico",
@@ -205,7 +217,8 @@
     "registration_date": "2023-02-15",
     "expiration_date": "2024-02-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Valentina",
@@ -221,7 +234,8 @@
     "registration_date": "2023-11-20",
     "expiration_date": "2024-11-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "26086799"
   },
   {
     "name": "Simone",
@@ -237,7 +251,8 @@
     "registration_date": "2023-07-05",
     "expiration_date": "2024-07-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "28013222"
   },
   {
     "name": "Giacomo",
@@ -253,7 +268,8 @@
     "registration_date": "2023-08-30",
     "expiration_date": "2024-08-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "86346123"
   },
   {
     "name": "Elena",
@@ -269,7 +285,8 @@
     "registration_date": "2023-06-18",
     "expiration_date": "2024-06-18",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "31789967"
   },
   {
     "name": "Fabio",
@@ -285,7 +302,8 @@
     "registration_date": "2023-10-12",
     "expiration_date": "2024-10-12",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "81029549"
   },
   {
     "name": "Silvia",
@@ -301,7 +319,8 @@
     "registration_date": "2023-04-02",
     "expiration_date": "2024-04-02",
     "suspended_till": "2024-06-02",
-    "is_deleted": true
+    "is_deleted": true,
+    "card_number": ""
   },
   {
     "name": "Roberto",
@@ -317,7 +336,8 @@
     "registration_date": "2023-01-25",
     "expiration_date": "2024-01-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Lorenzo",
@@ -333,7 +353,8 @@
     "registration_date": "2023-09-28",
     "expiration_date": "2024-09-28",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "86505296"
   },
   {
     "name": "Giorgia",
@@ -349,7 +370,8 @@
     "registration_date": "2023-03-15",
     "expiration_date": "2024-03-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Matteo",
@@ -365,7 +387,8 @@
     "registration_date": "2023-11-10",
     "expiration_date": "2024-11-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "10928345"
   },
   {
     "name": "Alessandra",
@@ -381,7 +404,8 @@
     "registration_date": "2023-06-25",
     "expiration_date": "2024-06-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "46138115"
   },
   {
     "name": "Stefano",
@@ -397,7 +421,8 @@
     "registration_date": "2023-08-12",
     "expiration_date": "2024-08-12",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "77245517"
   },
   {
     "name": "Alice",
@@ -413,7 +438,8 @@
     "registration_date": "2023-04-20",
     "expiration_date": "2024-04-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Daniele",
@@ -429,7 +455,8 @@
     "registration_date": "2023-12-05",
     "expiration_date": "2024-12-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "62884546"
   },
   {
     "name": "Sara",
@@ -445,7 +472,8 @@
     "registration_date": "2023-02-22",
     "expiration_date": "2024-02-22",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Marco",
@@ -461,7 +489,8 @@
     "registration_date": "2023-07-18",
     "expiration_date": "2024-07-18",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "72476182"
   },
   {
     "name": "Laura",
@@ -477,7 +506,8 @@
     "registration_date": "2023-05-10",
     "expiration_date": "2024-05-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "91265951"
   },
   {
     "name": "Elena",
@@ -493,7 +523,8 @@
     "registration_date": "2023-03-20",
     "expiration_date": "2024-03-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Marco",
@@ -509,7 +540,8 @@
     "registration_date": "2024-04-05",
     "expiration_date": "2025-04-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "45340205"
   },
   {
     "name": "Giulia",
@@ -525,7 +557,8 @@
     "registration_date": "2024-02-15",
     "expiration_date": "2025-02-15",
     "suspended_till": "2024-07-15",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Luca",
@@ -541,7 +574,8 @@
     "registration_date": "2023-11-10",
     "expiration_date": "2024-11-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "21895583"
   },
   {
     "name": "Alessia",
@@ -557,7 +591,8 @@
     "registration_date": "2023-06-30",
     "expiration_date": "2024-06-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "26453746"
   },
   {
     "name": "Davide",
@@ -573,7 +608,8 @@
     "registration_date": "2023-08-25",
     "expiration_date": "2024-08-25",
     "suspended_till": "2024-08-25",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Martina",
@@ -589,7 +625,8 @@
     "registration_date": "2023-07-05",
     "expiration_date": "2024-07-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "79974874"
   },
   {
     "name": "Simone",
@@ -605,7 +642,8 @@
     "registration_date": "2023-09-15",
     "expiration_date": "2024-09-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "79644707"
   },
   {
     "name": "Chiara",
@@ -621,7 +659,8 @@
     "registration_date": "2023-01-20",
     "expiration_date": "2024-01-20",
     "suspended_till": "",
-    "is_deleted": true
+    "is_deleted": true,
+    "card_number": ""
   },
   {
     "name": "Francesco",
@@ -637,7 +676,8 @@
     "registration_date": "2023-11-10",
     "expiration_date": "2024-11-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "94076454"
   },
   {
     "name": "Federico",
@@ -653,7 +693,8 @@
     "registration_date": "2023-12-05",
     "expiration_date": "2024-12-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "59110029"
   },
   {
     "name": "Sara",
@@ -669,7 +710,8 @@
     "registration_date": "2023-11-15",
     "expiration_date": "2024-11-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "39134729"
   },
   {
     "name": "Giovanni",
@@ -685,7 +727,8 @@
     "registration_date": "2023-10-10",
     "expiration_date": "2024-10-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "55452245"
   },
   {
     "name": "Valentina",
@@ -701,7 +744,8 @@
     "registration_date": "2023-09-20",
     "expiration_date": "2024-09-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "19750509"
   },
   {
     "name": "Roberto",
@@ -717,7 +761,8 @@
     "registration_date": "2023-08-15",
     "expiration_date": "2024-08-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "33574186"
   },
   {
     "name": "Martina",
@@ -733,7 +778,8 @@
     "registration_date": "2023-07-20",
     "expiration_date": "2024-07-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "10511642"
   },
   {
     "name": "Paolo",
@@ -749,7 +795,8 @@
     "registration_date": "2023-06-25",
     "expiration_date": "2024-06-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "19724637"
   },
   {
     "name": "Alice",
@@ -765,7 +812,8 @@
     "registration_date": "2023-05-30",
     "expiration_date": "2024-05-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "72514528"
   },
   {
     "name": "Luigi",
@@ -777,11 +825,12 @@
     "doc_type": "Passport",
     "doc_id": "5201398476",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-04-10",
     "expiration_date": "2024-04-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Elena",
@@ -793,11 +842,12 @@
     "doc_type": "ID Card",
     "doc_id": "7392850146",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-03-05",
     "expiration_date": "2024-03-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Alessandro",
@@ -809,11 +859,12 @@
     "doc_type": "Passport",
     "doc_id": "7583941026",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-02-28",
     "expiration_date": "2024-02-28",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Valeria",
@@ -825,11 +876,12 @@
     "doc_type": "ID Card",
     "doc_id": "6254891730",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-01-15",
     "expiration_date": "2024-01-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Stefano",
@@ -845,7 +897,8 @@
     "registration_date": "2023-07-10",
     "expiration_date": "2024-07-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "93495576"
   },
   {
     "name": "Silvia",
@@ -861,7 +914,8 @@
     "registration_date": "2023-06-20",
     "expiration_date": "2024-06-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "28102577"
   },
   {
     "name": "Giacomo",
@@ -877,7 +931,8 @@
     "registration_date": "2023-09-05",
     "expiration_date": "2024-09-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "91937294"
   },
   {
     "name": "Francesca",
@@ -893,7 +948,8 @@
     "registration_date": "2023-08-15",
     "expiration_date": "2024-08-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "77945392"
   },
   {
     "name": "Daniele",
@@ -909,7 +965,8 @@
     "registration_date": "2023-11-10",
     "expiration_date": "2024-11-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "94656155"
   },
   {
     "name": "Laura",
@@ -925,7 +982,8 @@
     "registration_date": "2023-10-20",
     "expiration_date": "2024-10-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "77252268"
   },
   {
     "name": "Gabriele",
@@ -941,7 +999,8 @@
     "registration_date": "2023-12-25",
     "expiration_date": "2024-12-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "47062508"
   },
   {
     "name": "Elena",
@@ -957,7 +1016,8 @@
     "registration_date": "2023-05-30",
     "expiration_date": "2024-05-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "18062097"
   },
   {
     "name": "Roberta",
@@ -973,7 +1033,8 @@
     "registration_date": "2023-07-15",
     "expiration_date": "2024-07-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "03329221"
   },
   {
     "name": "Matteo",
@@ -989,7 +1050,8 @@
     "registration_date": "2023-11-05",
     "expiration_date": "2024-11-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "93558952"
   },
   {
     "name": "Anna",
@@ -1005,7 +1067,8 @@
     "registration_date": "2023-10-20",
     "expiration_date": "2024-10-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "36244985"
   },
   {
     "name": "Davide",
@@ -1021,7 +1084,8 @@
     "registration_date": "2023-12-10",
     "expiration_date": "2024-12-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "62008251"
   },
   {
     "name": "Giorgia",
@@ -1037,7 +1101,8 @@
     "registration_date": "2023-09-30",
     "expiration_date": "2024-09-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "21505963"
   },
   {
     "name": "Enrico",
@@ -1053,7 +1118,8 @@
     "registration_date": "2023-08-05",
     "expiration_date": "2024-08-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "53779603"
   },
   {
     "name": "Elisa",
@@ -1069,7 +1135,8 @@
     "registration_date": "2023-06-15",
     "expiration_date": "2024-06-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "54207768"
   },
   {
     "name": "Lorenzo",
@@ -1085,7 +1152,8 @@
     "registration_date": "2023-05-20",
     "expiration_date": "2024-05-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "44176750"
   },
   {
     "name": "Elena",
@@ -1097,11 +1165,12 @@
     "doc_type": "Passport",
     "doc_id": "6789012345",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-04-25",
     "expiration_date": "2024-04-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Marco",
@@ -1113,11 +1182,12 @@
     "doc_type": "ID Card",
     "doc_id": "3456789012",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-03-10",
     "expiration_date": "2024-03-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Alessia",
@@ -1133,7 +1203,8 @@
     "registration_date": "2023-09-10",
     "expiration_date": "2024-09-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "33928628"
   },
   {
     "name": "Luca",
@@ -1149,7 +1220,8 @@
     "registration_date": "2023-08-20",
     "expiration_date": "2024-08-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "43735877"
   },
   {
     "name": "Sara",
@@ -1165,7 +1237,8 @@
     "registration_date": "2023-07-25",
     "expiration_date": "2024-07-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "88532410"
   },
   {
     "name": "Giovanni",
@@ -1181,7 +1254,8 @@
     "registration_date": "2023-06-05",
     "expiration_date": "2024-06-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "01649696"
   },
   {
     "name": "Valentina",
@@ -1197,7 +1271,8 @@
     "registration_date": "2023-10-15",
     "expiration_date": "2024-10-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "17661819"
   },
   {
     "name": "Marco",
@@ -1213,7 +1288,8 @@
     "registration_date": "2023-11-20",
     "expiration_date": "2024-11-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "99776671"
   },
   {
     "name": "Chiara",
@@ -1229,7 +1305,8 @@
     "registration_date": "2023-12-05",
     "expiration_date": "2024-12-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "65717607"
   },
   {
     "name": "Francesca",
@@ -1241,11 +1318,12 @@
     "doc_type": "National ID",
     "doc_id": "3456789012",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-01-30",
     "expiration_date": "2024-01-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Giacomo",
@@ -1257,11 +1335,12 @@
     "doc_type": "Passport",
     "doc_id": "7890123456",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-04-10",
     "expiration_date": "2024-04-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Elisa",
@@ -1273,11 +1352,12 @@
     "doc_type": "ID Card",
     "doc_id": "0123456789",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-03-20",
     "expiration_date": "2024-03-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Giovanna",
@@ -1293,7 +1373,8 @@
     "registration_date": "2023-10-15",
     "expiration_date": "2024-10-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "35246182"
   },
   {
     "name": "Antonio",
@@ -1309,7 +1390,8 @@
     "registration_date": "2023-08-10",
     "expiration_date": "2024-08-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "94380104"
   },
   {
     "name": "Alessio",
@@ -1325,7 +1407,8 @@
     "registration_date": "2023-07-20",
     "expiration_date": "2024-07-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "72317827"
   },
   {
     "name": "Elena",
@@ -1341,7 +1424,8 @@
     "registration_date": "2023-06-05",
     "expiration_date": "2024-06-05",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "46237328"
   },
   {
     "name": "Simone",
@@ -1357,7 +1441,8 @@
     "registration_date": "2023-11-25",
     "expiration_date": "2024-11-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "15193830"
   },
   {
     "name": "Laura",
@@ -1373,7 +1458,8 @@
     "registration_date": "2023-12-20",
     "expiration_date": "2024-12-20",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "18456381"
   },
   {
     "name": "Federico",
@@ -1389,7 +1475,8 @@
     "registration_date": "2023-09-15",
     "expiration_date": "2024-09-15",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "01767826"
   },
   {
     "name": "Sofia",
@@ -1405,7 +1492,8 @@
     "registration_date": "2023-05-10",
     "expiration_date": "2024-05-10",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": "87352656"
   },
   {
     "name": "Stefano",
@@ -1417,11 +1505,12 @@
     "doc_type": "Passport",
     "doc_id": "4567890123",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-04-30",
     "expiration_date": "2024-04-30",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   },
   {
     "name": "Valeria",
@@ -1433,10 +1522,11 @@
     "doc_type": "ID Card",
     "doc_id": "3456789012",
     "country": "Italy",
-    "is_active": true,
+    "is_active": false,
     "registration_date": "2023-03-25",
     "expiration_date": "2024-03-25",
     "suspended_till": "",
-    "is_deleted": false
+    "is_deleted": false,
+    "card_number": ""
   }
 ]

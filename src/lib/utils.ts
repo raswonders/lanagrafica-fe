@@ -88,3 +88,12 @@ export function hasExpired(date: Date) {
 export function isSuspended(date: Date) {
   return date ? new Date() < date : false;
 }
+
+export function extendDate(date: Date) {
+  date.setFullYear(date.getFullYear() + 1);
+  return date.toISOString();
+}
+
+export function genCardNumber() {
+  return String(Math.floor(Math.random() * 100_000_000)).padStart(8, "0");
+}

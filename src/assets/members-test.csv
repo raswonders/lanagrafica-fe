@@ -1,91 +1,91 @@
-"name","surname","province","birth_date","birth_place","email","doc_type","doc_id","country","is_active","registration_date","expiration_date","suspended_till","is_deleted"
-"Giulia","Rossi","MI","1985-09-15","Milano","giulia.rossi@example.com","Passport","123456789","Italy",true,"2023-05-20","2024-05-20","",false
-"Luca","Bianchi","TO","1990-04-20","Torino","luca.bianchi@example.com","Driver's license","ABCDE12345","Italy",false,"2022-12-10","2023-12-10","",false
-"Alessia","Romano","NA","1982-06-25","Napoli","alessia.romano@example.com","Identity card","543210987","Italy",true,"2023-08-15","2024-08-15","",false
-"Marco","Martini","RM","1978-12-10","Roma","marco.martini@example.com","Passport","9876543210","Italy",false,"2023-02-28","2024-02-28","",false
-"Chiara","Moretti","FI","1995-07-08","Firenze","chiara.moretti@example.com","Driver's license","FGHIJ67890","Italy",false,"2022-11-05","2023-11-05","",true
-"Paolo","Ricci","BO","1989-03-12","Bologna","paolo.ricci@example.com","Identity card","135792468","Italy",false,"2023-04-18","2024-04-18","",false
-"Sara","Gallo","NA","1992-11-30","Napoli","sara.gallo@example.com","Passport","246813579","Italy",true,"2023-10-22","2024-10-22","",false
-"Riccardo","Ferrari","MI","1980-05-03","Milano","riccardo.ferrari@example.com","Driver's license","KLMNO54321","Italy",false,"2023-07-12","2024-07-12","2024-05-12",false
-"Elisa","Amato","CT","1987-08-22","Catania","elisa.amato@example.com","Identity card","ABCDE98765","Italy",false,"2023-01-30","2024-01-30","",false
-"Davide","Santoro","FI","1991-12-05","Firenze","davide.santoro@example.com","Passport","9876543210","Italy",false,"2023-06-25","2024-06-25","2024-05-13",false
-"Anna","Gatti","VE","1993-03-25","Venezia","anna.gatti@example.com","Identity card","246802468","Italy",true,"2023-09-10","2024-09-10","",false
-"Michele","Conti","RM","1987-07-12","Roma","michele.conti@example.com","Passport","5432109876","Italy",false,"2023-03-28","2024-03-28","2024-08-12",false
-"Federico","Marini","TO","1982-11-18","Torino","federico.marini@example.com","Driver's license","PQRSTUVWXY","Italy",false,"2023-02-15","2024-02-15","",false
-"Valentina","Rossini","NA","1996-05-10","Napoli","valentina.rossini@example.com","Identity card","ABCDE54321","Italy",true,"2023-11-20","2024-11-20","",false
-"Simone","Lombardi","MI","1989-09-03","Milano","simone.lombardi@example.com","Passport","0987654321","Italy",true,"2023-07-05","2024-07-05","",false
-"Giacomo","Riva","BO","1984-12-08","Bologna","giacomo.riva@example.com","Driver's license","ZYXWVUTSRP","Italy",true,"2023-08-30","2024-08-30","",false
-"Elena","Ferraro","NA","1990-01-20","Napoli","elena.ferraro@example.com","Identity card","098765432","Italy",true,"2023-06-18","2024-06-18","",false
-"Fabio","Barbieri","FI","1986-04-15","Firenze","fabio.barbieri@example.com","Passport","1357902468","Italy",true,"2023-10-12","2024-10-12","",false
-"Silvia","Guerini","MI","1992-08-28","Milano","silvia.guerini@example.com","Driver's license","1234567890","Italy",false,"2023-04-02","2024-04-02","2024-06-02",true
-"Roberto","Serra","TO","1988-10-05","Torino","roberto.serra@example.com","Identity card","789456123","Italy",false,"2023-01-25","2024-01-25","",false
-"Lorenzo","De Luca","RM","1997-08-12","Roma","lorenzo.deluca@example.com","Passport","ABCDE98765","Italy",true,"2023-09-28","2024-09-28","",false
-"Giorgia","Santini","MI","1994-06-05","Milano","giorgia.santini@example.com","Driver's license","LMNOPQRST","Italy",false,"2023-03-15","2024-03-15","",false
-"Matteo","Rizzo","NA","1989-10-20","Napoli","matteo.rizzo@example.com","Identity card","0987654321","Italy",true,"2023-11-10","2024-11-10","",false
-"Alessandra","Lombardo","FI","1986-02-18","Firenze","alessandra.lombardo@example.com","Passport","5432109876","Italy",true,"2023-06-25","2024-06-25","",false
-"Stefano","Marconi","RM","1983-11-30","Roma","stefano.marconi@example.com","Driver's license","ZYXWVUTSRP","Italy",true,"2023-08-12","2024-08-12","",false
-"Alice","Fontana","TO","1991-05-15","Torino","alice.fontana@example.com","Identity card","ABCDE12345","Italy",false,"2023-04-20","2024-04-20","",false
-"Daniele","Ferrara","NA","1988-09-28","Napoli","daniele.ferrara@example.com","Passport","987654321","Italy",true,"2023-12-05","2024-12-05","",false
-"Sara","Moretti","FI","1995-07-10","Firenze","sara.moretti@example.com","Driver's license","FGHIJ67890","Italy",false,"2023-02-22","2024-02-22","",false
-"Marco","Galli","RM","1990-04-03","Roma","marco.galli@example.com","Identity card","135792468","Italy",true,"2023-07-18","2024-07-18","",false
-"Laura","Pellegrini","MI","1992-12-30","Milano","laura.pellegrini@example.com","Passport","0987654321","Italy",true,"2023-05-10","2024-05-10","",false
-"Elena","Rossi","RM","1990-08-15","Roma","elena.rossi@example.com","Driver's License","1234567890","Italy",false,"2023-03-20","2024-03-20","",false
-"Marco","Ferrari","TO","1985-06-25","Torino","marco.ferrari@example.com","ID Card","1357924680","Italy",true,"2024-04-05","2025-04-05","",false
-"Giulia","Ricci","FI","1998-02-10","Firenze","giulia.ricci@example.com","National ID","2468135790","Italy",false,"2024-02-15","2025-02-15","2024-07-15",false
-"Luca","Conti","NA","1987-11-05","Napoli","luca.conti@example.com","Passport","9876543210","Italy",true,"2023-11-10","2024-11-10","",false
-"Alessia","Marini","BO","1995-04-20","Bologna","alessia.marini@example.com","ID Card","9753186420","Italy",true,"2023-06-30","2024-06-30","",false
-"Davide","Moretti","MI","1983-09-12","Milano","davide.moretti@example.com","Driver's License","0246813579","Italy",false,"2023-08-25","2024-08-25","2024-08-25",false
-"Martina","Barbieri","MI","1991-07-18","Milano","martina.barbieri@example.com","National ID","1357902468","Italy",true,"2023-07-05","2024-07-05","",false
-"Simone","Galli","FI","1989-03-28","Firenze","simone.galli@example.com","Passport","5678901234","Italy",true,"2023-09-15","2024-09-15","",false
-"Chiara","Riva","TO","1986-05-07","Torino","chiara.riva@example.com","ID Card","2468013579","Italy",false,"2023-01-20","2024-01-20","",true
-"Francesco","Santoro","NA","1994-01-03","Napoli","francesco.santoro@example.com","National ID","6789012345","Italy",true,"2023-11-10","2024-11-10","",false
-"Federico","Lombardi","RM","1988-04-12","Roma","federico.lombardi@example.com","Passport","1029384756","Italy",true,"2023-12-05","2024-12-05","",false
-"Sara","Gallo","MI","1996-09-20","Milano","sara.gallo@example.com","ID Card","9283746501","Italy",true,"2023-11-15","2024-11-15","",false
-"Giovanni","Caruso","NA","1993-02-28","Napoli","giovanni.caruso@example.com","Driver's License","4758693201","Italy",true,"2023-10-10","2024-10-10","",false
-"Valentina","Moretti","BO","1990-11-15","Bologna","valentina.moretti@example.com","National ID","8162739405","Italy",true,"2023-09-20","2024-09-20","",false
-"Roberto","Marchetti","TO","1984-07-05","Torino","roberto.marchetti@example.com","Passport","3948572610","Italy",true,"2023-08-15","2024-08-15","",false
-"Martina","Silvestri","FI","1986-03-10","Firenze","martina.silvestri@example.com","ID Card","7364950281","Italy",true,"2023-07-20","2024-07-20","",false
-"Paolo","Rizzo","MI","1991-10-25","Milano","paolo.rizzo@example.com","Driver's License","8492036751","Italy",true,"2023-06-25","2024-06-25","",false
-"Alice","Fabbri","FI","1997-05-03","Firenze","alice.fabbri@example.com","National ID","6239481057","Italy",true,"2023-05-30","2024-05-30","",false
-"Luigi","Ricci","BO","1989-08-08","Bologna","luigi.ricci@example.com","Passport","5201398476","Italy",true,"2023-04-10","2024-04-10","",false
-"Elena","Gatti","RM","1992-12-03","Roma","elena.gatti@example.com","ID Card","7392850146","Italy",true,"2023-03-05","2024-03-05","",false
-"Alessandro","Costa","MI","1993-05-18","Milano","alessandro.costa@example.com","Passport","7583941026","Italy",true,"2023-02-28","2024-02-28","",false
-"Valeria","Ferraro","TO","1996-11-30","Torino","valeria.ferraro@example.com","ID Card","6254891730","Italy",true,"2023-01-15","2024-01-15","",false
-"Stefano","Barone","NA","1987-08-25","Napoli","stefano.barone@example.com","Driver's License","9172530486","Italy",true,"2023-07-10","2024-07-10","",false
-"Silvia","De Luca","BO","1990-04-08","Bologna","silvia.deluca@example.com","National ID","4032981765","Italy",true,"2023-06-20","2024-06-20","",false
-"Giacomo","Riva","FI","1984-12-12","Firenze","giacomo.riva@example.com","Passport","3698521470","Italy",true,"2023-09-05","2024-09-05","",false
-"Francesca","Colombo","MI","1992-03-22","Milano","francesca.colombo@example.com","ID Card","7248501396","Italy",true,"2023-08-15","2024-08-15","",false
-"Daniele","Carbone","FI","1995-02-05","Firenze","daniele.carbone@example.com","Driver's License","2581470369","Italy",true,"2023-11-10","2024-11-10","",false
-"Laura","Russo","NA","1989-10-03","Napoli","laura.russo@example.com","National ID","2061738954","Italy",true,"2023-10-20","2024-10-20","",false
-"Gabriele","Gatti","BO","1994-06-15","Bologna","gabriele.gatti@example.com","Passport","8364952710","Italy",true,"2023-12-25","2024-12-25","",false
-"Elena","Lombardi","RM","1991-07-10","Roma","elena.lombardi@example.com","ID Card","2058476139","Italy",true,"2023-05-30","2024-05-30","",false
-"Roberta","Piras","CA","1993-09-22","Cagliari","roberta.piras@example.com","Passport","7890123456","Italy",true,"2023-07-15","2024-07-15","",false
-"Matteo","Marchetti","MI","1991-04-30","Milano","matteo.marchetti@example.com","ID Card","6543210987","Italy",true,"2023-11-05","2024-11-05","",false
-"Anna","Esposito","NA","1988-12-12","Napoli","anna.esposito@example.com","Driver's License","0987654321","Italy",true,"2023-10-20","2024-10-20","",false
-"Davide","Villa","TO","1986-06-18","Torino","davide.villa@example.com","National ID","2468013579","Italy",true,"2023-12-10","2024-12-10","",false
-"Giorgia","Mancini","BO","1994-02-28","Bologna","giorgia.mancini@example.com","Passport","1357924680","Italy",true,"2023-09-30","2024-09-30","",false
-"Enrico","Rizzo","FI","1987-11-08","Firenze","enrico.rizzo@example.com","ID Card","9753186420","Italy",true,"2023-08-05","2024-08-05","",false
-"Elisa","Santini","MI","1990-03-25","Milano","elisa.santini@example.com","Driver's License","0246813579","Italy",true,"2023-06-15","2024-06-15","",false
-"Lorenzo","Conte","FI","1995-10-10","Firenze","lorenzo.conte@example.com","National ID","5678901234","Italy",true,"2023-05-20","2024-05-20","",false
-"Elena","Colombo","NA","1989-07-05","Napoli","elena.colombo@example.com","Passport","6789012345","Italy",true,"2023-04-25","2024-04-25","",false
-"Marco","Monti","RM","1992-02-15","Roma","marco.monti@example.com","ID Card","3456789012","Italy",true,"2023-03-10","2024-03-10","",false
-"Alessia","Greco","MI","1990-08-10","Milano","alessia.greco@example.com","Passport","6574839201","Italy",true,"2023-09-10","2024-09-10","",false
-"Luca","Martini","TO","1988-06-28","Torino","luca.martini@example.com","ID Card","1234598760","Italy",true,"2023-08-20","2024-08-20","",false
-"Sara","Russo","NA","1992-12-15","Napoli","sara.russo@example.com","Driver's License","9081726354","Italy",true,"2023-07-25","2024-07-25","",false
-"Giovanni","Conti","BO","1993-02-20","Bologna","giovanni.conti@example.com","National ID","5041327698","Italy",true,"2023-06-05","2024-06-05","",false
-"Valentina","Gallo","FI","1989-11-18","Firenze","valentina.gallo@example.com","Passport","9876543210","Italy",true,"2023-10-15","2024-10-15","",false
-"Marco","De Angelis","MI","1991-05-30","Milano","marco.deangelis@example.com","ID Card","4567890123","Italy",true,"2023-11-20","2024-11-20","",false
-"Chiara","Riva","TO","1994-03-25","Torino","chiara.riva@example.com","Driver's License","2345678901","Italy",true,"2023-12-05","2024-12-05","",false
-"Francesca","Ricci","FI","1995-10-08","Firenze","francesca.ricci@example.com","National ID","3456789012","Italy",true,"2023-01-30","2024-01-30","",false
-"Giacomo","Serra","RM","1987-08-05","Roma","giacomo.serra@example.com","Passport","7890123456","Italy",true,"2023-04-10","2024-04-10","",false
-"Elisa","De Luca","NA","1990-01-15","Napoli","elisa.deluca@example.com","ID Card","0123456789","Italy",true,"2023-03-20","2024-03-20","",false
-"Giovanna","Moretti","MI","1994-07-20","Milano","giovanna.moretti@example.com","Passport","9081726354","Italy",true,"2023-10-15","2024-10-15","",false
-"Antonio","Marini","TO","1989-02-12","Torino","antonio.marini@example.com","ID Card","1357902468","Italy",true,"2023-08-10","2024-08-10","",false
-"Alessio","Greco","NA","1993-04-28","Napoli","alessio.greco@example.com","Driver's License","5432109876","Italy",true,"2023-07-20","2024-07-20","",false
-"Elena","Monti","BO","1987-11-15","Bologna","elena.monti@example.com","National ID","9876543210","Italy",true,"2023-06-05","2024-06-05","",false
-"Simone","Villa","FI","1991-09-30","Firenze","simone.villa@example.com","Passport","6789012345","Italy",true,"2023-11-25","2024-11-25","",false
-"Laura","Ferrari","MI","1995-02-18","Milano","laura.ferrari@example.com","ID Card","0123456789","Italy",true,"2023-12-20","2024-12-20","",false
-"Federico","Russo","TO","1990-06-25","Torino","federico.russo@example.com","Driver's License","8765432109","Italy",true,"2023-09-15","2024-09-15","",false
-"Sofia","Caruso","NA","1992-03-12","Napoli","sofia.caruso@example.com","National ID","2468013579","Italy",true,"2023-05-10","2024-05-10","",false
-"Stefano","Leone","FI","1988-10-08","Firenze","stefano.leone@example.com","Passport","4567890123","Italy",true,"2023-04-30","2024-04-30","",false
-"Valeria","Gatti","RM","1993-01-05","Roma","valeria.gatti@example.com","ID Card","3456789012","Italy",true,"2023-03-25","2024-03-25","",false
+"name","surname","province","birth_date","birth_place","email","doc_type","doc_id","country","is_active","registration_date","expiration_date","suspended_till","is_deleted","card_number"
+"Giulia","Rossi","MI","1985-09-15","Milano","giulia.rossi@example.com","Passport","123456789","Italy",true,"2023-05-20","2024-05-20","",false,"92891645"
+"Luca","Bianchi","TO","1990-04-20","Torino","luca.bianchi@example.com","Driver's license","ABCDE12345","Italy",false,"2022-12-10","2023-12-10","",false,""
+"Alessia","Romano","NA","1982-06-25","Napoli","alessia.romano@example.com","Identity card","543210987","Italy",true,"2023-08-15","2024-08-15","",false,"20799046"
+"Marco","Martini","RM","1978-12-10","Roma","marco.martini@example.com","Passport","9876543210","Italy",false,"2023-02-28","2024-02-28","",false,""
+"Chiara","Moretti","FI","1995-07-08","Firenze","chiara.moretti@example.com","Driver's license","FGHIJ67890","Italy",false,"2022-11-05","2023-11-05","",true,""
+"Paolo","Ricci","BO","1989-03-12","Bologna","paolo.ricci@example.com","Identity card","135792468","Italy",false,"2023-04-18","2024-04-18","",false,""
+"Sara","Gallo","NA","1992-11-30","Napoli","sara.gallo@example.com","Passport","246813579","Italy",true,"2023-10-22","2024-10-22","",false,"37625559"
+"Riccardo","Ferrari","MI","1980-05-03","Milano","riccardo.ferrari@example.com","Driver's license","KLMNO54321","Italy",false,"2023-07-12","2024-07-12","2024-05-12",false,""
+"Elisa","Amato","CT","1987-08-22","Catania","elisa.amato@example.com","Identity card","ABCDE98765","Italy",false,"2023-01-30","2024-01-30","",false,""
+"Davide","Santoro","FI","1991-12-05","Firenze","davide.santoro@example.com","Passport","9876543210","Italy",false,"2023-06-25","2024-06-25","2024-05-13",false,""
+"Anna","Gatti","VE","1993-03-25","Venezia","anna.gatti@example.com","Identity card","246802468","Italy",true,"2023-09-10","2024-09-10","",false,"46810545"
+"Michele","Conti","RM","1987-07-12","Roma","michele.conti@example.com","Passport","5432109876","Italy",false,"2023-03-28","2024-03-28","2024-08-12",false,""
+"Federico","Marini","TO","1982-11-18","Torino","federico.marini@example.com","Driver's license","PQRSTUVWXY","Italy",false,"2023-02-15","2024-02-15","",false,""
+"Valentina","Rossini","NA","1996-05-10","Napoli","valentina.rossini@example.com","Identity card","ABCDE54321","Italy",true,"2023-11-20","2024-11-20","",false,"26086799"
+"Simone","Lombardi","MI","1989-09-03","Milano","simone.lombardi@example.com","Passport","0987654321","Italy",true,"2023-07-05","2024-07-05","",false,"28013222"
+"Giacomo","Riva","BO","1984-12-08","Bologna","giacomo.riva@example.com","Driver's license","ZYXWVUTSRP","Italy",true,"2023-08-30","2024-08-30","",false,"86346123"
+"Elena","Ferraro","NA","1990-01-20","Napoli","elena.ferraro@example.com","Identity card","098765432","Italy",true,"2023-06-18","2024-06-18","",false,"31789967"
+"Fabio","Barbieri","FI","1986-04-15","Firenze","fabio.barbieri@example.com","Passport","1357902468","Italy",true,"2023-10-12","2024-10-12","",false,"81029549"
+"Silvia","Guerini","MI","1992-08-28","Milano","silvia.guerini@example.com","Driver's license","1234567890","Italy",false,"2023-04-02","2024-04-02","2024-06-02",true,""
+"Roberto","Serra","TO","1988-10-05","Torino","roberto.serra@example.com","Identity card","789456123","Italy",false,"2023-01-25","2024-01-25","",false,""
+"Lorenzo","De Luca","RM","1997-08-12","Roma","lorenzo.deluca@example.com","Passport","ABCDE98765","Italy",true,"2023-09-28","2024-09-28","",false,"86505296"
+"Giorgia","Santini","MI","1994-06-05","Milano","giorgia.santini@example.com","Driver's license","LMNOPQRST","Italy",false,"2023-03-15","2024-03-15","",false,""
+"Matteo","Rizzo","NA","1989-10-20","Napoli","matteo.rizzo@example.com","Identity card","0987654321","Italy",true,"2023-11-10","2024-11-10","",false,"10928345"
+"Alessandra","Lombardo","FI","1986-02-18","Firenze","alessandra.lombardo@example.com","Passport","5432109876","Italy",true,"2023-06-25","2024-06-25","",false,"46138115"
+"Stefano","Marconi","RM","1983-11-30","Roma","stefano.marconi@example.com","Driver's license","ZYXWVUTSRP","Italy",true,"2023-08-12","2024-08-12","",false,"77245517"
+"Alice","Fontana","TO","1991-05-15","Torino","alice.fontana@example.com","Identity card","ABCDE12345","Italy",false,"2023-04-20","2024-04-20","",false,""
+"Daniele","Ferrara","NA","1988-09-28","Napoli","daniele.ferrara@example.com","Passport","987654321","Italy",true,"2023-12-05","2024-12-05","",false,"62884546"
+"Sara","Moretti","FI","1995-07-10","Firenze","sara.moretti@example.com","Driver's license","FGHIJ67890","Italy",false,"2023-02-22","2024-02-22","",false,""
+"Marco","Galli","RM","1990-04-03","Roma","marco.galli@example.com","Identity card","135792468","Italy",true,"2023-07-18","2024-07-18","",false,"72476182"
+"Laura","Pellegrini","MI","1992-12-30","Milano","laura.pellegrini@example.com","Passport","0987654321","Italy",true,"2023-05-10","2024-05-10","",false,"91265951"
+"Elena","Rossi","RM","1990-08-15","Roma","elena.rossi@example.com","Driver's License","1234567890","Italy",false,"2023-03-20","2024-03-20","",false,""
+"Marco","Ferrari","TO","1985-06-25","Torino","marco.ferrari@example.com","ID Card","1357924680","Italy",true,"2024-04-05","2025-04-05","",false,"45340205"
+"Giulia","Ricci","FI","1998-02-10","Firenze","giulia.ricci@example.com","National ID","2468135790","Italy",false,"2024-02-15","2025-02-15","2024-07-15",false,""
+"Luca","Conti","NA","1987-11-05","Napoli","luca.conti@example.com","Passport","9876543210","Italy",true,"2023-11-10","2024-11-10","",false,"21895583"
+"Alessia","Marini","BO","1995-04-20","Bologna","alessia.marini@example.com","ID Card","9753186420","Italy",true,"2023-06-30","2024-06-30","",false,"26453746"
+"Davide","Moretti","MI","1983-09-12","Milano","davide.moretti@example.com","Driver's License","0246813579","Italy",false,"2023-08-25","2024-08-25","2024-08-25",false,""
+"Martina","Barbieri","MI","1991-07-18","Milano","martina.barbieri@example.com","National ID","1357902468","Italy",true,"2023-07-05","2024-07-05","",false,"79974874"
+"Simone","Galli","FI","1989-03-28","Firenze","simone.galli@example.com","Passport","5678901234","Italy",true,"2023-09-15","2024-09-15","",false,"79644707"
+"Chiara","Riva","TO","1986-05-07","Torino","chiara.riva@example.com","ID Card","2468013579","Italy",false,"2023-01-20","2024-01-20","",true,""
+"Francesco","Santoro","NA","1994-01-03","Napoli","francesco.santoro@example.com","National ID","6789012345","Italy",true,"2023-11-10","2024-11-10","",false,"94076454"
+"Federico","Lombardi","RM","1988-04-12","Roma","federico.lombardi@example.com","Passport","1029384756","Italy",true,"2023-12-05","2024-12-05","",false,"59110029"
+"Sara","Gallo","MI","1996-09-20","Milano","sara.gallo@example.com","ID Card","9283746501","Italy",true,"2023-11-15","2024-11-15","",false,"39134729"
+"Giovanni","Caruso","NA","1993-02-28","Napoli","giovanni.caruso@example.com","Driver's License","4758693201","Italy",true,"2023-10-10","2024-10-10","",false,"55452245"
+"Valentina","Moretti","BO","1990-11-15","Bologna","valentina.moretti@example.com","National ID","8162739405","Italy",true,"2023-09-20","2024-09-20","",false,"19750509"
+"Roberto","Marchetti","TO","1984-07-05","Torino","roberto.marchetti@example.com","Passport","3948572610","Italy",true,"2023-08-15","2024-08-15","",false,"33574186"
+"Martina","Silvestri","FI","1986-03-10","Firenze","martina.silvestri@example.com","ID Card","7364950281","Italy",true,"2023-07-20","2024-07-20","",false,"10511642"
+"Paolo","Rizzo","MI","1991-10-25","Milano","paolo.rizzo@example.com","Driver's License","8492036751","Italy",true,"2023-06-25","2024-06-25","",false,"19724637"
+"Alice","Fabbri","FI","1997-05-03","Firenze","alice.fabbri@example.com","National ID","6239481057","Italy",true,"2023-05-30","2024-05-30","",false,"72514528"
+"Luigi","Ricci","BO","1989-08-08","Bologna","luigi.ricci@example.com","Passport","5201398476","Italy",false,"2023-04-10","2024-04-10","",false,""
+"Elena","Gatti","RM","1992-12-03","Roma","elena.gatti@example.com","ID Card","7392850146","Italy",false,"2023-03-05","2024-03-05","",false,""
+"Alessandro","Costa","MI","1993-05-18","Milano","alessandro.costa@example.com","Passport","7583941026","Italy",false,"2023-02-28","2024-02-28","",false,""
+"Valeria","Ferraro","TO","1996-11-30","Torino","valeria.ferraro@example.com","ID Card","6254891730","Italy",false,"2023-01-15","2024-01-15","",false,""
+"Stefano","Barone","NA","1987-08-25","Napoli","stefano.barone@example.com","Driver's License","9172530486","Italy",true,"2023-07-10","2024-07-10","",false,"93495576"
+"Silvia","De Luca","BO","1990-04-08","Bologna","silvia.deluca@example.com","National ID","4032981765","Italy",true,"2023-06-20","2024-06-20","",false,"28102577"
+"Giacomo","Riva","FI","1984-12-12","Firenze","giacomo.riva@example.com","Passport","3698521470","Italy",true,"2023-09-05","2024-09-05","",false,"91937294"
+"Francesca","Colombo","MI","1992-03-22","Milano","francesca.colombo@example.com","ID Card","7248501396","Italy",true,"2023-08-15","2024-08-15","",false,"77945392"
+"Daniele","Carbone","FI","1995-02-05","Firenze","daniele.carbone@example.com","Driver's License","2581470369","Italy",true,"2023-11-10","2024-11-10","",false,"94656155"
+"Laura","Russo","NA","1989-10-03","Napoli","laura.russo@example.com","National ID","2061738954","Italy",true,"2023-10-20","2024-10-20","",false,"77252268"
+"Gabriele","Gatti","BO","1994-06-15","Bologna","gabriele.gatti@example.com","Passport","8364952710","Italy",true,"2023-12-25","2024-12-25","",false,"47062508"
+"Elena","Lombardi","RM","1991-07-10","Roma","elena.lombardi@example.com","ID Card","2058476139","Italy",true,"2023-05-30","2024-05-30","",false,"18062097"
+"Roberta","Piras","CA","1993-09-22","Cagliari","roberta.piras@example.com","Passport","7890123456","Italy",true,"2023-07-15","2024-07-15","",false,"03329221"
+"Matteo","Marchetti","MI","1991-04-30","Milano","matteo.marchetti@example.com","ID Card","6543210987","Italy",true,"2023-11-05","2024-11-05","",false,"93558952"
+"Anna","Esposito","NA","1988-12-12","Napoli","anna.esposito@example.com","Driver's License","0987654321","Italy",true,"2023-10-20","2024-10-20","",false,"36244985"
+"Davide","Villa","TO","1986-06-18","Torino","davide.villa@example.com","National ID","2468013579","Italy",true,"2023-12-10","2024-12-10","",false,"62008251"
+"Giorgia","Mancini","BO","1994-02-28","Bologna","giorgia.mancini@example.com","Passport","1357924680","Italy",true,"2023-09-30","2024-09-30","",false,"21505963"
+"Enrico","Rizzo","FI","1987-11-08","Firenze","enrico.rizzo@example.com","ID Card","9753186420","Italy",true,"2023-08-05","2024-08-05","",false,"53779603"
+"Elisa","Santini","MI","1990-03-25","Milano","elisa.santini@example.com","Driver's License","0246813579","Italy",true,"2023-06-15","2024-06-15","",false,"54207768"
+"Lorenzo","Conte","FI","1995-10-10","Firenze","lorenzo.conte@example.com","National ID","5678901234","Italy",true,"2023-05-20","2024-05-20","",false,"44176750"
+"Elena","Colombo","NA","1989-07-05","Napoli","elena.colombo@example.com","Passport","6789012345","Italy",false,"2023-04-25","2024-04-25","",false,""
+"Marco","Monti","RM","1992-02-15","Roma","marco.monti@example.com","ID Card","3456789012","Italy",false,"2023-03-10","2024-03-10","",false,""
+"Alessia","Greco","MI","1990-08-10","Milano","alessia.greco@example.com","Passport","6574839201","Italy",true,"2023-09-10","2024-09-10","",false,"33928628"
+"Luca","Martini","TO","1988-06-28","Torino","luca.martini@example.com","ID Card","1234598760","Italy",true,"2023-08-20","2024-08-20","",false,"43735877"
+"Sara","Russo","NA","1992-12-15","Napoli","sara.russo@example.com","Driver's License","9081726354","Italy",true,"2023-07-25","2024-07-25","",false,"88532410"
+"Giovanni","Conti","BO","1993-02-20","Bologna","giovanni.conti@example.com","National ID","5041327698","Italy",true,"2023-06-05","2024-06-05","",false,"01649696"
+"Valentina","Gallo","FI","1989-11-18","Firenze","valentina.gallo@example.com","Passport","9876543210","Italy",true,"2023-10-15","2024-10-15","",false,"17661819"
+"Marco","De Angelis","MI","1991-05-30","Milano","marco.deangelis@example.com","ID Card","4567890123","Italy",true,"2023-11-20","2024-11-20","",false,"99776671"
+"Chiara","Riva","TO","1994-03-25","Torino","chiara.riva@example.com","Driver's License","2345678901","Italy",true,"2023-12-05","2024-12-05","",false,"65717607"
+"Francesca","Ricci","FI","1995-10-08","Firenze","francesca.ricci@example.com","National ID","3456789012","Italy",false,"2023-01-30","2024-01-30","",false,""
+"Giacomo","Serra","RM","1987-08-05","Roma","giacomo.serra@example.com","Passport","7890123456","Italy",false,"2023-04-10","2024-04-10","",false,""
+"Elisa","De Luca","NA","1990-01-15","Napoli","elisa.deluca@example.com","ID Card","0123456789","Italy",false,"2023-03-20","2024-03-20","",false,""
+"Giovanna","Moretti","MI","1994-07-20","Milano","giovanna.moretti@example.com","Passport","9081726354","Italy",true,"2023-10-15","2024-10-15","",false,"35246182"
+"Antonio","Marini","TO","1989-02-12","Torino","antonio.marini@example.com","ID Card","1357902468","Italy",true,"2023-08-10","2024-08-10","",false,"94380104"
+"Alessio","Greco","NA","1993-04-28","Napoli","alessio.greco@example.com","Driver's License","5432109876","Italy",true,"2023-07-20","2024-07-20","",false,"72317827"
+"Elena","Monti","BO","1987-11-15","Bologna","elena.monti@example.com","National ID","9876543210","Italy",true,"2023-06-05","2024-06-05","",false,"46237328"
+"Simone","Villa","FI","1991-09-30","Firenze","simone.villa@example.com","Passport","6789012345","Italy",true,"2023-11-25","2024-11-25","",false,"15193830"
+"Laura","Ferrari","MI","1995-02-18","Milano","laura.ferrari@example.com","ID Card","0123456789","Italy",true,"2023-12-20","2024-12-20","",false,"18456381"
+"Federico","Russo","TO","1990-06-25","Torino","federico.russo@example.com","Driver's License","8765432109","Italy",true,"2023-09-15","2024-09-15","",false,"01767826"
+"Sofia","Caruso","NA","1992-03-12","Napoli","sofia.caruso@example.com","National ID","2468013579","Italy",true,"2023-05-10","2024-05-10","",false,"87352656"
+"Stefano","Leone","FI","1988-10-08","Firenze","stefano.leone@example.com","Passport","4567890123","Italy",false,"2023-04-30","2024-04-30","",false,""
+"Valeria","Gatti","RM","1993-01-05","Roma","valeria.gatti@example.com","ID Card","3456789012","Italy",false,"2023-03-25","2024-03-25","",false,""
