@@ -29,7 +29,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export type Member = {
-  id: string;
+  id: number;
   name: string;
   surname: string;
   province: string;
@@ -76,7 +76,7 @@ const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
 export type RenewMutation = {
-  mutate: (args: { id: string; expirationDate: string; name: string }) => void;
+  mutate: (args: { id: number; expirationDate: string; name: string }) => void;
 };
 interface Row {
   original: Member;

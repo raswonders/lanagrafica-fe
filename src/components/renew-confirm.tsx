@@ -16,7 +16,7 @@ import { RenewMutation } from "./members-table";
 type RenewConfirmProps = {
   children: ReactNode;
   isOpenForbidden: boolean;
-  id: string;
+  id: number;
   expirationDate: string;
   name: string;
   renewMutation: RenewMutation;
