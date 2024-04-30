@@ -47,9 +47,11 @@ export function RenewConfirm({
           <AlertDialogCancel>{t("renewConfirm.cancel")}</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
+              console.log("name", name);
               renewMutation.mutate({
                 id: id,
                 expirationDate: expirationDate,
+                name: name,
               });
             }}
           >

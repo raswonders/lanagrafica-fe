@@ -63,6 +63,7 @@ import {
 import { Skeleton } from "./ui/skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RenewConfirm } from "./renew-confirm";
+import { toast } from "sonner";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -91,20 +92,29 @@ export function DataTable({ search }: { search: string | null }) {
   const queryClient = useQueryClient();
 
   const renewMutation = useMutation({
-    mutationFn: (variables: { id: number; expirationDate: string }) =>
-      renewMemberCard(variables.id, variables.expirationDate),
+    mutationFn: (variables: {
+      id: number;
+      expirationDate: string;
+      name: string;
+    }) => renewMemberCard(variables.id, variables.expirationDate),
     onMutate: (variables) => {
       setIsRenewing((prev) => ({
         ...prev,
         [variables.id]: true,
       }));
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["members"] });
+      toast.success(t("membersTable.renewSuccess", { name: variables.name }));
     },
-    onError: (error) => {
+    onError: (error, variables) => {
       console.error(error);
-      // TODO inform user renewal failed
+      toast.error(
+        t("membersTable.renewError", {
+          name: variables.name,
+          errorMsg: error.message,
+        }),
+      );
     },
     onSettled: (_, __, variables) => {
       setIsRenewing((prev) => ({
