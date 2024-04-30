@@ -605,7 +605,7 @@ export function DataTable({ search }: { search: string | null }) {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("membersTable.noResults")}
                     </TableCell>
                   </TableRow>
                 )}
