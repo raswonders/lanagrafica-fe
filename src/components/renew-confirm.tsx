@@ -31,7 +31,7 @@ export function RenewConfirm({
         setOpen(nextOpen);
       }}
     >
-      <AlertDialogTrigger>{children}</AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
