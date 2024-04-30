@@ -35,7 +35,7 @@ function App() {
         }}
       />
       <RouterProvider router={router} />
-      <Toaster />
+      <Toaster position="bottom-center" />
     </>
   );
 }
