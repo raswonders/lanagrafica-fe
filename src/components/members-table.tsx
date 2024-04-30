@@ -224,14 +224,8 @@ export function DataTable({ search }: { search: string | null }) {
                 expirationDate={row.original.expirationDate}
                 renewMutation={renewMutation}
               >
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  disabled={isRenewForbidden}
-                >
-                  <RefreshCcw
-                    className={`w-5 ${isRenewing[row.original.id] ? "spin" : ""}`}
-                  />
+                <Button size="icon" variant="ghost" disabled={isRenewForbidden}>
+                  <RefreshCcw className={`w-5`} />
                 </Button>
               </RenewConfirm>
             </div>
