@@ -9,7 +9,7 @@ function isSuspended(date) {
 }
 
 function genCardNumber() {
-  return String(Math.floor(Math.random() * 100_000_000)).padStart(0, 8);
+  return String(Math.floor(Math.random() * 100_000_000)).padStart(8, "0");
 }
 
 fs.readFile(

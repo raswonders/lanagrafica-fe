@@ -23,6 +23,7 @@ import {
   extendDate,
   extendWithStatus,
   fromSnakeToCamelCase,
+  genCardNumber,
   getCustomDate,
   hasExpired,
 } from "@/lib/utils";
@@ -86,7 +87,7 @@ async function renewMemberCard(
   id: number,
   expirationDate: string,
 ): Promise<Member | null> {
-  const cardNumber = String(Math.floor(Math.random() * 10000));
+  const cardNumber = genCardNumber();
   const nextExpiration = extendDate(new Date(expirationDate));
 
   const { data, error } = await supabase
