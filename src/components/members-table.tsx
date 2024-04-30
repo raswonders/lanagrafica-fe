@@ -62,6 +62,7 @@ import {
 } from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { RenewConfirm } from "./renew-confirm";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -89,7 +90,7 @@ export function DataTable({ search }: { search: string | null }) {
   const [isRenewing, setIsRenewing] = useState({});
   const queryClient = useQueryClient();
 
-  const renewCardMutation = useMutation({
+  const renewMutation = useMutation({
     mutationFn: (variables: { id: number; expirationDate: string }) =>
       renewMemberCard(variables.id, variables.expirationDate),
     onMutate: (variables) => {
@@ -101,7 +102,8 @@ export function DataTable({ search }: { search: string | null }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["members"] });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error(error);
       // TODO inform user renewal failed
     },
     onSettled: (_, __, variables) => {
@@ -203,33 +205,38 @@ export function DataTable({ search }: { search: string | null }) {
         meta: t("membersTable.actions"),
         id: "actions",
         header: () => <span className="ml-3">{t("membersTable.actions")}</span>,
-        cell: ({ row }) => (
-          <div className="flex">
-            <Button size="icon" variant="ghost">
-              <SquarePen className="w-5" />
-            </Button>
-            <Button
-              size="icon"
-              disabled={
-                isRenewing[row.original.id] ||
-                row.original.isActive ||
-                row.original.isDeleted ||
-                row.original.suspendedTill
-              }
-              variant="ghost"
-              onClick={() => {
-                renewCardMutation.mutate({
-                  id: row.original.id,
-                  expirationDate: row.original.expirationDate,
-                });
-              }}
-            >
-              <RefreshCcw
-                className={`w-5 ${isRenewing[row.original.id] ? "spin" : ""}`}
-              />
-            </Button>
-          </div>
-        ),
+        cell: ({ row }) => {
+          const isRenewForbidden =
+            isRenewing[row.original.id] ||
+            row.original.status === "active" ||
+            row.original.status === "suspended" ||
+            row.original.status === "deleted";
+
+          return (
+            <div className="flex">
+              <Button size="icon" variant="ghost">
+                <SquarePen className="w-5" />
+              </Button>
+              <RenewConfirm
+                isOpenForbidden={isRenewForbidden}
+                id={row.original.id}
+                name={`${row.original.name} ${row.original.surname}`}
+                expirationDate={row.original.expirationDate}
+                renewMutation={renewMutation}
+              >
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  disabled={isRenewForbidden}
+                >
+                  <RefreshCcw
+                    className={`w-5 ${isRenewing[row.original.id] ? "spin" : ""}`}
+                  />
+                </Button>
+              </RenewConfirm>
+            </div>
+          );
+        },
       },
     ],
     [t, isRenewing],

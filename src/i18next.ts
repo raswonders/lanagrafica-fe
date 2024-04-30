@@ -97,6 +97,12 @@ i18n
           errors: {
             membersDidNotLoad: "Members list couldn't load",
           },
+          renewConfirm: {
+            title: "Are you sure you want to renew",
+            description: "will be assigned new card number.",
+            renew: "Renew",
+            cancel: "Cancel",
+          },
         },
       },
       it: {
