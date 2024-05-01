@@ -9,8 +9,10 @@ import countries from "../../assets/countries.json";
 import cities from "../../assets/cities.json";
 import documents from "../../assets/documents.json";
 import {
-  delay,
   fromCamelToSnakeCase,
+  genCardNumber,
+  getExpirationDate,
+  getRegistrationDate,
   isAdult,
   isValidISODate,
   isWithinRange,
@@ -82,6 +84,14 @@ export function NewMember() {
     },
   });
 
+  interface ExtendedRow extends z.infer<typeof formSchema> {
+    registrationDate: string;
+    expirationDate: string;
+    cardNumber: string;
+    isActive: boolean;
+    isDeleted: boolean;
+  }
+
   const country = form.watch("country");
   const isItaly = country === "Italy";
   const resetForm = () => {
@@ -96,7 +106,16 @@ export function NewMember() {
   function serializeForInsert(
     row: z.infer<typeof formSchema>,
   ): Partial<SerializedMember> {
-    return fromCamelToSnakeCase(row);
+    const extended: ExtendedRow = {
+      ...row,
+      registrationDate: getRegistrationDate(),
+      expirationDate: getExpirationDate(),
+      cardNumber: genCardNumber(),
+      isActive: true,
+      isDeleted: false,
+    };
+
+    return fromCamelToSnakeCase(extended);
   }
 
   async function insertMember(member: Partial<SerializedMember>) {
