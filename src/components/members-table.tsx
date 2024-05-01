@@ -82,6 +82,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
@@ -117,6 +126,20 @@ export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
   const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
   const queryClient = useQueryClient();
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const renewMutation = useMutation({
     mutationFn: (variables: {
@@ -253,21 +276,39 @@ export function DataTable({ search }: { search: string | null }) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <Sheet>
-                      <SheetTrigger asChild>
-                        <Button size="icon" variant="ghost">
-                          <SquarePen className="w-5" />
-                        </Button>
-                      </SheetTrigger>
-                      <SheetContent>
-                        <SheetHeader>
-                          <SheetTitle>
-                            {`${row.original.name} ${row.original.surname}`}
-                          </SheetTitle>
-                          <SheetDescription></SheetDescription>
-                        </SheetHeader>
-                      </SheetContent>
-                    </Sheet>
+                    {isMobile ? (
+                      <Drawer>
+                        <DrawerTrigger asChild>
+                          <Button size="icon" variant="ghost">
+                            <SquarePen className="w-5" />
+                          </Button>
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>
+                              {`${row.original.name} ${row.original.surname}`}
+                            </DrawerTitle>
+                            <DrawerDescription></DrawerDescription>
+                          </DrawerHeader>
+                        </DrawerContent>
+                      </Drawer>
+                    ) : (
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button size="icon" variant="ghost">
+                            <SquarePen className="w-5" />
+                          </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                          <SheetHeader>
+                            <SheetTitle>
+                              {`${row.original.name} ${row.original.surname}`}
+                            </SheetTitle>
+                            <SheetDescription></SheetDescription>
+                          </SheetHeader>
+                        </SheetContent>
+                      </Sheet>
+                    )}
                   </TooltipTrigger>
                   <TooltipContent>
                     {t("membersTable.editMember")}
@@ -304,7 +345,7 @@ export function DataTable({ search }: { search: string | null }) {
         },
       },
     ],
-    [t, isRenewing],
+    [t, isRenewing, isMobile],
   );
 
   const [columnVisibility, setColumnVisibility] = useState({
