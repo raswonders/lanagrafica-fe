@@ -70,6 +70,18 @@ export function fromSnakeToCamelCase(arr: object[]) {
   });
 }
 
+export function fromCamelToSnakeCase(obj: object) {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      const newKey = key
+        .split(/(?=[A-Z])/)
+        .map((word) => word.toLocaleLowerCase())
+        .join("_");
+      return [newKey, value];
+    }),
+  );
+}
+
 export function extendWithStatus(data: Member[]) {
   return data.map((row) => {
     let status = "inactive";
@@ -96,4 +108,14 @@ export function extendDate(date: Date) {
 
 export function genCardNumber() {
   return String(Math.floor(Math.random() * 100_000_000)).padStart(8, "0");
+}
+
+export function getRegistrationDate(): string {
+  return new Date().toISOString().split("T")[0];
+}
+
+export function getExpirationDate(): string {
+  const expiration = new Date();
+  expiration.setFullYear(expiration.getFullYear() + 1);
+  return expiration.toISOString().split("T")[0];
 }

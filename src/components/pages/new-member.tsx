@@ -8,13 +8,43 @@ import { z } from "zod";
 import countries from "../../assets/countries.json";
 import cities from "../../assets/cities.json";
 import documents from "../../assets/documents.json";
-import { delay, isAdult, isValidISODate, isWithinRange } from "@/lib/utils";
+import {
+  fromCamelToSnakeCase,
+  genCardNumber,
+  getExpirationDate,
+  getRegistrationDate,
+  isAdult,
+  isValidISODate,
+  isWithinRange,
+} from "@/lib/utils";
 import { useState } from "react";
 import { InputField } from "../input-field";
 import { Combobox } from "../combobox";
 import { SelectField } from "../select-field";
 import { DateField } from "../date-field";
 import { PageLayout } from "../layouts/page-layout";
+import { toast } from "sonner";
+import { supabase } from "../supabase";
+
+interface SerializedMember {
+  birth_date: string;
+  birth_place: string;
+  card_number: string;
+  country: string;
+  doc_id: string;
+  doc_type: string;
+  email: string;
+  expiration_date: string;
+  is_active: boolean;
+  is_deleted: boolean;
+  measure: string;
+  name: string;
+  note: string;
+  registration_date: string;
+  surname: string;
+  province: string;
+  suspended_till: string;
+}
 
 export function NewMember() {
   const { t, i18n } = useTranslation();
@@ -34,7 +64,7 @@ export function NewMember() {
       .refine(isWithinRange, { message: t("validation.notInRange") })
       .refine(isAdult, { message: t("validation.notAdult") }),
     birthPlace: z.string().min(1, { message: t("validation.required") }),
-    state: z.string().min(1, { message: t("validation.required") }),
+    country: z.string().min(1, { message: t("validation.required") }),
     docType: z.string().min(1, { message: t("validation.required") }),
     docId: z.string().min(1, { message: t("validation.required") }),
     email: z.string(),
@@ -47,14 +77,22 @@ export function NewMember() {
       surname: "",
       birthDate: "",
       birthPlace: "",
-      state: "Italy",
+      country: "Italy",
       docType: "",
       docId: "",
       email: "",
     },
   });
 
-  const country = form.watch("state");
+  interface ExtendedRow extends z.infer<typeof formSchema> {
+    registrationDate: string;
+    expirationDate: string;
+    cardNumber: string;
+    isActive: boolean;
+    isDeleted: boolean;
+  }
+
+  const country = form.watch("country");
   const isItaly = country === "Italy";
   const resetForm = () => {
     form.reset();
@@ -65,9 +103,43 @@ export function NewMember() {
     setYear("");
   };
 
+  function serializeForInsert(
+    row: z.infer<typeof formSchema>,
+  ): Partial<SerializedMember> {
+    const extended: ExtendedRow = {
+      ...row,
+      registrationDate: getRegistrationDate(),
+      expirationDate: getExpirationDate(),
+      cardNumber: genCardNumber(),
+      isActive: true,
+      isDeleted: false,
+    };
+
+    return fromCamelToSnakeCase(extended);
+  }
+
+  async function insertMember(member: Partial<SerializedMember>) {
+    const { error } = await supabase.from("member").insert(member);
+
+    if (error) {
+      console.error(t("newMember.insertError"), error);
+      toast.error(
+        t("newMember.insertError", {
+          name: `${member.name} ${member.surname}`,
+        }),
+      );
+    }
+
+    toast.success(
+      t("newMember.insertSuccess", {
+        name: `${member.name} ${member.surname}`,
+      }),
+    );
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    await delay(1500);
+    const newMember = serializeForInsert(values);
+    await insertMember(newMember);
     resetForm();
   }
 
@@ -107,7 +179,7 @@ export function NewMember() {
                 />
                 <Combobox
                   form={form}
-                  name="state"
+                  name="country"
                   label={t("newMember.countryFieldLabel")}
                   data={[
                     i18n.language === "it" ? "__Altro__" : "__Other__",
