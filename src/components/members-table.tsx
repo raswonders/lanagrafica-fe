@@ -253,9 +253,21 @@ export function DataTable({ search }: { search: string | null }) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <Button size="icon" variant="ghost">
-                      <SquarePen className="w-5" />
-                    </Button>
+                    <Sheet>
+                      <SheetTrigger asChild>
+                        <Button size="icon" variant="ghost">
+                          <SquarePen className="w-5" />
+                        </Button>
+                      </SheetTrigger>
+                      <SheetContent>
+                        <SheetHeader>
+                          <SheetTitle>
+                            {`${row.original.name} ${row.original.surname}`}
+                          </SheetTitle>
+                          <SheetDescription></SheetDescription>
+                        </SheetHeader>
+                      </SheetContent>
+                    </Sheet>
                   </TooltipTrigger>
                   <TooltipContent>
                     {t("membersTable.editMember")}
@@ -441,18 +453,6 @@ export function DataTable({ search }: { search: string | null }) {
 
   return (
     <>
-      <Sheet>
-        <SheetTrigger>Open</SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
       <div className="flex justify-between">
         <div className="flex flex-wrap items-baseline">
           <div className="mr-2">
