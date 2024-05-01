@@ -70,6 +70,18 @@ export function fromSnakeToCamelCase(arr: object[]) {
   });
 }
 
+export function fromCamelToSnakeCase(obj: object) {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      const newKey = key
+        .split(/(?=[A-Z])/)
+        .map((word) => word.toLocaleLowerCase())
+        .join("_");
+      return [newKey, value];
+    }),
+  );
+}
+
 export function extendWithStatus(data: Member[]) {
   return data.map((row) => {
     let status = "inactive";
