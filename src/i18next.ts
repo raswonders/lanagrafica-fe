@@ -47,6 +47,8 @@ i18n
             countryFieldLabel: "Country of origin",
             cityFieldLabel: "Place of birth",
             docTypeFieldLabel: "Document type",
+            insertError: "Creation failed for {{name}}",
+            insertSuccess: "Creation successful for {{name}}",
           },
           members: {
             title: "Members",
@@ -145,6 +147,8 @@ i18n
             countryFieldLabel: "Paese di origine",
             cityFieldLabel: "Luogo di nascita",
             docTypeFieldLabel: "Tipo di documento",
+            insertError: "Creazione fallita per {{name}}",
+            insertSuccess: "Creazione riuscita per {{name}}",
           },
           members: {
             title: "Members",
