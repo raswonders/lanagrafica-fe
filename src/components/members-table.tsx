@@ -48,6 +48,8 @@ export type Member = {
   status: string;
 };
 
+type StatusVariant = "active" | "inactive" | "suspended" | "deleted";
+
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -214,26 +216,25 @@ export function DataTable({ search }: { search: string | null }) {
       columnHelper.accessor("status", {
         meta: t("membersTable.status"),
         cell: (info) => {
-          const name = info.getValue();
-          let variantName;
+          const status = info.getValue();
+          const allowedStatus = [
+            "active",
+            "inactive",
+            "expired",
+            "suspended",
+            "deleted",
+          ];
+          let variantName: StatusVariant;
 
-          if (name === "expired") {
-            variantName = "inactive";
-          } else {
-            variantName = name;
+          if (!allowedStatus.includes(status)) {
+            throw new Error(`Invalid status name used ${status}`);
           }
 
+          if (status === "expired") variantName = "inactive";
+
+          variantName = status as StatusVariant;
           return (
-            <Badge
-              variant={
-                (variantName as "active") ||
-                "inactive" ||
-                "suspended" ||
-                "deleted"
-              }
-            >
-              {t("membersTable." + name)}
-            </Badge>
+            <Badge variant={variantName}>{t("membersTable." + status)}</Badge>
           );
         },
         header: () => <span>{t("membersTable.status")}</span>,
