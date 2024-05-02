@@ -283,7 +283,10 @@ export function DataTable({ search }: { search: string | null }) {
                         <SheetContent>
                           <SheetHeader>
                             <SheetTitle>
-                              {`${row.original.name} ${row.original.surname}`}
+                              <div className="flex gap-2 my-4">
+                                {`${row.original.name} ${row.original.surname}`}
+                                <StatusBadge status={row.original.status} />
+                              </div>
                             </SheetTitle>
                             <SheetDescription>
                               <MemberDetails row={row.original} />
