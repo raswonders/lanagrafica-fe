@@ -90,6 +90,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { MemberDetails } from "./member-details";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -288,7 +289,9 @@ export function DataTable({ search }: { search: string | null }) {
                             <DrawerTitle>
                               {`${row.original.name} ${row.original.surname}`}
                             </DrawerTitle>
-                            <DrawerDescription></DrawerDescription>
+                            <DrawerDescription>
+                              <MemberDetails row={row.original} />
+                            </DrawerDescription>
                           </DrawerHeader>
                         </DrawerContent>
                       </Drawer>
@@ -304,7 +307,9 @@ export function DataTable({ search }: { search: string | null }) {
                             <SheetTitle>
                               {`${row.original.name} ${row.original.surname}`}
                             </SheetTitle>
-                            <SheetDescription></SheetDescription>
+                            <SheetDescription>
+                              <MemberDetails row={row.original} />
+                            </SheetDescription>
                           </SheetHeader>
                         </SheetContent>
                       </Sheet>
