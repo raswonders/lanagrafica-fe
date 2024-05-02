@@ -73,12 +73,17 @@ export function MemberDetails({ row }) {
 
   return (
     <div className="flex justify-center">
-      <Tabs defaultValue="account" className="w-[400px] space-y-6">
+      <Tabs defaultValue="personal" className="w-[400px] space-y-6">
         <TabsList>
-          <TabsTrigger value="account">Details</TabsTrigger>
-          <TabsTrigger value="password">Suspension</TabsTrigger>
+          <TabsTrigger value="personal">
+            {t("memberDetails.personalTab")}
+          </TabsTrigger>
+          <TabsTrigger value="membership">
+            {t("memberDetails.membershipTab")}
+          </TabsTrigger>
+          <TabsTrigger value="note">{t("memberDetails.noteTab")}</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
+        <TabsContent value="personal">
           <div className="">
             <Form {...form}>
               <form
@@ -158,9 +163,10 @@ export function MemberDetails({ row }) {
             </Form>
           </div>
         </TabsContent>
-        <TabsContent value="password">
+        <TabsContent value="membership">
           Member is currently not suspended
         </TabsContent>
+        <TabsContent value="note">No note.</TabsContent>
         <Button
           disabled={form.formState.isSubmitting}
           type="submit"

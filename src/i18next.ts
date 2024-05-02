@@ -110,6 +110,11 @@ i18n
             renew: "Renew",
             cancel: "Cancel",
           },
+          memberDetails: {
+            personalTab: "Personal",
+            membershipTab: "Membership",
+            noteTab: "Note",
+          },
         },
       },
       it: {
@@ -209,6 +214,11 @@ i18n
             description: "verrà assegnato un nuovo numero di carta.",
             renew: "Rinnova",
             cancel: "Annulla",
+          },
+          memberDetails: {
+            personalTab: "Personale",
+            membershipTab: "Membri",
+            noteTab: "Nota",
           },
         },
       },
