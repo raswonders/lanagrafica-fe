@@ -48,8 +48,6 @@ export type Member = {
   status: string;
 };
 
-type StatusVariant = "active" | "inactive" | "suspended" | "deleted";
-
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -58,7 +56,6 @@ import {
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
 import { EyeOff, Filter, RefreshCcw, SquarePen } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   useInfiniteQuery,
   useMutation,
@@ -93,6 +90,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { MemberDetails } from "./member-details";
+import { StatusBadge } from "./status-badge";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -215,28 +213,7 @@ export function DataTable({ search }: { search: string | null }) {
       }),
       columnHelper.accessor("status", {
         meta: t("membersTable.status"),
-        cell: (info) => {
-          const status = info.getValue();
-          const allowedStatus = [
-            "active",
-            "inactive",
-            "expired",
-            "suspended",
-            "deleted",
-          ];
-          let variantName: StatusVariant;
-
-          if (!allowedStatus.includes(status)) {
-            throw new Error(`Invalid status name used ${status}`);
-          }
-
-          if (status === "expired") variantName = "inactive";
-
-          variantName = status as StatusVariant;
-          return (
-            <Badge variant={variantName}>{t("membersTable." + status)}</Badge>
-          );
-        },
+        cell: (info) => <StatusBadge status={info.getValue()} />,
         header: () => <span>{t("membersTable.status")}</span>,
         filterFn: "equals",
       }),
