@@ -53,7 +53,7 @@ export function MemberDetails({ row }) {
       name: row.name,
       surname: row.surname,
       birthDate: createDateString(day, month, year),
-      birthPlace: "",
+      birthPlace: row.birthPlace,
       country: row.country,
       docType: row.docType,
       docId: row.docId,
@@ -127,7 +127,13 @@ export function MemberDetails({ row }) {
                   ]}
                   search={citySearch}
                   setSearch={setCitySearch}
-                  value={isItaly ? "" : country}
+                  value={
+                    isItaly
+                      ? cities.includes(row.birthPlace)
+                        ? row.birthPlace
+                        : ""
+                      : country
+                  }
                   disabled={!isItaly}
                 />
                 <SelectField
