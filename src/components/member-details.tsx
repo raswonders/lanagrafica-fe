@@ -16,12 +16,15 @@ import {
   isAdult,
   isValidISODate,
   isWithinRange,
+  getCustomDate,
+  hasExpired,
 } from "@/lib/utils";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { Ban, PlayCircle, RefreshCcw } from "lucide-react";
 
 export function MemberDetails({ row }) {
   const { t, i18n } = useTranslation();
@@ -30,6 +33,8 @@ export function MemberDetails({ row }) {
   const [day, setDay] = useState(parseDay(row.birthDate));
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
+
+  const isSuspended = Boolean(row.suspendedTill);
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -164,7 +169,71 @@ export function MemberDetails({ row }) {
           </div>
         </TabsContent>
         <TabsContent value="membership">
-          Member is currently not suspended
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-between items-center">
+                <div className="text-neutral-12 font-semibold">
+                  {t("memberDetails.registered")}
+                </div>
+                <div>{getCustomDate(row.registrationDate)}</div>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="text-neutral-12 font-semibold">
+                  {t("memberDetails.expires")}
+                </div>
+                <div>{getCustomDate(row.expirationDate)}</div>
+              </div>
+              <div className="flex">
+                <Button
+                  disabled={
+                    form.formState.isSubmitting ||
+                    !hasExpired(new Date(row.expirationDate))
+                  }
+                  type="button"
+                  variant="active"
+                  className="sm:self-end"
+                >
+                  <RefreshCcw className={`w-5 mr-3`} />
+                  {t("memberDetails.renew")}
+                </Button>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-between items-center">
+                <div className="text-neutral-12 font-semibold">
+                  {t("memberDetails.suspended")}
+                </div>
+                <div>
+                  {isSuspended
+                    ? getCustomDate(row.suspendedTill)
+                    : t("memberDetails.notSuspended")}
+                </div>
+              </div>
+              <div className="flex">
+                {isSuspended ? (
+                  <Button
+                    disabled={form.formState.isSubmitting}
+                    type="button"
+                    variant="active"
+                    className="sm:self-end"
+                  >
+                    <PlayCircle className={"w-5 mr-3"} />
+                    {t("memberDetails.resume")}
+                  </Button>
+                ) : (
+                  <Button
+                    disabled={form.formState.isSubmitting || isSuspended}
+                    type="button"
+                    variant="suspended"
+                    className="sm:self-end"
+                  >
+                    <Ban className={"w-5 mr-3"} />
+                    {t("memberDetails.suspend")}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
         </TabsContent>
         <TabsContent value="note">No note.</TabsContent>
         <Button
