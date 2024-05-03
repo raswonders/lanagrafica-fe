@@ -97,6 +97,8 @@ i18n
             actions: "Actions",
             renewSuccess: "Renewal successful for {{name}}",
             renewError: "Renewal failed for {{name}}",
+            suspendSuccess: "Suspending of {{name}} was successful",
+            suspendError: "Suspending of {{name}} failed",
             noResults: "No results.",
             editMember: "Edit member",
             renewMember: "Renew member",
@@ -211,6 +213,9 @@ i18n
             actions: "Azioni",
             renewSuccess: "Rinnovo riuscito per {{name}}",
             renewError: "Rinnovo fallito per {{name}}",
+            suspendSuccess:
+              "La sospensione di {{name}} è stata eseguita con successo",
+            suspendError: "La sospensione di {{name}} non è riuscita",
             noResults: "Nessun risultato.",
             editMember: "Modifica membro",
             renewMember: "Rinnova membro",

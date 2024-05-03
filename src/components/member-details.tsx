@@ -27,7 +27,12 @@ import { useState } from "react";
 import { Ban, PlayCircle, RefreshCcw } from "lucide-react";
 import { RenewConfirm } from "./renew-confirm";
 
-export function MemberDetails({ row, isRenewing, renewMutation }) {
+export function MemberDetails({
+  row,
+  isRenewing,
+  renewMutation,
+  suspendMutation,
+}) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
@@ -245,6 +250,14 @@ export function MemberDetails({ row, isRenewing, renewMutation }) {
                     type="button"
                     variant="suspended"
                     className="sm:self-end"
+                    onClick={() => {
+                      suspendMutation.mutate({
+                        id: row.id,
+                        suspendedTill: "2030-12-12",
+                        measure: "",
+                        name: `${row.name} ${row.surname}`,
+                      });
+                    }}
                   >
                     <Ban className={"w-5 mr-3"} />
                     {t("memberDetails.suspend")}

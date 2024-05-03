@@ -123,6 +123,25 @@ async function renewMemberCard(
   return data;
 }
 
+async function suspendMember(
+  id: number,
+  suspendedTill: string,
+  measure: string,
+): Promise<Member | null> {
+  const { data, error } = await supabase
+    .from("member")
+    .update({
+      suspended_till: suspendedTill,
+      is_active: false,
+      measure,
+    })
+    .eq("id", id);
+
+  if (error) throw error;
+
+  return data;
+}
+
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
   const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
@@ -174,6 +193,28 @@ export function DataTable({ search }: { search: string | null }) {
     },
   });
 
+  const suspendMutation = useMutation({
+    mutationFn: (variables: {
+      id: number;
+      suspendedTill: string;
+      measure: string;
+      name: string;
+    }) =>
+      suspendMember(variables.id, variables.suspendedTill, variables.measure),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      toast.success(t("membersTable.suspendSuccess", { name: variables.name }));
+    },
+    onError: (error, variables) => {
+      console.error(t("membersTable.suspendError"), error);
+      toast.error(
+        t("membersTable.renewError", {
+          name: variables.name,
+        }),
+      );
+    },
+  });
+  
   const columns = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
@@ -272,6 +313,7 @@ export function DataTable({ search }: { search: string | null }) {
                                 row={row.original}
                                 isRenewing={isRenewing}
                                 renewMutation={renewMutation}
+                                suspendMutation={suspendMutation}
                               />
                             </DrawerDescription>
                           </DrawerHeader>
@@ -297,6 +339,7 @@ export function DataTable({ search }: { search: string | null }) {
                                 row={row.original}
                                 isRenewing={isRenewing}
                                 renewMutation={renewMutation}
+                                suspendMutation={suspendMutation}
                               />
                             </SheetDescription>
                           </SheetHeader>
