@@ -18,6 +18,8 @@ import {
   isWithinRange,
   getCustomDate,
   hasExpired,
+  getDateWeekLater,
+  getDateMonthsLater,
 } from "@/lib/utils";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
@@ -26,6 +28,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Ban, PlayCircle, RefreshCcw } from "lucide-react";
 import { RenewConfirm } from "./renew-confirm";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 export function MemberDetails({
   row,
@@ -88,6 +91,14 @@ export function MemberDetails({
     row.status === "suspended" ||
     row.status === "deleted";
 
+  function handleSuspension(suspendedTill: string) {
+    suspendMutation.mutate({
+      id: row.id,
+      suspendedTill,
+      measure: "",
+      name: `${row.name} ${row.surname}`,
+    });
+  }
   return (
     <div className="flex justify-center">
       <Tabs defaultValue="personal" className="w-[400px] space-y-6">
@@ -253,23 +264,78 @@ export function MemberDetails({
                     {t("memberDetails.resume")}
                   </Button>
                 ) : (
-                  <Button
-                    disabled={form.formState.isSubmitting || isSuspended}
-                    type="button"
-                    variant="suspended"
-                    className="sm:self-end"
-                    onClick={() => {
-                      suspendMutation.mutate({
-                        id: row.id,
-                        suspendedTill: "2030-12-12",
-                        measure: "",
-                        name: `${row.name} ${row.surname}`,
-                      });
-                    }}
-                  >
-                    <Ban className={"w-5 mr-3"} />
-                    {t("memberDetails.suspend")}
-                  </Button>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        disabled={form.formState.isSubmitting || isSuspended}
+                        type="button"
+                        variant="suspended"
+                        className="sm:self-end"
+                      >
+                        <Ban className={"w-5 mr-3"} />
+                        {t("memberDetails.suspend")}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <ul className="space-y-2">
+                        <li>
+                          <Button
+                            size="sm"
+                            variant="suspended"
+                            onClick={() => {
+                              handleSuspension(getDateWeekLater());
+                            }}
+                          >
+                            week
+                          </Button>
+                        </li>
+                        <li>
+                          <Button
+                            size="sm"
+                            variant="suspended"
+                            onClick={() => {
+                              handleSuspension(getDateMonthsLater(1));
+                            }}
+                          >
+                            {t("durations.month", { count: 1 })}
+                          </Button>
+                        </li>
+                        <li>
+                          <Button
+                            size="sm"
+                            variant="suspended"
+                            onClick={() => {
+                              handleSuspension(getDateMonthsLater(3));
+                            }}
+                          >
+                            {t("durations.month", { count: 3 })}
+                          </Button>
+                        </li>
+                        <li>
+                          <Button
+                            size="sm"
+                            variant="suspended"
+                            onClick={() => {
+                              handleSuspension(getDateMonthsLater(6));
+                            }}
+                          >
+                            {t("durations.month", { count: 6 })}
+                          </Button>
+                        </li>
+                        <li>
+                          <Button
+                            size="sm"
+                            variant="suspended"
+                            onClick={() => {
+                              handleSuspension(getDateMonthsLater(12));
+                            }}
+                          >
+                            {t("durations.year", { count: 1 })}
+                          </Button>
+                        </li>
+                      </ul>
+                    </PopoverContent>
+                  </Popover>
                 )}
               </div>
             </div>

@@ -128,6 +128,12 @@ i18n
             notSuspended: "not suspended",
             save: "Save",
           },
+          durations: {
+            year_one: "year",
+            year_other: "{{count}} years",
+            month_one: "month",
+            month_other: "{{count}} months",
+          },
         },
       },
       it: {
@@ -249,6 +255,12 @@ i18n
             suspended: "Sospeso fino a:",
             notSuspended: "non sospeso",
             save: "Salva",
+          },
+          durations: {
+            year_one: "anno",
+            year_other: "{{count}} anni",
+            month_one: "mese",
+            month_other: "{{count}} mesi",
           },
         },
       },

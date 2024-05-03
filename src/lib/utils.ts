@@ -129,3 +129,15 @@ export function getExpirationDate(): string {
   expiration.setFullYear(expiration.getFullYear() + 1);
   return expiration.toISOString().split("T")[0];
 }
+
+export function getDateWeekLater() {
+  const date = new Date();
+  date.setDate(date.getDay() + 7);
+  return date.toISOString().split("T")[0];
+}
+
+export function getDateMonthsLater(count: number) {
+  const date = new Date();
+  date.setMonth(date.getMonth() + count);
+  return date.toISOString().split("T")[0];
+}
