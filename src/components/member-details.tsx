@@ -34,8 +34,6 @@ export function MemberDetails({ row }) {
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
 
-  const isSuspended = Boolean(row.suspendedTill);
-
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
     surname: z.string().min(1, { message: t("validation.required") }),
@@ -75,6 +73,8 @@ export function MemberDetails({ row }) {
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
+  const isSuspended = Boolean(row.suspendedTill);
+  const isExpired = hasExpired(new Date(row.expirationDate));
 
   return (
     <div className="flex justify-center">
@@ -178,17 +178,22 @@ export function MemberDetails({ row }) {
                 <div>{getCustomDate(row.registrationDate)}</div>
               </div>
               <div className="flex justify-between items-center">
-                <div className="text-neutral-12 font-semibold">
-                  {t("memberDetails.expires")}
+                <div
+                  className={`${isExpired ? "text-warning-11" : "text-neutral-12"} font-semibold`}
+                >
+                  {isExpired
+                    ? t("memberDetails.expired")
+                    : t("memberDetails.expires")}
                 </div>
-                <div>{getCustomDate(row.expirationDate)}</div>
+                <div
+                  className={`${isExpired ? "text-warning-11" : ""}`}
+                >
+                  {getCustomDate(row.expirationDate)}
+                </div>
               </div>
               <div className="flex">
                 <Button
-                  disabled={
-                    form.formState.isSubmitting ||
-                    !hasExpired(new Date(row.expirationDate))
-                  }
+                  disabled={form.formState.isSubmitting || !isExpired}
                   type="button"
                   variant="active"
                   className="sm:self-end"
@@ -200,10 +205,14 @@ export function MemberDetails({ row }) {
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex justify-between items-center">
-                <div className="text-neutral-12 font-semibold">
+                <div
+                  className={`${isSuspended ? "text-danger-11" : "text-neutral-12"} font-semibold`}
+                >
                   {t("memberDetails.suspended")}
                 </div>
-                <div>
+                <div
+                  className={`${isSuspended ? "text-danger-11" : ""}`}
+                >
                   {isSuspended
                     ? getCustomDate(row.suspendedTill)
                     : t("memberDetails.notSuspended")}
@@ -239,9 +248,9 @@ export function MemberDetails({ row }) {
         <Button
           disabled={form.formState.isSubmitting}
           type="submit"
-          className="sm:self-end"
+          className="w-full"
         >
-          {t("newMember.submit")}
+          {t("memberDetails.save")}
         </Button>
       </Tabs>
     </div>
