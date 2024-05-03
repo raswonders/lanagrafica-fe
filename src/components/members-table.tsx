@@ -268,7 +268,11 @@ export function DataTable({ search }: { search: string | null }) {
                               {`${row.original.name} ${row.original.surname}`}
                             </DrawerTitle>
                             <DrawerDescription>
-                              <MemberDetails row={row.original} />
+                              <MemberDetails
+                                row={row.original}
+                                isRenewing={isRenewing}
+                                renewMutation={renewMutation}
+                              />
                             </DrawerDescription>
                           </DrawerHeader>
                         </DrawerContent>
@@ -289,7 +293,11 @@ export function DataTable({ search }: { search: string | null }) {
                               </div>
                             </SheetTitle>
                             <SheetDescription>
-                              <MemberDetails row={row.original} />
+                              <MemberDetails
+                                row={row.original}
+                                isRenewing={isRenewing}
+                                renewMutation={renewMutation}
+                              />
                             </SheetDescription>
                           </SheetHeader>
                         </SheetContent>

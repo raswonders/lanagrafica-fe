@@ -25,8 +25,9 @@ import documents from "../assets/documents.json";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Ban, PlayCircle, RefreshCcw } from "lucide-react";
+import { RenewConfirm } from "./renew-confirm";
 
-export function MemberDetails({ row }) {
+export function MemberDetails({ row, isRenewing, renewMutation }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
@@ -75,6 +76,11 @@ export function MemberDetails({ row }) {
   const isItaly = country === "Italy";
   const isSuspended = Boolean(row.suspendedTill);
   const isExpired = hasExpired(new Date(row.expirationDate));
+  const isRenewForbidden =
+    isRenewing[row.id] ||
+    row.status === "active" ||
+    row.status === "suspended" ||
+    row.status === "deleted";
 
   return (
     <div className="flex justify-center">
@@ -185,22 +191,28 @@ export function MemberDetails({ row }) {
                     ? t("memberDetails.expired")
                     : t("memberDetails.expires")}
                 </div>
-                <div
-                  className={`${isExpired ? "text-warning-11" : ""}`}
-                >
+                <div className={`${isExpired ? "text-warning-11" : ""}`}>
                   {getCustomDate(row.expirationDate)}
                 </div>
               </div>
               <div className="flex">
-                <Button
-                  disabled={form.formState.isSubmitting || !isExpired}
-                  type="button"
-                  variant="active"
-                  className="sm:self-end"
+                <RenewConfirm
+                  isOpenForbidden={isRenewForbidden}
+                  id={row.id}
+                  name={`${row.name} ${row.surname}`}
+                  expirationDate={row.expirationDate}
+                  renewMutation={renewMutation}
                 >
-                  <RefreshCcw className={`w-5 mr-3`} />
-                  {t("memberDetails.renew")}
-                </Button>
+                  <Button
+                    disabled={form.formState.isSubmitting || !isExpired}
+                    type="button"
+                    variant="active"
+                    className="sm:self-end"
+                  >
+                    <RefreshCcw className={`w-5 mr-3`} />
+                    {t("memberDetails.renew")}
+                  </Button>
+                </RenewConfirm>
               </div>
             </div>
             <div className="flex flex-col gap-4">
@@ -210,9 +222,7 @@ export function MemberDetails({ row }) {
                 >
                   {t("memberDetails.suspended")}
                 </div>
-                <div
-                  className={`${isSuspended ? "text-danger-11" : ""}`}
-                >
+                <div className={`${isSuspended ? "text-danger-11" : ""}`}>
                   {isSuspended
                     ? getCustomDate(row.suspendedTill)
                     : t("memberDetails.notSuspended")}
