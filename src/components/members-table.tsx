@@ -142,6 +142,24 @@ async function suspendMember(
   return data;
 }
 
+async function resumeMember(
+  id: number,
+  expirationDate: string,
+): Promise<Member | null> {
+  const { data, error } = await supabase
+    .from("member")
+    .update({
+      suspended_till: null,
+      measure: null,
+      is_active: !hasExpired(new Date(expirationDate)),
+    })
+    .eq("id", id);
+
+  if (error) throw error;
+
+  return data;
+}
+
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
   const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
@@ -198,6 +216,7 @@ export function DataTable({ search }: { search: string | null }) {
       id: number;
       suspendedTill: string;
       measure: string;
+      expirationDate: string;
       name: string;
     }) =>
       suspendMember(variables.id, variables.suspendedTill, variables.measure),
@@ -214,7 +233,27 @@ export function DataTable({ search }: { search: string | null }) {
       );
     },
   });
-  
+
+  const resumeMutation = useMutation({
+    mutationFn: (variables: {
+      id: number;
+      expirationDate: string;
+      name: string;
+    }) => resumeMember(variables.id, variables.expirationDate),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      toast.success(t("membersTable.resumeSuccess", { name: variables.name }));
+    },
+    onError: (error, variables) => {
+      console.error(t("membersTable.resumeError"), error);
+      toast.error(
+        t("membersTable.resumeError", {
+          name: variables.name,
+        }),
+      );
+    },
+  });
+
   const columns = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
@@ -314,6 +353,7 @@ export function DataTable({ search }: { search: string | null }) {
                                 isRenewing={isRenewing}
                                 renewMutation={renewMutation}
                                 suspendMutation={suspendMutation}
+                                resumeMutation={resumeMutation}
                               />
                             </DrawerDescription>
                           </DrawerHeader>
@@ -340,6 +380,7 @@ export function DataTable({ search }: { search: string | null }) {
                                 isRenewing={isRenewing}
                                 renewMutation={renewMutation}
                                 suspendMutation={suspendMutation}
+                                resumeMutation={resumeMutation}
                               />
                             </SheetDescription>
                           </SheetHeader>

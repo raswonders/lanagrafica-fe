@@ -32,6 +32,7 @@ export function MemberDetails({
   isRenewing,
   renewMutation,
   suspendMutation,
+  resumeMutation,
 }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
@@ -240,6 +241,13 @@ export function MemberDetails({
                     type="button"
                     variant="active"
                     className="sm:self-end"
+                    onClick={() => {
+                      resumeMutation.mutate({
+                        id: row.id,
+                        expirationDate: row.expirationDate,
+                        name: `${row.name} ${row.surname}`,
+                      });
+                    }}
                   >
                     <PlayCircle className={"w-5 mr-3"} />
                     {t("memberDetails.resume")}

@@ -99,6 +99,8 @@ i18n
             renewError: "Renewal failed for {{name}}",
             suspendSuccess: "Suspending of {{name}} was successful",
             suspendError: "Suspending of {{name}} failed",
+            resumeSuccess: "Resuming membership for {{name}} was successful",
+            resumeError: "Resuming membership for {{name}} failed",
             noResults: "No results.",
             editMember: "Edit member",
             renewMember: "Renew member",
@@ -216,6 +218,10 @@ i18n
             suspendSuccess:
               "La sospensione di {{name}} è stata eseguita con successo",
             suspendError: "La sospensione di {{name}} non è riuscita",
+            resumeSuccess:
+              "La ripresa dell'iscrizione per {{name}} è stata eseguita con successo",
+            resumeError:
+              "La ripresa dell'iscrizione per {{name}} non è riuscita",
             noResults: "Nessun risultato.",
             editMember: "Modifica membro",
             renewMember: "Rinnova membro",
