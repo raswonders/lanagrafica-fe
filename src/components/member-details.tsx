@@ -234,10 +234,9 @@ export function MemberDetails({ row, isRenewing }) {
                       name="measure"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Reason</FormLabel>
+                          <FormLabel>Reason for suspension</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="Your reasoning"
                               className="resize-none"
                               {...field}
                             />
