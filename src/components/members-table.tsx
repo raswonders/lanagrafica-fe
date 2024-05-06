@@ -211,49 +211,6 @@ export function DataTable({ search }: { search: string | null }) {
     },
   });
 
-  const suspendMutation = useMutation({
-    mutationFn: (variables: {
-      id: number;
-      suspendedTill: string;
-      measure: string;
-      expirationDate: string;
-      name: string;
-    }) =>
-      suspendMember(variables.id, variables.suspendedTill, variables.measure),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["members"] });
-      toast.success(t("membersTable.suspendSuccess", { name: variables.name }));
-    },
-    onError: (error, variables) => {
-      console.error(t("membersTable.suspendError"), error);
-      toast.error(
-        t("membersTable.renewError", {
-          name: variables.name,
-        }),
-      );
-    },
-  });
-
-  const resumeMutation = useMutation({
-    mutationFn: (variables: {
-      id: number;
-      expirationDate: string;
-      name: string;
-    }) => resumeMember(variables.id, variables.expirationDate),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["members"] });
-      toast.success(t("membersTable.resumeSuccess", { name: variables.name }));
-    },
-    onError: (error, variables) => {
-      console.error(t("membersTable.resumeError"), error);
-      toast.error(
-        t("membersTable.resumeError", {
-          name: variables.name,
-        }),
-      );
-    },
-  });
-
   const columns = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
@@ -352,8 +309,6 @@ export function DataTable({ search }: { search: string | null }) {
                                 row={row.original}
                                 isRenewing={isRenewing}
                                 renewMutation={renewMutation}
-                                suspendMutation={suspendMutation}
-                                resumeMutation={resumeMutation}
                               />
                             </DrawerDescription>
                           </DrawerHeader>
@@ -379,8 +334,6 @@ export function DataTable({ search }: { search: string | null }) {
                                 row={row.original}
                                 isRenewing={isRenewing}
                                 renewMutation={renewMutation}
-                                suspendMutation={suspendMutation}
-                                resumeMutation={resumeMutation}
                               />
                             </SheetDescription>
                           </SheetHeader>
