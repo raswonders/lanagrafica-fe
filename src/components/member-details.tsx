@@ -275,14 +275,14 @@ export function MemberDetails({ row, isRenewing, updateMutation }) {
                       <Button
                         disabled={form.formState.isSubmitting}
                         type="button"
-                        variant="active"
+                        variant="suspended"
                         className="self-start"
                         onClick={() => {
                           setSuspendedTill("");
                           form.setValue("measure", "");
                         }}
                       >
-                        <PlayCircle className={"w-5 mr-3"} />
+                        <Ban className={"w-5 mr-3"} />
                         {t("memberDetails.resume")}
                       </Button>
                     ) : (
