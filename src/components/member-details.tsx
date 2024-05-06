@@ -1,5 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Form } from "./ui/form";
 import { InputField } from "./input-field";
 import { DateField } from "./date-field";
 import { Combobox } from "./combobox";
@@ -29,12 +28,21 @@ import { useState } from "react";
 import { Ban, PlayCircle, RefreshCcw } from "lucide-react";
 import { RenewConfirm } from "./renew-confirm";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Textarea } from "./ui/textarea";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 export function MemberDetails({
   row,
   isRenewing,
   renewMutation,
-  suspendMutation,
   resumeMutation,
 }) {
   const { t, i18n } = useTranslation();
@@ -43,6 +51,7 @@ export function MemberDetails({
   const [day, setDay] = useState(parseDay(row.birthDate));
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
+  const [suspendedTill, setSuspendedTill] = useState(row.suspendedTill);
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -58,6 +67,7 @@ export function MemberDetails({
     docType: z.string().min(1, { message: t("validation.required") }),
     docId: z.string().min(1, { message: t("validation.required") }),
     email: z.string(),
+    measure: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,6 +81,7 @@ export function MemberDetails({
       docType: row.docType,
       docId: row.docId,
       email: row.email,
+      measure: row.measure,
     },
   });
 
@@ -78,12 +89,12 @@ export function MemberDetails({
     // const newMember = serializeForInsert(values);
     // await insertMember(newMember);
     // resetForm();
-    console.log("Updated", values);
+    console.log("submitted", values);
   }
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
-  const isSuspended = Boolean(row.suspendedTill);
+  const isSuspended = Boolean(suspendedTill);
   const isExpired = hasExpired(new Date(row.expirationDate));
   const isRenewForbidden =
     isRenewing[row.id] ||
@@ -91,14 +102,6 @@ export function MemberDetails({
     row.status === "suspended" ||
     row.status === "deleted";
 
-  function handleSuspension(suspendedTill: string) {
-    suspendMutation.mutate({
-      id: row.id,
-      suspendedTill,
-      measure: "",
-      name: `${row.name} ${row.surname}`,
-    });
-  }
   return (
     <div className="flex justify-center">
       <Tabs defaultValue="personal" className="w-[400px] space-y-6">
@@ -111,13 +114,13 @@ export function MemberDetails({
           </TabsTrigger>
           <TabsTrigger value="note">{t("memberDetails.noteTab")}</TabsTrigger>
         </TabsList>
-        <TabsContent value="personal">
-          <div className="">
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 flex flex-col"
-              >
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 flex flex-col"
+          >
+            <TabsContent value="personal">
+              <div className="">
                 <InputField
                   form={form}
                   label={t("newMember.nameFieldLabel")}
@@ -187,178 +190,187 @@ export function MemberDetails({
                   label={t("newMember.emailFieldLabel")}
                   name="email"
                 />
-              </form>
-            </Form>
-          </div>
-
-          <Button
-            disabled={form.formState.isSubmitting}
-            type="submit"
-            className="w-full mt-8"
-          >
-            {t("memberDetails.save")}
-          </Button>
-        </TabsContent>
-        <TabsContent value="membership">
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-between items-center">
-                <div className="text-neutral-12 font-semibold">
-                  {t("memberDetails.registered")}
-                </div>
-                <div>{getCustomDate(row.registrationDate)}</div>
               </div>
-              <div className="flex justify-between items-center">
-                <div
-                  className={`${isExpired ? "text-warning-11" : "text-neutral-12"} font-semibold`}
-                >
-                  {isExpired
-                    ? t("memberDetails.expired")
-                    : t("memberDetails.expires")}
-                </div>
-                <div className={`${isExpired ? "text-warning-11" : ""}`}>
-                  {getCustomDate(row.expirationDate)}
-                </div>
-              </div>
-              <div className="flex">
-                <RenewConfirm
-                  isOpenForbidden={isRenewForbidden}
-                  id={row.id}
-                  name={`${row.name} ${row.surname}`}
-                  expirationDate={row.expirationDate}
-                  renewMutation={renewMutation}
-                >
-                  <Button
-                    disabled={form.formState.isSubmitting || !isExpired}
-                    type="button"
-                    variant="active"
-                    className="sm:self-end"
-                  >
-                    <RefreshCcw className={`w-5 mr-3`} />
-                    {t("memberDetails.renew")}
-                  </Button>
-                </RenewConfirm>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-between items-center">
-                <div
-                  className={`${isSuspended ? "text-danger-11" : "text-neutral-12"} font-semibold`}
-                >
-                  {t("memberDetails.suspended")}
-                </div>
-                <div className={`${isSuspended ? "text-danger-11" : ""}`}>
-                  {isSuspended
-                    ? getCustomDate(row.suspendedTill)
-                    : t("memberDetails.notSuspended")}
-                </div>
-              </div>
-              <div className="flex">
-                {isSuspended ? (
-                  <Button
-                    disabled={form.formState.isSubmitting}
-                    type="button"
-                    variant="active"
-                    className="sm:self-end"
-                    onClick={() => {
-                      resumeMutation.mutate({
-                        id: row.id,
-                        expirationDate: row.expirationDate,
-                        name: `${row.name} ${row.surname}`,
-                      });
-                    }}
-                  >
-                    <PlayCircle className={"w-5 mr-3"} />
-                    {t("memberDetails.resume")}
-                  </Button>
-                ) : (
-                  <Popover>
-                    <PopoverTrigger asChild>
+            </TabsContent>
+            <TabsContent value="membership">
+              <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-4">
+                  <div className="flex justify-between items-center">
+                    <div className="text-neutral-12 font-semibold">
+                      {t("memberDetails.registered")}
+                    </div>
+                    <div>{getCustomDate(row.registrationDate)}</div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div
+                      className={`${isExpired ? "text-warning-11" : "text-neutral-12"} font-semibold`}
+                    >
+                      {isExpired
+                        ? t("memberDetails.expired")
+                        : t("memberDetails.expires")}
+                    </div>
+                    <div className={`${isExpired ? "text-warning-11" : ""}`}>
+                      {getCustomDate(row.expirationDate)}
+                    </div>
+                  </div>
+                  <div className="flex">
+                    <RenewConfirm
+                      isOpenForbidden={isRenewForbidden}
+                      id={row.id}
+                      name={`${row.name} ${row.surname}`}
+                      expirationDate={row.expirationDate}
+                      renewMutation={renewMutation}
+                    >
                       <Button
-                        disabled={form.formState.isSubmitting || isSuspended}
+                        disabled={form.formState.isSubmitting || !isExpired}
                         type="button"
-                        variant="suspended"
+                        variant="active"
                         className="sm:self-end"
                       >
-                        <Ban className={"w-5 mr-3"} />
-                        {t("memberDetails.suspend")}
+                        <RefreshCcw className={`w-5 mr-3`} />
+                        {t("memberDetails.renew")}
                       </Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <ul className="space-y-2">
-                        <li>
+                    </RenewConfirm>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div className="flex justify-between items-center">
+                    <div
+                      className={`${isSuspended ? "text-danger-11" : "text-neutral-12"} font-semibold`}
+                    >
+                      {t("memberDetails.suspended")}
+                    </div>
+                    <div className={`${isSuspended ? "text-danger-11" : ""}`}>
+                      {isSuspended
+                        ? getCustomDate(row.suspendedTill)
+                        : t("memberDetails.notSuspended")}
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="measure"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Reason</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Your reasoning"
+                              className="resize-none"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {isSuspended ? (
+                      <Button
+                        disabled={form.formState.isSubmitting}
+                        type="button"
+                        variant="active"
+                        className="self-start"
+                        onClick={() => {
+                          resumeMutation.mutate({
+                            id: row.id,
+                            expirationDate: row.expirationDate,
+                            name: `${row.name} ${row.surname}`,
+                          });
+                        }}
+                      >
+                        <PlayCircle className={"w-5 mr-3"} />
+                        {t("memberDetails.resume")}
+                      </Button>
+                    ) : (
+                      <Popover>
+                        <PopoverTrigger asChild>
                           <Button
-                            size="sm"
+                            disabled={
+                              form.formState.isSubmitting || isSuspended
+                            }
+                            type="button"
                             variant="suspended"
-                            onClick={() => {
-                              handleSuspension(getDateWeekLater());
-                            }}
+                            className="sm:self-end"
                           >
-                            week
+                            <Ban className={"w-5 mr-3"} />
+                            {t("memberDetails.suspend")}
                           </Button>
-                        </li>
-                        <li>
-                          <Button
-                            size="sm"
-                            variant="suspended"
-                            onClick={() => {
-                              handleSuspension(getDateMonthsLater(1));
-                            }}
-                          >
-                            {t("durations.month", { count: 1 })}
-                          </Button>
-                        </li>
-                        <li>
-                          <Button
-                            size="sm"
-                            variant="suspended"
-                            onClick={() => {
-                              handleSuspension(getDateMonthsLater(3));
-                            }}
-                          >
-                            {t("durations.month", { count: 3 })}
-                          </Button>
-                        </li>
-                        <li>
-                          <Button
-                            size="sm"
-                            variant="suspended"
-                            onClick={() => {
-                              handleSuspension(getDateMonthsLater(6));
-                            }}
-                          >
-                            {t("durations.month", { count: 6 })}
-                          </Button>
-                        </li>
-                        <li>
-                          <Button
-                            size="sm"
-                            variant="suspended"
-                            onClick={() => {
-                              handleSuspension(getDateMonthsLater(12));
-                            }}
-                          >
-                            {t("durations.year", { count: 1 })}
-                          </Button>
-                        </li>
-                      </ul>
-                    </PopoverContent>
-                  </Popover>
-                )}
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <ul className="space-y-2">
+                            <li>
+                              <Button
+                                size="sm"
+                                variant="suspended"
+                                onClick={() => {
+                                  setSuspendedTill(getDateWeekLater());
+                                }}
+                              >
+                                week
+                              </Button>
+                            </li>
+                            <li>
+                              <Button
+                                size="sm"
+                                variant="suspended"
+                                onClick={() => {
+                                  setSuspendedTill(getDateMonthsLater(1));
+                                }}
+                              >
+                                {t("durations.month", { count: 1 })}
+                              </Button>
+                            </li>
+                            <li>
+                              <Button
+                                size="sm"
+                                variant="suspended"
+                                onClick={() => {
+                                  setSuspendedTill(getDateMonthsLater(3));
+                                }}
+                              >
+                                {t("durations.month", { count: 3 })}
+                              </Button>
+                            </li>
+                            <li>
+                              <Button
+                                size="sm"
+                                variant="suspended"
+                                onClick={() => {
+                                  setSuspendedTill(getDateMonthsLater(6));
+                                }}
+                              >
+                                {t("durations.month", { count: 6 })}
+                              </Button>
+                            </li>
+                            <li>
+                              <Button
+                                size="sm"
+                                variant="suspended"
+                                onClick={() => {
+                                  setSuspendedTill(getDateMonthsLater(12));
+                                }}
+                              >
+                                {t("durations.year", { count: 1 })}
+                              </Button>
+                            </li>
+                          </ul>
+                        </PopoverContent>
+                      </Popover>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="note">
-          No note.
-          <Button
-            disabled={form.formState.isSubmitting}
-            type="submit"
-            className="w-full mt-8"
-          >
-            {t("memberDetails.save")}
-          </Button>
-        </TabsContent>
+            </TabsContent>
+            <TabsContent value="note">No note.</TabsContent>
+            <Button
+              disabled={form.formState.isSubmitting}
+              type="submit"
+              className="w-full mt-8"
+            >
+              {t("memberDetails.save")}
+            </Button>
+          </form>
+        </Form>
       </Tabs>
     </div>
   );
