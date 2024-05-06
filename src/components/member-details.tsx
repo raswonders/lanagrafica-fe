@@ -271,11 +271,7 @@ export function MemberDetails({
                         variant="active"
                         className="self-start"
                         onClick={() => {
-                          resumeMutation.mutate({
-                            id: row.id,
-                            expirationDate: row.expirationDate,
-                            name: `${row.name} ${row.surname}`,
-                          });
+                          setSuspendedTill("");
                         }}
                       >
                         <PlayCircle className={"w-5 mr-3"} />
