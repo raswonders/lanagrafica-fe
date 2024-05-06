@@ -19,6 +19,7 @@ import {
   hasExpired,
   getDateWeekLater,
   getDateMonthsLater,
+  fromCamelToSnakeCase,
 } from "@/lib/utils";
 import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
@@ -37,8 +38,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { SerializedMember } from "./pages/new-member";
 
-export function MemberDetails({ row, isRenewing }) {
+export function MemberDetails({ row, isRenewing, updateMutation }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
@@ -79,12 +81,38 @@ export function MemberDetails({ row, isRenewing }) {
       measure: row.measure,
     },
   });
+  interface ExtendedRow extends z.infer<typeof formSchema> {
+    expirationDate: string;
+    suspendedTill: string;
+    isActive: boolean;
+  }
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // const newMember = serializeForInsert(values);
-    // await insertMember(newMember);
-    // resetForm();
-    console.log("submitted", values);
+  function serializeForUpdate(
+    row: z.infer<typeof formSchema>,
+  ): Partial<SerializedMember> {
+    const extended: ExtendedRow = {
+      ...row,
+      expirationDate,
+      suspendedTill,
+      isActive: isActive,
+    };
+
+    Object.keys(extended).forEach((key) => {
+      extended[key] = extended[key] || null;
+    });
+
+    return fromCamelToSnakeCase(extended);
+  }
+
+  async function onSubmit(member: z.infer<typeof formSchema>) {
+    const serializedMember = serializeForUpdate(member);
+    console.log("member", member);
+    console.log("serialized", serializedMember);
+    await updateMutation.mutate({
+      id: row.id,
+      details: serializedMember,
+      name: row.name,
+    });
   }
 
   const country = form.watch("country");
@@ -96,6 +124,7 @@ export function MemberDetails({ row, isRenewing }) {
     row.status === "active" ||
     row.status === "suspended" ||
     row.status === "deleted";
+  const isActive = !isSuspended && !isExpired;
 
   return (
     <div className="flex justify-center">
@@ -236,10 +265,7 @@ export function MemberDetails({ row, isRenewing }) {
                         <FormItem>
                           <FormLabel>Reason for suspension</FormLabel>
                           <FormControl>
-                            <Textarea
-                              className="resize-none"
-                              {...field}
-                            />
+                            <Textarea className="resize-none" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -253,6 +279,7 @@ export function MemberDetails({ row, isRenewing }) {
                         className="self-start"
                         onClick={() => {
                           setSuspendedTill("");
+                          form.setValue("measure", "");
                         }}
                       >
                         <PlayCircle className={"w-5 mr-3"} />

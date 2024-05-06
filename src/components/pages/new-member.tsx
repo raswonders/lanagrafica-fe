@@ -26,7 +26,7 @@ import { PageLayout } from "../layouts/page-layout";
 import { toast } from "sonner";
 import { supabase } from "../supabase";
 
-interface SerializedMember {
+export interface SerializedMember {
   birth_date: string;
   birth_place: string;
   card_number: string;

@@ -91,6 +91,7 @@ import {
 } from "@/components/ui/drawer";
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
+import { SerializedMember } from "./pages/new-member";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -123,36 +124,13 @@ async function renewMemberCard(
   return data;
 }
 
-async function suspendMember(
+async function updateMember(
   id: number,
-  suspendedTill: string,
-  measure: string,
+  details: Partial<SerializedMember>,
 ): Promise<Member | null> {
   const { data, error } = await supabase
     .from("member")
-    .update({
-      suspended_till: suspendedTill,
-      is_active: false,
-      measure,
-    })
-    .eq("id", id);
-
-  if (error) throw error;
-
-  return data;
-}
-
-async function resumeMember(
-  id: number,
-  expirationDate: string,
-): Promise<Member | null> {
-  const { data, error } = await supabase
-    .from("member")
-    .update({
-      suspended_till: null,
-      measure: null,
-      is_active: !hasExpired(new Date(expirationDate)),
-    })
+    .update(details)
     .eq("id", id);
 
   if (error) throw error;
@@ -208,6 +186,26 @@ export function DataTable({ search }: { search: string | null }) {
         ...prev,
         [variables.id]: false,
       }));
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (variables: {
+      id: number;
+      details: SerializedMember;
+      name: string;
+    }) => updateMember(variables.id, variables.details),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      toast.success(t("membersTable.updateSuccess", { name: variables.name }));
+    },
+    onError: (error, variables) => {
+      console.error(t("membersTable.updateError"), error);
+      toast.error(
+        t("membersTable.updateError", {
+          name: variables.name,
+        }),
+      );
     },
   });
 
@@ -308,7 +306,7 @@ export function DataTable({ search }: { search: string | null }) {
                               <MemberDetails
                                 row={row.original}
                                 isRenewing={isRenewing}
-                                renewMutation={renewMutation}
+                                updateMutation={updateMutation}
                               />
                             </DrawerDescription>
                           </DrawerHeader>
@@ -333,7 +331,7 @@ export function DataTable({ search }: { search: string | null }) {
                               <MemberDetails
                                 row={row.original}
                                 isRenewing={isRenewing}
-                                renewMutation={renewMutation}
+                                updateMutation={updateMutation}
                               />
                             </SheetDescription>
                           </SheetHeader>
