@@ -190,6 +190,14 @@ export function MemberDetails({
               </form>
             </Form>
           </div>
+
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="w-full mt-8"
+          >
+            {t("memberDetails.save")}
+          </Button>
         </TabsContent>
         <TabsContent value="membership">
           <div className="flex flex-col gap-8">
@@ -341,14 +349,16 @@ export function MemberDetails({
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="note">No note.</TabsContent>
-        <Button
-          disabled={form.formState.isSubmitting}
-          type="submit"
-          className="w-full"
-        >
-          {t("memberDetails.save")}
-        </Button>
+        <TabsContent value="note">
+          No note.
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="w-full mt-8"
+          >
+            {t("memberDetails.save")}
+          </Button>
+        </TabsContent>
       </Tabs>
     </div>
   );
