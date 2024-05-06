@@ -236,7 +236,7 @@ export function MemberDetails({
                     </div>
                     <div>
                       {isSuspended
-                        ? getCustomDate(row.suspendedTill)
+                        ? getCustomDate(suspendedTill)
                         : t("memberDetails.notSuspended")}
                     </div>
                   </div>
