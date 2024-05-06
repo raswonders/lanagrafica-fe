@@ -286,7 +286,7 @@ export function MemberDetails({
                             }
                             type="button"
                             variant="suspended"
-                            className="sm:self-end"
+                            className="self-start"
                           >
                             <Ban className={"w-5 mr-3"} />
                             {t("memberDetails.suspend")}
