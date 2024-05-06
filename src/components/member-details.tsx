@@ -26,7 +26,6 @@ import documents from "../assets/documents.json";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Ban, PlayCircle, RefreshCcw } from "lucide-react";
-import { RenewConfirm } from "./renew-confirm";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Textarea } from "./ui/textarea";
 
@@ -39,12 +38,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-export function MemberDetails({
-  row,
-  isRenewing,
-  renewMutation,
-  resumeMutation,
-}) {
+export function MemberDetails({ row, isRenewing }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
@@ -52,6 +46,7 @@ export function MemberDetails({
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
   const [suspendedTill, setSuspendedTill] = useState(row.suspendedTill);
+  const [expirationDate, setExpirationDate] = useState(row.expirationDate);
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -95,7 +90,7 @@ export function MemberDetails({
   const country = form.watch("country");
   const isItaly = country === "Italy";
   const isSuspended = Boolean(suspendedTill);
-  const isExpired = hasExpired(new Date(row.expirationDate));
+  const isExpired = hasExpired(new Date(expirationDate));
   const isRenewForbidden =
     isRenewing[row.id] ||
     row.status === "active" ||
@@ -207,26 +202,19 @@ export function MemberDetails({
                         ? t("memberDetails.expired")
                         : t("memberDetails.expires")}
                     </div>
-                    <div>{getCustomDate(row.expirationDate)}</div>
+                    <div>{getCustomDate(expirationDate)}</div>
                   </div>
                   <div className="flex">
-                    <RenewConfirm
-                      isOpenForbidden={isRenewForbidden}
-                      id={row.id}
-                      name={`${row.name} ${row.surname}`}
-                      expirationDate={row.expirationDate}
-                      renewMutation={renewMutation}
+                    <Button
+                      disabled={form.formState.isSubmitting || isRenewForbidden}
+                      type="button"
+                      variant="active"
+                      className="self-start"
+                      onClick={() => setExpirationDate(getDateMonthsLater(12))}
                     >
-                      <Button
-                        disabled={form.formState.isSubmitting || !isExpired}
-                        type="button"
-                        variant="active"
-                        className="sm:self-end"
-                      >
-                        <RefreshCcw className={`w-5 mr-3`} />
-                        {t("memberDetails.renew")}
-                      </Button>
-                    </RenewConfirm>
+                      <RefreshCcw className={`w-5 mr-3`} />
+                      {t("memberDetails.renew")}
+                    </Button>
                   </div>
                 </div>
                 <div className="flex flex-col gap-4">
