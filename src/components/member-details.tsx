@@ -202,16 +202,12 @@ export function MemberDetails({
                     <div>{getCustomDate(row.registrationDate)}</div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <div
-                      className={`${isExpired ? "text-warning-11" : "text-neutral-12"} font-semibold`}
-                    >
+                    <div className={`text-neutral-12 font-semibold`}>
                       {isExpired
                         ? t("memberDetails.expired")
                         : t("memberDetails.expires")}
                     </div>
-                    <div className={`${isExpired ? "text-warning-11" : ""}`}>
-                      {getCustomDate(row.expirationDate)}
-                    </div>
+                    <div>{getCustomDate(row.expirationDate)}</div>
                   </div>
                   <div className="flex">
                     <RenewConfirm
@@ -235,12 +231,10 @@ export function MemberDetails({
                 </div>
                 <div className="flex flex-col gap-4">
                   <div className="flex justify-between items-center">
-                    <div
-                      className={`${isSuspended ? "text-danger-11" : "text-neutral-12"} font-semibold`}
-                    >
+                    <div className={`text-neutral-12 font-semibold`}>
                       {t("memberDetails.suspended")}
                     </div>
-                    <div className={`${isSuspended ? "text-danger-11" : ""}`}>
+                    <div>
                       {isSuspended
                         ? getCustomDate(row.suspendedTill)
                         : t("memberDetails.notSuspended")}
