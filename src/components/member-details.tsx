@@ -26,7 +26,7 @@ import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { Ban, PlayCircle, RefreshCcw } from "lucide-react";
+import { Ban, RefreshCcw } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Textarea } from "./ui/textarea";
 
