@@ -141,12 +141,9 @@ export function MemberDetails({ row, isRenewing, updateMutation }) {
           <TabsTrigger value="note">{t("memberDetails.noteTab")}</TabsTrigger>
         </TabsList>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 flex flex-col"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <TabsContent value="personal">
-              <div className="">
+              <div className="space-y-8 flex flex-col">
                 <InputField
                   form={form}
                   label={t("newMember.nameFieldLabel")}
@@ -219,7 +216,7 @@ export function MemberDetails({ row, isRenewing, updateMutation }) {
               </div>
             </TabsContent>
             <TabsContent value="membership">
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col space-y-8">
                 <div className="flex flex-col gap-4">
                   <div className="flex justify-between items-center">
                     <div className="text-neutral-12 font-semibold">
