@@ -49,6 +49,7 @@ export function MemberDetails({ row, isRenewing, updateMutation }) {
   const [year, setYear] = useState(parseYear(row.birthDate));
   const [suspendedTill, setSuspendedTill] = useState(row.suspendedTill);
   const [expirationDate, setExpirationDate] = useState(row.expirationDate);
+  const isSuspended = Boolean(suspendedTill);
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -64,7 +65,9 @@ export function MemberDetails({ row, isRenewing, updateMutation }) {
     docType: z.string().min(1, { message: t("validation.required") }),
     docId: z.string().min(1, { message: t("validation.required") }),
     email: z.string(),
-    measure: z.string(),
+    measure: z.string().refine((measure) => !(measure === "" && isSuspended), {
+      message: t("validation.required"),
+    }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -117,7 +120,6 @@ export function MemberDetails({ row, isRenewing, updateMutation }) {
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
-  const isSuspended = Boolean(suspendedTill);
   const isExpired = hasExpired(new Date(expirationDate));
   const isRenewForbidden =
     isRenewing[row.id] ||
