@@ -39,8 +39,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SerializedMember } from "./pages/new-member";
+import { Member } from "./members-table";
 
-export function MemberDetails({ row, isRenewing, updateMutation }) {
+export function MemberDetails({
+  row,
+  isRenewing,
+  updateMutation,
+}: {
+  row: Member;
+}) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");

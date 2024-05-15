@@ -46,6 +46,7 @@ export type Member = {
   isActive: boolean;
   isDeleted: boolean;
   status: string;
+  measure: string;
 };
 
 import { Label } from "@/components/ui/label";
