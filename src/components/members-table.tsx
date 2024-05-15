@@ -100,6 +100,15 @@ const membersPerPage = 20;
 export type RenewMutation = {
   mutate: (args: { id: number; expirationDate: string; name: string }) => void;
 };
+
+export type UpdateMutation = {
+  mutate: (args: {
+    id: number;
+    details: SerializedMember;
+    name: string;
+  }) => void;
+};
+
 interface Row {
   original: Member;
 }
