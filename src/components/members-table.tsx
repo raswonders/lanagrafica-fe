@@ -104,7 +104,7 @@ export type RenewMutation = {
 export type UpdateMutation = {
   mutate: (args: {
     id: number;
-    details: SerializedMember;
+    details: Partial<SerializedMember>;
     name: string;
   }) => void;
 };
@@ -202,7 +202,7 @@ export function DataTable({ search }: { search: string | null }) {
   const updateMutation = useMutation({
     mutationFn: (variables: {
       id: number;
-      details: SerializedMember;
+      details: Partial<SerializedMember>;
       name: string;
     }) => updateMember(variables.id, variables.details),
     onSuccess: (_, variables) => {
