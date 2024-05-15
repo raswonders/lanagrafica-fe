@@ -391,7 +391,7 @@ export function MemberDetails({
               />
             </TabsContent>
             <Button
-              disabled={form.formState.isSubmitting}
+              disabled={!form.formState.isDirty || form.formState.isSubmitting}
               type="submit"
               className="w-full mt-8"
             >
