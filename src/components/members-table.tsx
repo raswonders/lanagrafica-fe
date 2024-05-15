@@ -383,7 +383,7 @@ export function DataTable({ search }: { search: string | null }) {
         },
       },
     ],
-    [t, isRenewing, isMobile],
+    [t, isRenewing, isMobile, renewMutation, updateMutation],
   );
 
   const [columnVisibility, setColumnVisibility] = useState({
