@@ -47,6 +47,7 @@ export type Member = {
   isDeleted: boolean;
   status: string;
   measure: string;
+  registrationDate: string;
 };
 
 import { Label } from "@/components/ui/label";
