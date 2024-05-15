@@ -92,6 +92,7 @@ export function MemberDetails({
     },
   });
   interface ExtendedRow extends z.infer<typeof formSchema> {
+    [key: string]: unknown;
     expirationDate: string;
     suspendedTill: string;
     isActive: boolean;
@@ -107,7 +108,7 @@ export function MemberDetails({
       isActive: isActive,
     };
 
-    Object.keys(extended).forEach((key) => {
+    Object.keys(extended).forEach((key: string) => {
       extended[key] = extended[key] || null;
     });
 
