@@ -75,6 +75,7 @@ export function MemberDetails({
     measure: z.string().refine((measure) => !(measure === "" && isSuspended), {
       message: t("validation.required"),
     }),
+    note: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -89,6 +90,7 @@ export function MemberDetails({
       docId: row.docId,
       email: row.email,
       measure: row.measure,
+      note: row.note,
     },
   });
   interface ExtendedRow extends z.infer<typeof formSchema> {
@@ -371,7 +373,21 @@ export function MemberDetails({
                 </div>
               </div>
             </TabsContent>
-            <TabsContent value="note">No note.</TabsContent>
+            <TabsContent value="note">
+              <FormField
+                control={form.control}
+                name="note"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Note</FormLabel>
+                    <FormControl>
+                      <Textarea className="resize-none" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </TabsContent>
             <Button
               disabled={form.formState.isSubmitting}
               type="submit"

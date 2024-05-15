@@ -48,6 +48,7 @@ export type Member = {
   status: string;
   measure: string;
   registrationDate: string;
+  note: string;
 };
 
 import { Label } from "@/components/ui/label";
