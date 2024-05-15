@@ -125,6 +125,8 @@ i18n
             suspended: "Suspended till:",
             notSuspended: "not suspended",
             save: "Save",
+            noteLabel: "Note",
+            suspensionLabel: "Reason for suspension",
           },
           durations: {
             year_one: "year",
@@ -248,6 +250,8 @@ i18n
             suspended: "Sospeso fino a:",
             notSuspended: "non sospeso",
             save: "Salva",
+            noteLabel: "Nota",
+            suspensionLabel: "Motivo della sospensione",
           },
           durations: {
             year_one: "anno",

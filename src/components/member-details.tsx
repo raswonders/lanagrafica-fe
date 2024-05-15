@@ -271,7 +271,9 @@ export function MemberDetails({
                       name="measure"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Reason for suspension</FormLabel>
+                          <FormLabel>
+                            {t("memberDetails.suspensionLabel")}
+                          </FormLabel>
                           <FormControl>
                             <Textarea className="resize-none" {...field} />
                           </FormControl>
@@ -379,7 +381,7 @@ export function MemberDetails({
                 name="note"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Note</FormLabel>
+                    <FormLabel>{t("memberDetails.noteLabel")}</FormLabel>
                     <FormControl>
                       <Textarea className="resize-none" {...field} />
                     </FormControl>
