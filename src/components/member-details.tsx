@@ -71,11 +71,14 @@ export function MemberDetails({
     country: z.string().min(1, { message: t("validation.required") }),
     docType: z.string().min(1, { message: t("validation.required") }),
     docId: z.string().min(1, { message: t("validation.required") }),
-    email: z.string(),
-    measure: z.string().refine((measure) => !(measure === "" && isSuspended), {
-      message: t("validation.required"),
-    }),
-    note: z.string(),
+    email: z.string().nullish(),
+    measure: z
+      .string()
+      .nullish()
+      .refine((measure) => measure || !isSuspended, {
+        message: t("validation.required"),
+      }),
+    note: z.string().nullish(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
