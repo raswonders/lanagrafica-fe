@@ -306,7 +306,6 @@ export function DataTable({ search }: { search: string | null }) {
                             <DrawerDescription>
                               <MemberDetails
                                 row={row.original}
-                                isRenewing={isRenewing}
                                 updateMutation={updateMutation}
                               />
                             </DrawerDescription>
@@ -331,7 +330,6 @@ export function DataTable({ search }: { search: string | null }) {
                             <SheetDescription>
                               <MemberDetails
                                 row={row.original}
-                                isRenewing={isRenewing}
                                 updateMutation={updateMutation}
                               />
                             </SheetDescription>

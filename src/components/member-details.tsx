@@ -43,7 +43,6 @@ import { Member } from "./members-table";
 
 export function MemberDetails({
   row,
-  isRenewing,
   updateMutation,
 }: {
   row: Member;
@@ -129,7 +128,6 @@ export function MemberDetails({
   const isItaly = country === "Italy";
   const isExpired = hasExpired(new Date(expirationDate));
   const isRenewForbidden =
-    isRenewing[row.id] ||
     row.status === "active" ||
     row.status === "suspended" ||
     row.status === "deleted";
