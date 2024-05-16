@@ -131,7 +131,7 @@ export function MemberDetails({
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
-  const isSuspended = Boolean(form.watch("suspendedTill"));
+  const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
   const isExpired = hasExpired(new Date(expirationDate));
   const isRenewForbidden =
     row.status === "active" ||
