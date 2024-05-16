@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/form";
 import { SerializedMember } from "./pages/new-member";
 import { Member, UpdateMutation } from "./members-table";
+import { Input } from "./ui/input";
 
 export function MemberDetails({
   row,
@@ -54,9 +55,7 @@ export function MemberDetails({
   const [day, setDay] = useState(parseDay(row.birthDate));
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
-  const [suspendedTill, setSuspendedTill] = useState(row.suspendedTill);
   const [expirationDate, setExpirationDate] = useState(row.expirationDate);
-  const isSuspended = Boolean(suspendedTill);
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -76,6 +75,7 @@ export function MemberDetails({
       message: t("validation.required"),
     }),
     note: z.string(),
+    suspendedTill: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -91,12 +91,14 @@ export function MemberDetails({
       email: row.email || "",
       measure: row.measure || "",
       note: row.note || "",
+      suspendedTill: row.suspendedTill || "",
     },
   });
+
+  const { isDirty } = form.formState;
   interface ExtendedRow extends z.infer<typeof formSchema> {
     [key: string]: unknown;
     expirationDate: string;
-    suspendedTill: string;
     isActive: boolean;
   }
 
@@ -106,7 +108,6 @@ export function MemberDetails({
     const extended: ExtendedRow = {
       ...row,
       expirationDate,
-      suspendedTill,
       isActive: isActive,
     };
 
@@ -130,6 +131,7 @@ export function MemberDetails({
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
+  const isSuspended = Boolean(form.watch("suspendedTill"));
   const isExpired = hasExpired(new Date(expirationDate));
   const isRenewForbidden =
     row.status === "active" ||
@@ -255,16 +257,27 @@ export function MemberDetails({
                   </div>
                 </div>
                 <div className="flex flex-col gap-4">
-                  <div className="flex justify-between items-center">
-                    <div className={`text-neutral-12 font-semibold`}>
-                      {t("memberDetails.suspended")}
-                    </div>
-                    <div>
-                      {isSuspended
-                        ? getCustomDate(suspendedTill)
-                        : t("memberDetails.notSuspended")}
-                    </div>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="suspendedTill"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("memberDetails.suspended")}</FormLabel>
+                        <FormControl>
+                          <Input
+                            disabled={true}
+                            placeholder={t("memberDetails.notSuspended")}
+                            {...field}
+                            value={
+                              isSuspended
+                                ? getCustomDate(form.watch("suspendedTill"))
+                                : t("memberDetails.notSuspended")
+                            }
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                   <div className="flex flex-col space-y-6">
                     <FormField
                       control={form.control}
@@ -292,7 +305,7 @@ export function MemberDetails({
                         variant="suspended"
                         className="self-start"
                         onClick={() => {
-                          setSuspendedTill("");
+                          form.setValue("suspendedTill", "");
                           form.setValue("measure", "");
                         }}
                       >
@@ -321,7 +334,10 @@ export function MemberDetails({
                                 size="sm"
                                 variant="suspended"
                                 onClick={() => {
-                                  setSuspendedTill(getDateWeekLater());
+                                  form.setValue(
+                                    "suspendedTill",
+                                    getDateWeekLater(),
+                                  );
                                 }}
                               >
                                 week
@@ -332,7 +348,10 @@ export function MemberDetails({
                                 size="sm"
                                 variant="suspended"
                                 onClick={() => {
-                                  setSuspendedTill(getDateMonthsLater(1));
+                                  form.setValue(
+                                    "suspendedTill",
+                                    getDateMonthsLater(1),
+                                  );
                                 }}
                               >
                                 {t("durations.month", { count: 1 })}
@@ -343,7 +362,10 @@ export function MemberDetails({
                                 size="sm"
                                 variant="suspended"
                                 onClick={() => {
-                                  setSuspendedTill(getDateMonthsLater(3));
+                                  form.setValue(
+                                    "suspendedTill",
+                                    getDateMonthsLater(3),
+                                  );
                                 }}
                               >
                                 {t("durations.month", { count: 3 })}
@@ -354,7 +376,10 @@ export function MemberDetails({
                                 size="sm"
                                 variant="suspended"
                                 onClick={() => {
-                                  setSuspendedTill(getDateMonthsLater(6));
+                                  form.setValue(
+                                    "suspendedTill",
+                                    getDateMonthsLater(6),
+                                  );
                                 }}
                               >
                                 {t("durations.month", { count: 6 })}
@@ -365,7 +390,10 @@ export function MemberDetails({
                                 size="sm"
                                 variant="suspended"
                                 onClick={() => {
-                                  setSuspendedTill(getDateMonthsLater(12));
+                                  form.setValue(
+                                    "suspendedTill",
+                                    getDateMonthsLater(12),
+                                  );
                                 }}
                               >
                                 {t("durations.year", { count: 1 })}
@@ -395,7 +423,7 @@ export function MemberDetails({
               />
             </TabsContent>
             <Button
-              disabled={!form.formState.isDirty || form.formState.isSubmitting}
+              disabled={!isDirty || form.formState.isSubmitting}
               type="submit"
               className="w-full mt-8"
             >
