@@ -113,7 +113,7 @@ export function Combobox({
                         value={entry}
                         key={entry}
                         onSelect={() => {
-                          form.setValue(name, entry);
+                          form.setValue(name, entry, { shouldDirty: true });
                           form.clearErrors(name);
                           setOpen(false);
                         }}
