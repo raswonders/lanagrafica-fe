@@ -55,7 +55,6 @@ export function MemberDetails({
   const [day, setDay] = useState(parseDay(row.birthDate));
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
-  const [expirationDate, setExpirationDate] = useState(row.expirationDate);
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -76,6 +75,7 @@ export function MemberDetails({
     }),
     note: z.string(),
     suspendedTill: z.string(),
+    expirationDate: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -92,13 +92,13 @@ export function MemberDetails({
       measure: row.measure || "",
       note: row.note || "",
       suspendedTill: row.suspendedTill || "",
+      expirationDate: row.expirationDate || "",
     },
   });
 
   const { isDirty } = form.formState;
   interface ExtendedRow extends z.infer<typeof formSchema> {
     [key: string]: unknown;
-    expirationDate: string;
     isActive: boolean;
   }
 
@@ -107,7 +107,6 @@ export function MemberDetails({
   ): Partial<SerializedMember> {
     const extended: ExtendedRow = {
       ...row,
-      expirationDate,
       isActive: isActive,
     };
 
@@ -132,7 +131,7 @@ export function MemberDetails({
   const country = form.watch("country");
   const isItaly = country === "Italy";
   const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
-  const isExpired = hasExpired(new Date(expirationDate));
+  const isExpired: boolean = hasExpired(new Date(form.watch("expirationDate")));
   const isRenewForbidden =
     row.status === "active" ||
     row.status === "suspended" ||
@@ -242,21 +241,39 @@ export function MemberDetails({
                     </FormItem>
                   )}
                 />
-                <div className="flex justify-between items-center">
-                  <div className={`text-neutral-12 font-semibold`}>
-                    {isExpired
-                      ? t("memberDetails.expired")
-                      : t("memberDetails.expires")}
-                  </div>
-                  <div>{getCustomDate(expirationDate)}</div>
-                </div>
+
+                <FormField
+                  control={form.control}
+                  name="expirationDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {isExpired
+                          ? t("memberDetails.expired")
+                          : t("memberDetails.expires")}
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={true}
+                          placeholder={t("memberDetails.notSuspended")}
+                          {...field}
+                          value={getCustomDate(form.watch("expirationDate"))}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
                 <div className="flex">
                   <Button
                     disabled={form.formState.isSubmitting || isRenewForbidden}
                     type="button"
                     variant="active"
                     className="self-start"
-                    onClick={() => setExpirationDate(getDateMonthsLater(12))}
+                    onClick={() =>
+                      form.setValue("expirationDate", getDateMonthsLater(12), {
+                        shouldDirty: true,
+                      })
+                    }
                   >
                     <RefreshCcw className={`w-5 mr-3`} />
                     {t("memberDetails.renew")}
