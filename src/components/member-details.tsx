@@ -228,33 +228,39 @@ export function MemberDetails({
             </TabsContent>
             <TabsContent value="membership">
               <div className="flex flex-col space-y-8">
-                <div className="flex flex-col gap-4">
-                  <div className="flex justify-between items-center">
-                    <div className="text-neutral-12 font-semibold">
-                      {t("memberDetails.registered")}
-                    </div>
-                    <div>{getCustomDate(row.registrationDate)}</div>
+                <FormField
+                  name="registrationDate"
+                  render={() => (
+                    <FormItem>
+                      <FormLabel>{t("memberDetails.registered")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={true}
+                          value={getCustomDate(row.registrationDate)}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <div className="flex justify-between items-center">
+                  <div className={`text-neutral-12 font-semibold`}>
+                    {isExpired
+                      ? t("memberDetails.expired")
+                      : t("memberDetails.expires")}
                   </div>
-                  <div className="flex justify-between items-center">
-                    <div className={`text-neutral-12 font-semibold`}>
-                      {isExpired
-                        ? t("memberDetails.expired")
-                        : t("memberDetails.expires")}
-                    </div>
-                    <div>{getCustomDate(expirationDate)}</div>
-                  </div>
-                  <div className="flex">
-                    <Button
-                      disabled={form.formState.isSubmitting || isRenewForbidden}
-                      type="button"
-                      variant="active"
-                      className="self-start"
-                      onClick={() => setExpirationDate(getDateMonthsLater(12))}
-                    >
-                      <RefreshCcw className={`w-5 mr-3`} />
-                      {t("memberDetails.renew")}
-                    </Button>
-                  </div>
+                  <div>{getCustomDate(expirationDate)}</div>
+                </div>
+                <div className="flex">
+                  <Button
+                    disabled={form.formState.isSubmitting || isRenewForbidden}
+                    type="button"
+                    variant="active"
+                    className="self-start"
+                    onClick={() => setExpirationDate(getDateMonthsLater(12))}
+                  >
+                    <RefreshCcw className={`w-5 mr-3`} />
+                    {t("memberDetails.renew")}
+                  </Button>
                 </div>
                 <div className="flex flex-col gap-4">
                   <FormField
