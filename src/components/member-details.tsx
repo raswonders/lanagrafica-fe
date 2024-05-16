@@ -132,10 +132,7 @@ export function MemberDetails({
   const isItaly = country === "Italy";
   const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
   const isExpired: boolean = hasExpired(new Date(form.watch("expirationDate")));
-  const isRenewForbidden =
-    row.status === "active" ||
-    row.status === "suspended" ||
-    row.status === "deleted";
+  const isRenewAllowed = !isSuspended && isExpired;
   const isActive = !isSuspended && !isExpired;
 
   return (
@@ -265,7 +262,7 @@ export function MemberDetails({
                 />
                 <div className="flex">
                   <Button
-                    disabled={form.formState.isSubmitting || isRenewForbidden}
+                    disabled={form.formState.isSubmitting || !isRenewAllowed}
                     type="button"
                     variant="active"
                     className="self-start"
