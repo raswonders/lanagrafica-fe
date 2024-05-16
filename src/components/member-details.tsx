@@ -271,7 +271,7 @@ export function MemberDetails({
                             value={
                               isSuspended
                                 ? getCustomDate(form.watch("suspendedTill"))
-                                : t("memberDetails.notSuspended")
+                                : ""
                             }
                           />
                         </FormControl>
@@ -305,8 +305,12 @@ export function MemberDetails({
                         variant="suspended"
                         className="self-start"
                         onClick={() => {
-                          form.setValue("suspendedTill", "");
-                          form.setValue("measure", "");
+                          form.setValue("suspendedTill", "", {
+                            shouldDirty: true,
+                          });
+                          form.setValue("measure", "", {
+                            shouldDirty: true,
+                          });
                         }}
                       >
                         <Ban className={"w-5 mr-3"} />
@@ -337,6 +341,9 @@ export function MemberDetails({
                                   form.setValue(
                                     "suspendedTill",
                                     getDateWeekLater(),
+                                    {
+                                      shouldDirty: true,
+                                    },
                                   );
                                 }}
                               >
@@ -351,6 +358,9 @@ export function MemberDetails({
                                   form.setValue(
                                     "suspendedTill",
                                     getDateMonthsLater(1),
+                                    {
+                                      shouldDirty: true,
+                                    },
                                   );
                                 }}
                               >
@@ -365,6 +375,9 @@ export function MemberDetails({
                                   form.setValue(
                                     "suspendedTill",
                                     getDateMonthsLater(3),
+                                    {
+                                      shouldDirty: true,
+                                    },
                                   );
                                 }}
                               >
@@ -379,6 +392,9 @@ export function MemberDetails({
                                   form.setValue(
                                     "suspendedTill",
                                     getDateMonthsLater(6),
+                                    {
+                                      shouldDirty: true,
+                                    },
                                   );
                                 }}
                               >
@@ -393,6 +409,9 @@ export function MemberDetails({
                                   form.setValue(
                                     "suspendedTill",
                                     getDateMonthsLater(12),
+                                    {
+                                      shouldDirty: true,
+                                    },
                                   );
                                 }}
                               >
