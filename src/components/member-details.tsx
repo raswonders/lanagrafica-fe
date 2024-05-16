@@ -347,7 +347,7 @@ export function MemberDetails({
                                   );
                                 }}
                               >
-                                week
+                                {t("durations.week", { count: 1 })}
                               </Button>
                             </li>
                             <li>
