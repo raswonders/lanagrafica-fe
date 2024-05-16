@@ -46,6 +46,9 @@ export type Member = {
   isActive: boolean;
   isDeleted: boolean;
   status: string;
+  measure: string;
+  registrationDate: string;
+  note: string;
 };
 
 import { Label } from "@/components/ui/label";
@@ -56,7 +59,6 @@ import {
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
 import { EyeOff, Filter, RefreshCcw, SquarePen } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   useInfiniteQuery,
   useMutation,
@@ -73,12 +75,42 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { MemberDetails } from "./member-details";
+import { StatusBadge } from "./status-badge";
+import { SerializedMember } from "./pages/new-member";
+
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
 
 export type RenewMutation = {
   mutate: (args: { id: number; expirationDate: string; name: string }) => void;
 };
+
+export type UpdateMutation = {
+  mutate: (args: {
+    id: number;
+    details: Partial<SerializedMember>;
+    name: string;
+  }) => void;
+};
+
 interface Row {
   original: Member;
 }
@@ -104,10 +136,38 @@ async function renewMemberCard(
   return data;
 }
 
+async function updateMember(
+  id: number,
+  details: Partial<SerializedMember>,
+): Promise<Member | null> {
+  const { data, error } = await supabase
+    .from("member")
+    .update(details)
+    .eq("id", id);
+
+  if (error) throw error;
+
+  return data;
+}
+
 export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
   const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
   const queryClient = useQueryClient();
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const renewMutation = useMutation({
     mutationFn: (variables: {
@@ -138,6 +198,26 @@ export function DataTable({ search }: { search: string | null }) {
         ...prev,
         [variables.id]: false,
       }));
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (variables: {
+      id: number;
+      details: Partial<SerializedMember>;
+      name: string;
+    }) => updateMember(variables.id, variables.details),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      toast.success(t("membersTable.updateSuccess", { name: variables.name }));
+    },
+    onError: (error, variables) => {
+      console.error(t("membersTable.updateError"), error);
+      toast.error(
+        t("membersTable.updateError", {
+          name: variables.name,
+        }),
+      );
     },
   });
 
@@ -180,29 +260,7 @@ export function DataTable({ search }: { search: string | null }) {
       }),
       columnHelper.accessor("status", {
         meta: t("membersTable.status"),
-        cell: (info) => {
-          const name = info.getValue();
-          let variantName;
-
-          if (name === "expired") {
-            variantName = "inactive";
-          } else {
-            variantName = name;
-          }
-
-          return (
-            <Badge
-              variant={
-                (variantName as "active") ||
-                "inactive" ||
-                "suspended" ||
-                "deleted"
-              }
-            >
-              {t("membersTable." + name)}
-            </Badge>
-          );
-        },
+        cell: (info) => <StatusBadge status={info.getValue()} />,
         header: () => <span>{t("membersTable.status")}</span>,
         filterFn: "equals",
       }),
@@ -244,9 +302,52 @@ export function DataTable({ search }: { search: string | null }) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <Button size="icon" variant="ghost">
-                      <SquarePen className="w-5" />
-                    </Button>
+                    {isMobile ? (
+                      <Drawer>
+                        <DrawerTrigger asChild>
+                          <Button size="icon" variant="ghost">
+                            <SquarePen className="w-5" />
+                          </Button>
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>
+                              {`${row.original.name} ${row.original.surname}`}
+                            </DrawerTitle>
+                            <DrawerDescription>
+                              <MemberDetails
+                                row={row.original}
+                                updateMutation={updateMutation}
+                              />
+                            </DrawerDescription>
+                          </DrawerHeader>
+                        </DrawerContent>
+                      </Drawer>
+                    ) : (
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button size="icon" variant="ghost">
+                            <SquarePen className="w-5" />
+                          </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                          <SheetHeader>
+                            <SheetTitle>
+                              <div className="flex gap-2 my-4">
+                                {`${row.original.name} ${row.original.surname}`}
+                                <StatusBadge status={row.original.status} />
+                              </div>
+                            </SheetTitle>
+                            <SheetDescription>
+                              <MemberDetails
+                                row={row.original}
+                                updateMutation={updateMutation}
+                              />
+                            </SheetDescription>
+                          </SheetHeader>
+                        </SheetContent>
+                      </Sheet>
+                    )}
                   </TooltipTrigger>
                   <TooltipContent>
                     {t("membersTable.editMember")}
@@ -283,7 +384,7 @@ export function DataTable({ search }: { search: string | null }) {
         },
       },
     ],
-    [t, isRenewing],
+    [t, isRenewing, isMobile, renewMutation, updateMutation],
   );
 
   const [columnVisibility, setColumnVisibility] = useState({

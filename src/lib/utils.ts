@@ -16,6 +16,16 @@ export function createDateString(day: string, month: string, year: string) {
   return `${year}-${paddedMonth}-${paddedDay}`;
 }
 
+export function parseDay(dateISO: string) {
+  return dateISO.split("-")[2];
+}
+export function parseMonth(dateISO: string) {
+  return dateISO.split("-")[1];
+}
+export function parseYear(dateISO: string) {
+  return dateISO.split("-")[0];
+}
+
 export function isValidISODate(value: string) {
   const date = new Date(value);
   return !isNaN(date.getTime()) && value === date.toISOString().slice(0, 10);
@@ -118,4 +128,16 @@ export function getExpirationDate(): string {
   const expiration = new Date();
   expiration.setFullYear(expiration.getFullYear() + 1);
   return expiration.toISOString().split("T")[0];
+}
+
+export function getDateWeekLater() {
+  const date = new Date();
+  date.setDate(date.getDay() + 7);
+  return date.toISOString().split("T")[0];
+}
+
+export function getDateMonthsLater(count: number) {
+  const date = new Date();
+  date.setMonth(date.getMonth() + count);
+  return date.toISOString().split("T")[0];
 }
