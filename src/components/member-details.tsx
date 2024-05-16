@@ -71,14 +71,11 @@ export function MemberDetails({
     country: z.string().min(1, { message: t("validation.required") }),
     docType: z.string().min(1, { message: t("validation.required") }),
     docId: z.string().min(1, { message: t("validation.required") }),
-    email: z.string().nullish(),
-    measure: z
-      .string()
-      .nullish()
-      .refine((measure) => measure || !isSuspended, {
-        message: t("validation.required"),
-      }),
-    note: z.string().nullish(),
+    email: z.string(),
+    measure: z.string().refine((measure) => measure || !isSuspended, {
+      message: t("validation.required"),
+    }),
+    note: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -91,9 +88,9 @@ export function MemberDetails({
       country: row.country,
       docType: row.docType,
       docId: row.docId,
-      email: row.email,
-      measure: row.measure,
-      note: row.note,
+      email: row.email || "",
+      measure: row.measure || "",
+      note: row.note || "",
     },
   });
   interface ExtendedRow extends z.infer<typeof formSchema> {
