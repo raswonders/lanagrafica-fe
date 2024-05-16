@@ -55,6 +55,7 @@ export function MemberDetails({
   const [day, setDay] = useState(parseDay(row.birthDate));
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
+  const focusDelay = 50;
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -365,6 +366,9 @@ export function MemberDetails({
                                       shouldDirty: true,
                                     },
                                   );
+                                  setTimeout(() => {
+                                    form.setFocus("measure");
+                                  }, focusDelay);
                                 }}
                               >
                                 {t("durations.week", { count: 1 })}
@@ -382,6 +386,9 @@ export function MemberDetails({
                                       shouldDirty: true,
                                     },
                                   );
+                                  setTimeout(() => {
+                                    form.setFocus("measure");
+                                  }, focusDelay);
                                 }}
                               >
                                 {t("durations.month", { count: 1 })}
@@ -399,6 +406,9 @@ export function MemberDetails({
                                       shouldDirty: true,
                                     },
                                   );
+                                  setTimeout(() => {
+                                    form.setFocus("measure");
+                                  }, focusDelay);
                                 }}
                               >
                                 {t("durations.month", { count: 3 })}
@@ -416,6 +426,9 @@ export function MemberDetails({
                                       shouldDirty: true,
                                     },
                                   );
+                                  setTimeout(() => {
+                                    form.setFocus("measure");
+                                  }, focusDelay);
                                 }}
                               >
                                 {t("durations.month", { count: 6 })}
@@ -433,6 +446,9 @@ export function MemberDetails({
                                       shouldDirty: true,
                                     },
                                   );
+                                  setTimeout(() => {
+                                    form.setFocus("measure");
+                                  }, focusDelay);
                                 }}
                               >
                                 {t("durations.year", { count: 1 })}
