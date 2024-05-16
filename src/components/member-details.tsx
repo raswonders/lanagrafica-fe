@@ -275,7 +275,11 @@ export function MemberDetails({
                             {t("memberDetails.suspensionLabel")}
                           </FormLabel>
                           <FormControl>
-                            <Textarea className="resize-none" {...field} />
+                            <Textarea
+                              disabled={!isSuspended}
+                              className="resize-none"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
