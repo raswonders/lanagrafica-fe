@@ -323,30 +323,17 @@ export function DataTable({ search }: { search: string | null }) {
                 </TooltipProvider>
               </Sheet>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <RenewConfirm
-                      isOpenForbidden={isRenewForbidden}
-                      id={row.original.id}
-                      name={`${row.original.name} ${row.original.surname}`}
-                      expirationDate={row.original.expirationDate}
-                      renewMutation={renewMutation}
-                    >
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        disabled={isRenewForbidden}
-                      >
-                        <RefreshCcw className={`w-5`} />
-                      </Button>
-                    </RenewConfirm>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {t("membersTable.renewMember")}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <RenewConfirm
+                isOpenForbidden={isRenewForbidden}
+                id={row.original.id}
+                name={`${row.original.name} ${row.original.surname}`}
+                expirationDate={row.original.expirationDate}
+                renewMutation={renewMutation}
+              >
+                <Button size="icon" variant="ghost" disabled={isRenewForbidden}>
+                  <RefreshCcw className={`w-5`} />
+                </Button>
+              </RenewConfirm>
             </div>
           );
         },
