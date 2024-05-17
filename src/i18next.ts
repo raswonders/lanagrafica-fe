@@ -15,7 +15,6 @@ i18n
       en: {
         translation: {
           navbar: {
-            home: "Home",
             members: "Members",
             cards: "Cards",
             addMember: "Add member",
@@ -53,9 +52,6 @@ i18n
           members: {
             title: "Members",
             searchPlaceholder: "Search name",
-          },
-          home: {
-            title: "Home",
           },
           validation: {
             required: "is required",
@@ -141,7 +137,6 @@ i18n
       it: {
         translation: {
           navbar: {
-            home: "Casa",
             members: "Membri",
             cards: "Carte",
             addMember: "Aggiungi membro",
@@ -179,9 +174,6 @@ i18n
           members: {
             title: "Members",
             searchPlaceholder: "Cerca nome",
-          },
-          home: {
-            title: "Casa",
           },
           validation: {
             required: "è richiesto",

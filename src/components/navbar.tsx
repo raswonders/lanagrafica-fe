@@ -26,7 +26,7 @@ export function Navbar() {
         {user && (
           <ul className="flex gap-3">
             <li>
-              <NavLink to={"/members"} tabIndex={-1}>
+              <NavLink to={"/"} tabIndex={-1}>
                 {({ isActive }) => (
                   <Button
                     variant="ghost"
