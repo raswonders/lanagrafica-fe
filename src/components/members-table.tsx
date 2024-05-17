@@ -290,63 +290,50 @@ export function DataTable({ search }: { search: string | null }) {
 
           return (
             <div className="flex">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Sheet>
+              <Sheet>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
                       <SheetTrigger asChild>
                         <Button size="icon" variant="ghost">
                           <SquarePen className="w-5" />
                         </Button>
                       </SheetTrigger>
-                      <SheetContent
-                        className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}
-                      >
-                        <SheetHeader>
-                          <SheetTitle>
-                            <div className="flex gap-2 my-4">
-                              {`${row.original.name} ${row.original.surname}`}
-                              <StatusBadge status={row.original.status} />
-                            </div>
-                          </SheetTitle>
-                        </SheetHeader>
-                        <MemberDetails
-                          row={row.original}
-                          updateMutation={updateMutation}
-                        />
-                      </SheetContent>
-                    </Sheet>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {t("membersTable.editMember")}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {t("membersTable.editMember")}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <SheetContent
+                  className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}
+                >
+                  <SheetHeader>
+                    <SheetTitle>
+                      <div className="flex gap-2 my-4">
+                        {`${row.original.name} ${row.original.surname}`}
+                        <StatusBadge status={row.original.status} />
+                      </div>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <MemberDetails
+                    row={row.original}
+                    updateMutation={updateMutation}
+                  />
+                </SheetContent>
+              </Sheet>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <RenewConfirm
-                      isOpenForbidden={isRenewForbidden}
-                      id={row.original.id}
-                      name={`${row.original.name} ${row.original.surname}`}
-                      expirationDate={row.original.expirationDate}
-                      renewMutation={renewMutation}
-                    >
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        disabled={isRenewForbidden}
-                      >
-                        <RefreshCcw className={`w-5`} />
-                      </Button>
-                    </RenewConfirm>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {t("membersTable.renewMember")}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <RenewConfirm
+                isOpenForbidden={isRenewForbidden}
+                id={row.original.id}
+                name={`${row.original.name} ${row.original.surname}`}
+                expirationDate={row.original.expirationDate}
+                renewMutation={renewMutation}
+              >
+                <Button size="icon" variant="ghost" disabled={isRenewForbidden}>
+                  <RefreshCcw className={`w-5`} />
+                </Button>
+              </RenewConfirm>
             </div>
           );
         },

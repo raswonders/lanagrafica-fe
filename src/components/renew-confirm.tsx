@@ -13,6 +13,13 @@ import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { RenewMutation } from "./members-table";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 type RenewConfirmProps = {
   children: ReactNode;
   isOpenForbidden: boolean;
@@ -41,7 +48,14 @@ export function RenewConfirm({
         setOpen(nextOpen);
       }}
     >
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>{t("membersTable.renewMember")}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>

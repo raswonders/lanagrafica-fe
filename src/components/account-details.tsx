@@ -31,7 +31,7 @@ export function AccountDetails() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger tabIndex={-1}>
+      <DropdownMenuTrigger asChild>
         <Button variant="ghost">#{user?.username}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
