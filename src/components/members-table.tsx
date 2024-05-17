@@ -95,6 +95,7 @@ import {
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
 import { SerializedMember } from "./pages/new-member";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -302,52 +303,27 @@ export function DataTable({ search }: { search: string | null }) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    {isMobile ? (
-                      <Drawer>
-                        <DrawerTrigger asChild>
-                          <Button size="icon" variant="ghost">
-                            <SquarePen className="w-5" />
-                          </Button>
-                        </DrawerTrigger>
-                        <DrawerContent>
-                          <DrawerHeader>
-                            <DrawerTitle>
+                    <Sheet>
+                      <SheetTrigger asChild>
+                        <Button size="icon" variant="ghost">
+                          <SquarePen className="w-5" />
+                        </Button>
+                      </SheetTrigger>
+                      <SheetContent className="overflow-y-scroll w-full">
+                        <SheetHeader>
+                          <SheetTitle>
+                            <div className="flex gap-2 my-4">
                               {`${row.original.name} ${row.original.surname}`}
-                            </DrawerTitle>
-                            <DrawerDescription>
-                              <MemberDetails
-                                row={row.original}
-                                updateMutation={updateMutation}
-                              />
-                            </DrawerDescription>
-                          </DrawerHeader>
-                        </DrawerContent>
-                      </Drawer>
-                    ) : (
-                      <Sheet>
-                        <SheetTrigger asChild>
-                          <Button size="icon" variant="ghost">
-                            <SquarePen className="w-5" />
-                          </Button>
-                        </SheetTrigger>
-                        <SheetContent>
-                          <SheetHeader>
-                            <SheetTitle>
-                              <div className="flex gap-2 my-4">
-                                {`${row.original.name} ${row.original.surname}`}
-                                <StatusBadge status={row.original.status} />
-                              </div>
-                            </SheetTitle>
-                            <SheetDescription>
-                              <MemberDetails
-                                row={row.original}
-                                updateMutation={updateMutation}
-                              />
-                            </SheetDescription>
-                          </SheetHeader>
-                        </SheetContent>
-                      </Sheet>
-                    )}
+                              <StatusBadge status={row.original.status} />
+                            </div>
+                          </SheetTitle>
+                        </SheetHeader>
+                        <MemberDetails
+                          row={row.original}
+                          updateMutation={updateMutation}
+                        />
+                      </SheetContent>
+                    </Sheet>
                   </TooltipTrigger>
                   <TooltipContent>
                     {t("membersTable.editMember")}
