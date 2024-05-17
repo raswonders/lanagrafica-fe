@@ -300,27 +300,27 @@ export function DataTable({ search }: { search: string | null }) {
                         </Button>
                       </SheetTrigger>
                     </TooltipTrigger>
-                    <SheetContent
-                      className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}
-                    >
-                      <SheetHeader>
-                        <SheetTitle>
-                          <div className="flex gap-2 my-4">
-                            {`${row.original.name} ${row.original.surname}`}
-                            <StatusBadge status={row.original.status} />
-                          </div>
-                        </SheetTitle>
-                      </SheetHeader>
-                      <MemberDetails
-                        row={row.original}
-                        updateMutation={updateMutation}
-                      />
-                    </SheetContent>
                     <TooltipContent>
                       {t("membersTable.editMember")}
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
+                <SheetContent
+                  className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}
+                >
+                  <SheetHeader>
+                    <SheetTitle>
+                      <div className="flex gap-2 my-4">
+                        {`${row.original.name} ${row.original.surname}`}
+                        <StatusBadge status={row.original.status} />
+                      </div>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <MemberDetails
+                    row={row.original}
+                    updateMutation={updateMutation}
+                  />
+                </SheetContent>
               </Sheet>
 
               <RenewConfirm
