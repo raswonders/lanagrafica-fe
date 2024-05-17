@@ -78,24 +78,14 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
 import { SerializedMember } from "./pages/new-member";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -309,7 +299,9 @@ export function DataTable({ search }: { search: string | null }) {
                           <SquarePen className="w-5" />
                         </Button>
                       </SheetTrigger>
-                      <SheetContent className="overflow-y-scroll w-full">
+                      <SheetContent
+                        className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}
+                      >
                         <SheetHeader>
                           <SheetTitle>
                             <div className="flex gap-2 my-4">
