@@ -27,8 +27,8 @@ function App() {
       <Background
         style={{
           position: "fixed",
-          width: "100%",
-          height: "100%",
+          width: "max(100vw, 2560px)",
+          height: "auto",
           zIndex: "-9999",
         }}
       />
