@@ -10,14 +10,14 @@ export function Background() {
           viewBox="0 0 2560 1920"
           style={
             {
-              "--color-background-image-base": "var(--color-background)",
+              "--color-background-image-base": "var(--neutral-1)",
               "--color-background-image-accent-1": "var(--accent-1)",
               "--color-background-image-accent-2": "var(--accent-2)",
               "--color-background-image-accent-3": "var(--accent-3)",
-              "--color-background-image-accent-4": "var(--accent-4)",
+              "--color-background-image-accent-4": "var(--info-8)",
               "--color-background-image-accent-5": "var(--accent-5)",
-              "--color-background-image-accent-6": "var(--accent-6)",
-              opacity: "0.6",
+              "--color-background-image-accent-6": "var(--accent-7)",
+              opacity: "0.4",
               width: "max(100vw, 2560px)",
               height: "auto",
               overflow: "visible",
