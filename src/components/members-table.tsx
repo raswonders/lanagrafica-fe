@@ -456,6 +456,53 @@ export function DataTable({ search }: { search: string | null }) {
                 <Button variant="outline" className="my-6">
                   <Filter className="w-4 mr-2" />
                   {t("membersTable.addFilter")}
+                  {columnFilters.map((filter, index) => {
+                    let filterName = "";
+                    let filterVariant = "";
+
+                    if (filter.id === "isActive" && filter.value === true) {
+                      filterName = "active";
+                      filterVariant = "active";
+                    }
+
+                    if (filter.id === "isActive" && filter.value === false) {
+                      filterName = "inactive";
+                      filterVariant = "inactive";
+                    }
+
+                    if (filter.id === "expirationDate") {
+                      filterName = "expired";
+                      filterVariant = "inactive";
+                    }
+
+                    if (filter.id === "suspendedTill") {
+                      filterName = "suspended";
+                      filterVariant = "suspended";
+                    }
+
+                    if (filter.id === "isDeleted") {
+                      filterName = "deleted";
+                      filterVariant = "deleted";
+                    }
+
+                    return (
+                      <div className="ml-2">
+                        <Button
+                          variant={
+                            filterVariant as
+                              | "active"
+                              | "inactive"
+                              | "suspended"
+                              | "deleted"
+                          }
+                          size="xs"
+                          key={filterName}
+                        >
+                          {t("membersTable." + filterName)}
+                        </Button>
+                      </div>
+                    );
+                  })}
                 </Button>
               </PopoverTrigger>
               <PopoverContent>
@@ -508,54 +555,6 @@ export function DataTable({ search }: { search: string | null }) {
                 </ul>
               </PopoverContent>
             </Popover>
-          </div>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {columnFilters.map((filter, index) => {
-              let filterName = "";
-              let filterVariant = "";
-
-              if (filter.id === "isActive" && filter.value === true) {
-                filterName = "active";
-                filterVariant = "active";
-              }
-
-              if (filter.id === "isActive" && filter.value === false) {
-                filterName = "inactive";
-                filterVariant = "inactive";
-              }
-
-              if (filter.id === "expirationDate") {
-                filterName = "expired";
-                filterVariant = "inactive";
-              }
-
-              if (filter.id === "suspendedTill") {
-                filterName = "suspended";
-                filterVariant = "suspended";
-              }
-
-              if (filter.id === "isDeleted") {
-                filterName = "deleted";
-                filterVariant = "deleted";
-              }
-
-              return (
-                <Button
-                  variant={
-                    filterVariant as
-                      | "active"
-                      | "inactive"
-                      | "suspended"
-                      | "deleted"
-                  }
-                  size="xs"
-                  key={filterName}
-                  onClick={() => handleFilterBadgeRemoval(index)}
-                >
-                  {t("membersTable." + filterName)}
-                </Button>
-              );
-            })}
           </div>
         </div>
         <Popover>
