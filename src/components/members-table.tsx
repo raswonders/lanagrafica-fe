@@ -58,7 +58,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff, Filter, RefreshCcw, SquarePen } from "lucide-react";
+import {
+  EyeOff,
+  Filter,
+  MessageSquareText,
+  RefreshCcw,
+  SquarePen,
+} from "lucide-react";
 import {
   useInfiniteQuery,
   useMutation,
@@ -86,6 +92,7 @@ import {
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
 import { SerializedMember } from "./pages/new-member";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -287,6 +294,7 @@ export function DataTable({ search }: { search: string | null }) {
             row.original.status === "active" ||
             row.original.status === "suspended" ||
             row.original.status === "deleted";
+          const hasNote = Boolean(row.original.note);
 
           return (
             <div className="flex">
@@ -334,6 +342,20 @@ export function DataTable({ search }: { search: string | null }) {
                   <RefreshCcw className={`w-5`} />
                 </Button>
               </RenewConfirm>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="icon" variant="ghost" disabled={!hasNote}>
+                      <MessageSquareText className="w-5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-96">
+                      {t("memberDetails.noteLabel")}
+                      <p>{row.original.note}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           );
         },
