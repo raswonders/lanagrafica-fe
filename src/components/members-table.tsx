@@ -351,8 +351,8 @@ export function DataTable({ search }: { search: string | null }) {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent className="max-w-96">
-                      {t("memberDetails.noteLabel")}
-                      <p>{row.original.note}</p>
+                    {t("memberDetails.noteLabel")}
+                    <p>{row.original.note}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

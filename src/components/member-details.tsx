@@ -45,9 +45,11 @@ import { Input } from "./ui/input";
 export function MemberDetails({
   row,
   updateMutation,
+  initialTab="personal",
 }: {
   row: Member;
   updateMutation: UpdateMutation;
+  initialTab?: "personal" | "membership" | "note";
 }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
@@ -138,7 +140,7 @@ export function MemberDetails({
 
   return (
     <div className="flex justify-center">
-      <Tabs defaultValue="personal" className="w-[400px] space-y-6">
+      <Tabs defaultValue={initialTab} className="w-[400px] space-y-6">
         <TabsList>
           <TabsTrigger value="personal">
             {t("memberDetails.personalTab")}
