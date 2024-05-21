@@ -58,7 +58,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./ui/checkbox";
-import { EyeOff, Filter, RefreshCcw, SquarePen } from "lucide-react";
+import {
+  EyeOff,
+  Filter,
+  MessageSquareText,
+  RefreshCcw,
+  SquarePen,
+} from "lucide-react";
 import {
   useInfiniteQuery,
   useMutation,
@@ -68,21 +74,6 @@ import { Skeleton } from "./ui/skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RenewConfirm } from "./renew-confirm";
 import { toast } from "sonner";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
 import { SerializedMember } from "./pages/new-member";
@@ -145,20 +136,6 @@ export function DataTable({ search }: { search: string | null }) {
   const { t } = useTranslation();
   const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
   const queryClient = useQueryClient();
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const renewMutation = useMutation({
     mutationFn: (variables: {
@@ -287,41 +264,15 @@ export function DataTable({ search }: { search: string | null }) {
             row.original.status === "active" ||
             row.original.status === "suspended" ||
             row.original.status === "deleted";
+          const hasNote = Boolean(row.original.note);
 
           return (
             <div className="flex">
-              <Sheet>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <SheetTrigger asChild>
-                        <Button size="icon" variant="ghost">
-                          <SquarePen className="w-5" />
-                        </Button>
-                      </SheetTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      {t("membersTable.editMember")}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <SheetContent
-                  className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}
-                >
-                  <SheetHeader>
-                    <SheetTitle>
-                      <div className="flex gap-2 my-4">
-                        {`${row.original.name} ${row.original.surname}`}
-                        <StatusBadge status={row.original.status} />
-                      </div>
-                    </SheetTitle>
-                  </SheetHeader>
-                  <MemberDetails
-                    row={row.original}
-                    updateMutation={updateMutation}
-                  />
-                </SheetContent>
-              </Sheet>
+              <MemberDetails row={row.original} updateMutation={updateMutation}>
+                <Button size="icon" variant="ghost">
+                  <SquarePen className="w-5" />
+                </Button>
+              </MemberDetails>
 
               <RenewConfirm
                 isOpenForbidden={isRenewForbidden}
@@ -334,12 +285,22 @@ export function DataTable({ search }: { search: string | null }) {
                   <RefreshCcw className={`w-5`} />
                 </Button>
               </RenewConfirm>
+
+              <MemberDetails
+                row={row.original}
+                updateMutation={updateMutation}
+                variant="note"
+              >
+                <Button size="icon" variant="ghost" disabled={!hasNote}>
+                  <MessageSquareText className="w-5" />
+                </Button>
+              </MemberDetails>
             </div>
           );
         },
       },
     ],
-    [t, isRenewing, isMobile, renewMutation, updateMutation],
+    [t, isRenewing, renewMutation, updateMutation],
   );
 
   const [columnVisibility, setColumnVisibility] = useState({

@@ -25,7 +25,7 @@ import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ban, RefreshCcw } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Textarea } from "./ui/textarea";
@@ -41,13 +41,32 @@ import {
 import { SerializedMember } from "./pages/new-member";
 import { Member, UpdateMutation } from "./members-table";
 import { Input } from "./ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { StatusBadge } from "./status-badge";
 
 export function MemberDetails({
   row,
   updateMutation,
+  children,
+  variant = "personal",
 }: {
   row: Member;
   updateMutation: UpdateMutation;
+  children: React.ReactNode;
+  variant?: "personal" | "membership" | "note";
 }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
@@ -129,6 +148,7 @@ export function MemberDetails({
     });
   }
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const country = form.watch("country");
   const isItaly = country === "Italy";
   const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
@@ -136,357 +156,405 @@ export function MemberDetails({
   const isRenewAllowed = !isSuspended && isExpired;
   const isActive = !isSuspended && !isExpired;
 
-  return (
-    <div className="flex justify-center">
-      <Tabs defaultValue="personal" className="w-[400px] space-y-6">
-        <TabsList>
-          <TabsTrigger value="personal">
-            {t("memberDetails.personalTab")}
-          </TabsTrigger>
-          <TabsTrigger value="membership">
-            {t("memberDetails.membershipTab")}
-          </TabsTrigger>
-          <TabsTrigger value="note">{t("memberDetails.noteTab")}</TabsTrigger>
-        </TabsList>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <TabsContent value="personal">
-              <div className="space-y-8 flex flex-col">
-                <InputField
-                  form={form}
-                  label={t("newMember.nameFieldLabel")}
-                  name="name"
-                />
-                <InputField
-                  form={form}
-                  label={t("newMember.surnameFieldLabel")}
-                  name="surname"
-                />
-                <DateField
-                  form={form}
-                  label={t("newMember.dateFieldLabel")}
-                  name="birthDate"
-                  day={day}
-                  month={month}
-                  year={year}
-                  setDay={setDay}
-                  setMonth={setMonth}
-                  setYear={setYear}
-                />
-                <Combobox
-                  form={form}
-                  name="country"
-                  label={t("newMember.countryFieldLabel")}
-                  data={[
-                    i18n.language === "it" ? "__Altro__" : "__Other__",
-                    ...countries.map((entry) => entry.en),
-                  ]}
-                  search={countrySearch}
-                  setSearch={setCountrySearch}
-                />
-                <Combobox
-                  form={form}
-                  name="birthPlace"
-                  label={t("newMember.cityFieldLabel")}
-                  data={[
-                    i18n.language === "it" ? "__Altro__" : "__Other__",
-                    ...cities,
-                  ]}
-                  search={citySearch}
-                  setSearch={setCitySearch}
-                  value={
-                    isItaly
-                      ? cities.includes(row.birthPlace)
-                        ? row.birthPlace
-                        : ""
-                      : country
-                  }
-                  disabled={!isItaly}
-                />
-                <SelectField
-                  form={form}
-                  name="docType"
-                  label={t("newMember.docTypeFieldLabel")}
-                  data={documents.map((entry) =>
-                    i18n.language === "it" ? entry.it : entry.en,
-                  )}
-                />
-                <InputField
-                  form={form}
-                  label={t("newMember.docIdFieldLabel")}
-                  name="docId"
-                />
-                <InputField
-                  form={form}
-                  label={t("newMember.emailFieldLabel")}
-                  name="email"
-                />
-              </div>
-            </TabsContent>
-            <TabsContent value="membership">
-              <div className="flex flex-col space-y-8">
-                <FormField
-                  name="registrationDate"
-                  render={() => (
-                    <FormItem>
-                      <FormLabel>{t("memberDetails.registered")}</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={true}
-                          value={getCustomDate(row.registrationDate)}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-                <FormField
-                  control={form.control}
-                  name="expirationDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {isExpired
-                          ? t("memberDetails.expired")
-                          : t("memberDetails.expires")}
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={true}
-                          placeholder={t("memberDetails.notSuspended")}
-                          {...field}
-                          value={getCustomDate(form.watch("expirationDate"))}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <div className="flex">
-                  <Button
-                    disabled={form.formState.isSubmitting || !isRenewAllowed}
-                    type="button"
-                    variant="active"
-                    className="self-start"
-                    onClick={() =>
-                      form.setValue("expirationDate", getDateMonthsLater(12), {
-                        shouldDirty: true,
-                      })
-                    }
-                  >
-                    <RefreshCcw className={`w-5 mr-3`} />
-                    {t("memberDetails.renew")}
-                  </Button>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <FormField
-                    control={form.control}
-                    name="suspendedTill"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("memberDetails.suspended")}</FormLabel>
-                        <FormControl>
-                          <Input
-                            disabled={true}
-                            placeholder={t("memberDetails.notSuspended")}
-                            {...field}
-                            value={
-                              isSuspended
-                                ? getCustomDate(form.watch("suspendedTill"))
-                                : ""
-                            }
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  <div className="flex flex-col space-y-6">
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <Sheet>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <SheetTrigger asChild>{children}</SheetTrigger>
+          </TooltipTrigger>
+          <TooltipContent className={variant === "note" ? "max-w-96" : ""}>
+            {variant === "personal" && t("membersTable.editMember")}
+            {variant === "note" && row.note}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <SheetContent className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}>
+        <SheetHeader>
+          <SheetTitle>
+            <div className="flex gap-2 my-4">
+              {`${row.name} ${row.surname}`}
+              <StatusBadge status={row.status} />
+            </div>
+          </SheetTitle>
+        </SheetHeader>
+
+        <div className="flex justify-center">
+          <Tabs defaultValue={variant} className="w-[400px] space-y-6">
+            <TabsList>
+              <TabsTrigger value="personal">
+                {t("memberDetails.personalTab")}
+              </TabsTrigger>
+              <TabsTrigger value="membership">
+                {t("memberDetails.membershipTab")}
+              </TabsTrigger>
+              <TabsTrigger value="note">
+                {t("memberDetails.noteTab")}
+              </TabsTrigger>
+            </TabsList>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                <TabsContent value="personal">
+                  <div className="space-y-8 flex flex-col">
+                    <InputField
+                      form={form}
+                      label={t("newMember.nameFieldLabel")}
+                      name="name"
+                    />
+                    <InputField
+                      form={form}
+                      label={t("newMember.surnameFieldLabel")}
+                      name="surname"
+                    />
+                    <DateField
+                      form={form}
+                      label={t("newMember.dateFieldLabel")}
+                      name="birthDate"
+                      day={day}
+                      month={month}
+                      year={year}
+                      setDay={setDay}
+                      setMonth={setMonth}
+                      setYear={setYear}
+                    />
+                    <Combobox
+                      form={form}
+                      name="country"
+                      label={t("newMember.countryFieldLabel")}
+                      data={[
+                        i18n.language === "it" ? "__Altro__" : "__Other__",
+                        ...countries.map((entry) => entry.en),
+                      ]}
+                      search={countrySearch}
+                      setSearch={setCountrySearch}
+                    />
+                    <Combobox
+                      form={form}
+                      name="birthPlace"
+                      label={t("newMember.cityFieldLabel")}
+                      data={[
+                        i18n.language === "it" ? "__Altro__" : "__Other__",
+                        ...cities,
+                      ]}
+                      search={citySearch}
+                      setSearch={setCitySearch}
+                      value={
+                        isItaly
+                          ? cities.includes(row.birthPlace)
+                            ? row.birthPlace
+                            : ""
+                          : country
+                      }
+                      disabled={!isItaly}
+                    />
+                    <SelectField
+                      form={form}
+                      name="docType"
+                      label={t("newMember.docTypeFieldLabel")}
+                      data={documents.map((entry) =>
+                        i18n.language === "it" ? entry.it : entry.en,
+                      )}
+                    />
+                    <InputField
+                      form={form}
+                      label={t("newMember.docIdFieldLabel")}
+                      name="docId"
+                    />
+                    <InputField
+                      form={form}
+                      label={t("newMember.emailFieldLabel")}
+                      name="email"
+                    />
+                  </div>
+                </TabsContent>
+                <TabsContent value="membership">
+                  <div className="flex flex-col space-y-8">
                     <FormField
-                      control={form.control}
-                      name="measure"
-                      render={({ field }) => (
+                      name="registrationDate"
+                      render={() => (
                         <FormItem>
-                          <FormLabel>
-                            {t("memberDetails.suspensionLabel")}
-                          </FormLabel>
+                          <FormLabel>{t("memberDetails.registered")}</FormLabel>
                           <FormControl>
-                            <Textarea
-                              disabled={!isSuspended}
-                              className="resize-none"
-                              {...field}
+                            <Input
+                              disabled={true}
+                              value={getCustomDate(row.registrationDate)}
                             />
                           </FormControl>
-                          <FormMessage />
                         </FormItem>
                       )}
                     />
-                    {isSuspended ? (
+
+                    <FormField
+                      control={form.control}
+                      name="expirationDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            {isExpired
+                              ? t("memberDetails.expired")
+                              : t("memberDetails.expires")}
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              disabled={true}
+                              placeholder={t("memberDetails.notSuspended")}
+                              {...field}
+                              value={getCustomDate(
+                                form.watch("expirationDate"),
+                              )}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <div className="flex">
                       <Button
-                        disabled={form.formState.isSubmitting}
+                        disabled={
+                          form.formState.isSubmitting || !isRenewAllowed
+                        }
                         type="button"
-                        variant="suspended"
+                        variant="active"
                         className="self-start"
-                        onClick={() => {
-                          form.setValue("suspendedTill", "", {
-                            shouldDirty: true,
-                          });
-                          form.setValue("measure", "", {
-                            shouldDirty: true,
-                          });
-                        }}
+                        onClick={() =>
+                          form.setValue(
+                            "expirationDate",
+                            getDateMonthsLater(12),
+                            {
+                              shouldDirty: true,
+                            },
+                          )
+                        }
                       >
-                        <Ban className={"w-5 mr-3"} />
-                        {t("memberDetails.resume")}
+                        <RefreshCcw className={`w-5 mr-3`} />
+                        {t("memberDetails.renew")}
                       </Button>
-                    ) : (
-                      <Popover>
-                        <PopoverTrigger asChild>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <FormField
+                        control={form.control}
+                        name="suspendedTill"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              {t("memberDetails.suspended")}
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                disabled={true}
+                                placeholder={t("memberDetails.notSuspended")}
+                                {...field}
+                                value={
+                                  isSuspended
+                                    ? getCustomDate(form.watch("suspendedTill"))
+                                    : ""
+                                }
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <div className="flex flex-col space-y-6">
+                        <FormField
+                          control={form.control}
+                          name="measure"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>
+                                {t("memberDetails.suspensionLabel")}
+                              </FormLabel>
+                              <FormControl>
+                                <Textarea
+                                  disabled={!isSuspended}
+                                  className="resize-none"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        {isSuspended ? (
                           <Button
-                            disabled={
-                              form.formState.isSubmitting || isSuspended
-                            }
+                            disabled={form.formState.isSubmitting}
                             type="button"
                             variant="suspended"
                             className="self-start"
+                            onClick={() => {
+                              form.setValue("suspendedTill", "", {
+                                shouldDirty: true,
+                              });
+                              form.setValue("measure", "", {
+                                shouldDirty: true,
+                              });
+                            }}
                           >
                             <Ban className={"w-5 mr-3"} />
-                            {t("memberDetails.suspend")}
+                            {t("memberDetails.resume")}
                           </Button>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                          <ul className="space-y-2">
-                            <li>
+                        ) : (
+                          <Popover>
+                            <PopoverTrigger asChild>
                               <Button
-                                size="sm"
+                                disabled={
+                                  form.formState.isSubmitting || isSuspended
+                                }
+                                type="button"
                                 variant="suspended"
-                                onClick={() => {
-                                  form.setValue(
-                                    "suspendedTill",
-                                    getDateWeekLater(),
-                                    {
-                                      shouldDirty: true,
-                                    },
-                                  );
-                                  setTimeout(() => {
-                                    form.setFocus("measure");
-                                  }, focusDelay);
-                                }}
+                                className="self-start"
                               >
-                                {t("durations.week", { count: 1 })}
+                                <Ban className={"w-5 mr-3"} />
+                                {t("memberDetails.suspend")}
                               </Button>
-                            </li>
-                            <li>
-                              <Button
-                                size="sm"
-                                variant="suspended"
-                                onClick={() => {
-                                  form.setValue(
-                                    "suspendedTill",
-                                    getDateMonthsLater(1),
-                                    {
-                                      shouldDirty: true,
-                                    },
-                                  );
-                                  setTimeout(() => {
-                                    form.setFocus("measure");
-                                  }, focusDelay);
-                                }}
-                              >
-                                {t("durations.month", { count: 1 })}
-                              </Button>
-                            </li>
-                            <li>
-                              <Button
-                                size="sm"
-                                variant="suspended"
-                                onClick={() => {
-                                  form.setValue(
-                                    "suspendedTill",
-                                    getDateMonthsLater(3),
-                                    {
-                                      shouldDirty: true,
-                                    },
-                                  );
-                                  setTimeout(() => {
-                                    form.setFocus("measure");
-                                  }, focusDelay);
-                                }}
-                              >
-                                {t("durations.month", { count: 3 })}
-                              </Button>
-                            </li>
-                            <li>
-                              <Button
-                                size="sm"
-                                variant="suspended"
-                                onClick={() => {
-                                  form.setValue(
-                                    "suspendedTill",
-                                    getDateMonthsLater(6),
-                                    {
-                                      shouldDirty: true,
-                                    },
-                                  );
-                                  setTimeout(() => {
-                                    form.setFocus("measure");
-                                  }, focusDelay);
-                                }}
-                              >
-                                {t("durations.month", { count: 6 })}
-                              </Button>
-                            </li>
-                            <li>
-                              <Button
-                                size="sm"
-                                variant="suspended"
-                                onClick={() => {
-                                  form.setValue(
-                                    "suspendedTill",
-                                    getDateMonthsLater(12),
-                                    {
-                                      shouldDirty: true,
-                                    },
-                                  );
-                                  setTimeout(() => {
-                                    form.setFocus("measure");
-                                  }, focusDelay);
-                                }}
-                              >
-                                {t("durations.year", { count: 1 })}
-                              </Button>
-                            </li>
-                          </ul>
-                        </PopoverContent>
-                      </Popover>
-                    )}
+                            </PopoverTrigger>
+                            <PopoverContent>
+                              <ul className="space-y-2">
+                                <li>
+                                  <Button
+                                    size="sm"
+                                    variant="suspended"
+                                    onClick={() => {
+                                      form.setValue(
+                                        "suspendedTill",
+                                        getDateWeekLater(),
+                                        {
+                                          shouldDirty: true,
+                                        },
+                                      );
+                                      setTimeout(() => {
+                                        form.setFocus("measure");
+                                      }, focusDelay);
+                                    }}
+                                  >
+                                    {t("durations.week", { count: 1 })}
+                                  </Button>
+                                </li>
+                                <li>
+                                  <Button
+                                    size="sm"
+                                    variant="suspended"
+                                    onClick={() => {
+                                      form.setValue(
+                                        "suspendedTill",
+                                        getDateMonthsLater(1),
+                                        {
+                                          shouldDirty: true,
+                                        },
+                                      );
+                                      setTimeout(() => {
+                                        form.setFocus("measure");
+                                      }, focusDelay);
+                                    }}
+                                  >
+                                    {t("durations.month", { count: 1 })}
+                                  </Button>
+                                </li>
+                                <li>
+                                  <Button
+                                    size="sm"
+                                    variant="suspended"
+                                    onClick={() => {
+                                      form.setValue(
+                                        "suspendedTill",
+                                        getDateMonthsLater(3),
+                                        {
+                                          shouldDirty: true,
+                                        },
+                                      );
+                                      setTimeout(() => {
+                                        form.setFocus("measure");
+                                      }, focusDelay);
+                                    }}
+                                  >
+                                    {t("durations.month", { count: 3 })}
+                                  </Button>
+                                </li>
+                                <li>
+                                  <Button
+                                    size="sm"
+                                    variant="suspended"
+                                    onClick={() => {
+                                      form.setValue(
+                                        "suspendedTill",
+                                        getDateMonthsLater(6),
+                                        {
+                                          shouldDirty: true,
+                                        },
+                                      );
+                                      setTimeout(() => {
+                                        form.setFocus("measure");
+                                      }, focusDelay);
+                                    }}
+                                  >
+                                    {t("durations.month", { count: 6 })}
+                                  </Button>
+                                </li>
+                                <li>
+                                  <Button
+                                    size="sm"
+                                    variant="suspended"
+                                    onClick={() => {
+                                      form.setValue(
+                                        "suspendedTill",
+                                        getDateMonthsLater(12),
+                                        {
+                                          shouldDirty: true,
+                                        },
+                                      );
+                                      setTimeout(() => {
+                                        form.setFocus("measure");
+                                      }, focusDelay);
+                                    }}
+                                  >
+                                    {t("durations.year", { count: 1 })}
+                                  </Button>
+                                </li>
+                              </ul>
+                            </PopoverContent>
+                          </Popover>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </TabsContent>
-            <TabsContent value="note">
-              <FormField
-                control={form.control}
-                name="note"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("memberDetails.noteLabel")}</FormLabel>
-                    <FormControl>
-                      <Textarea className="resize-none" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </TabsContent>
-            <Button
-              disabled={!isDirty || form.formState.isSubmitting}
-              type="submit"
-              className="w-full mt-8"
-            >
-              {t("memberDetails.save")}
-            </Button>
-          </form>
-        </Form>
-      </Tabs>
-    </div>
+                </TabsContent>
+                <TabsContent value="note">
+                  <FormField
+                    control={form.control}
+                    name="note"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("memberDetails.noteLabel")}</FormLabel>
+                        <FormControl>
+                          <Textarea className="resize-none" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </TabsContent>
+                <Button
+                  disabled={!isDirty || form.formState.isSubmitting}
+                  type="submit"
+                  className="w-full mt-8"
+                >
+                  {t("memberDetails.save")}
+                </Button>
+              </form>
+            </Form>
+          </Tabs>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
