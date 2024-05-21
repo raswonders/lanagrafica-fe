@@ -24,14 +24,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <>
-      <Background
-        style={{
-          position: "fixed",
-          width: "100%",
-          height: "100%",
-          zIndex: "-9999",
-        }}
-      />
+      <Background />
       <RouterProvider router={router} />
       <Toaster position="bottom-center" />
     </>
