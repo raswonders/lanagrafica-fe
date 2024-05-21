@@ -34,7 +34,8 @@ export function Members() {
               value={search || ""}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") setDebouncedSearch(e.target.value);
+                if (e.key === "Enter")
+                  setDebouncedSearch((e.target as HTMLInputElement).value);
               }}
               className="pl-10"
             />
