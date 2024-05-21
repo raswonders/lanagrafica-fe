@@ -33,6 +33,9 @@ export function Members() {
               placeholder={t("members.searchPlaceholder")}
               value={search || ""}
               onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setDebouncedSearch(e.target.value);
+              }}
               className="pl-10"
             />
             <label
