@@ -268,11 +268,7 @@ export function DataTable({ search }: { search: string | null }) {
 
           return (
             <div className="flex">
-              <MemberDetails
-                row={row.original}
-                updateMutation={updateMutation}
-                tooltip={t("membersTable.editMember")}
-              >
+              <MemberDetails row={row.original} updateMutation={updateMutation}>
                 <Button size="icon" variant="ghost">
                   <SquarePen className="w-5" />
                 </Button>
@@ -293,8 +289,7 @@ export function DataTable({ search }: { search: string | null }) {
               <MemberDetails
                 row={row.original}
                 updateMutation={updateMutation}
-                initialTab="note"
-                tooltip={row.original.note}
+                variant="note"
               >
                 <Button size="icon" variant="ghost" disabled={!hasNote}>
                   <MessageSquareText className="w-5" />

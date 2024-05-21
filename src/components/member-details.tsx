@@ -61,14 +61,12 @@ export function MemberDetails({
   row,
   updateMutation,
   children,
-  tooltip,
-  initialTab = "personal",
+  variant = "personal",
 }: {
   row: Member;
   updateMutation: UpdateMutation;
   children: React.ReactNode;
-  tooltip: string;
-  initialTab?: "personal" | "membership" | "note";
+  variant?: "personal" | "membership" | "note";
 }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
@@ -177,7 +175,10 @@ export function MemberDetails({
           <TooltipTrigger asChild>
             <SheetTrigger asChild>{children}</SheetTrigger>
           </TooltipTrigger>
-          <TooltipContent>{tooltip}</TooltipContent>
+          <TooltipContent className={variant === "note" ? "max-w-96" : ""}>
+            {variant === "personal" && t("membersTable.editMember")}
+            {variant === "note" && row.note}
+          </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <SheetContent className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}>
@@ -191,7 +192,7 @@ export function MemberDetails({
         </SheetHeader>
 
         <div className="flex justify-center">
-          <Tabs defaultValue={initialTab} className="w-[400px] space-y-6">
+          <Tabs defaultValue={variant} className="w-[400px] space-y-6">
             <TabsList>
               <TabsTrigger value="personal">
                 {t("memberDetails.personalTab")}
