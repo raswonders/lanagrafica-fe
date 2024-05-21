@@ -556,15 +556,6 @@ export function DataTable({ search }: { search: string | null }) {
                 </Button>
               );
             })}
-            {columnFilters.length !== 0 && (
-              <Button
-                variant="secondary"
-                size="xs"
-                onClick={() => setColumnFilters([])}
-              >
-                {t("membersTable.clearAll")}
-              </Button>
-            )}
           </div>
         </div>
         <Popover>
