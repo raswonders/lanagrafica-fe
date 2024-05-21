@@ -438,7 +438,6 @@ export function DataTable({ search }: { search: string | null }) {
       }
 
       return [
-        ...prev.filter((f) => f.id !== filterId),
         {
           id: filterId,
           value: filterValue,
