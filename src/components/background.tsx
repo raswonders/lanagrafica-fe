@@ -1,7 +1,7 @@
 export function Background() {
   return (
     <div className="flex flex-grow flex-shrink-0 items-stretch">
-      <div className="flex justify-center fixed inset-0 items-start">
+      <div className="flex justify-center fixed -z-10 inset-0 items-start">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="2560"
