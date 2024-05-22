@@ -463,57 +463,37 @@ export function DataTable({ search }: { search: string | null }) {
                   {t("membersTable.addFilter")}
                   {columnFilters.length ? (
                     columnFilters.map((filter) => {
-                      let filterName = "";
                       let filterVariant = "";
 
                       if (filter.id === "isActive" && filter.value === true) {
-                        filterName = "active";
                         filterVariant = "active";
                       }
 
                       if (filter.id === "isActive" && filter.value === false) {
-                        filterName = "inactive";
                         filterVariant = "inactive";
                       }
 
                       if (filter.id === "expirationDate") {
-                        filterName = "expired";
                         filterVariant = "inactive";
                       }
 
                       if (filter.id === "suspendedTill") {
-                        filterName = "suspended";
                         filterVariant = "suspended";
                       }
 
                       if (filter.id === "isDeleted") {
-                        filterName = "deleted";
                         filterVariant = "deleted";
                       }
 
                       return (
                         <div className="ml-2">
-                          <Button
-                            variant={
-                              filterVariant as
-                                | "active"
-                                | "inactive"
-                                | "suspended"
-                                | "deleted"
-                            }
-                            size="xs"
-                            key={filterName}
-                          >
-                            {t("membersTable." + filterName)}
-                          </Button>
+                          <StatusBadge status={filterVariant} />
                         </div>
                       );
                     })
                   ) : (
                     <div className="ml-2">
-                      <Button variant="all" size="xs" key="all">
-                        {t("membersTable.all")}
-                      </Button>
+                      <StatusBadge status="all" />
                     </div>
                   )}
                 </Button>

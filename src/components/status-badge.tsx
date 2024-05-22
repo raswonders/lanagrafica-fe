@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Badge } from "./ui/badge";
 
-type StatusVariant = "active" | "inactive" | "suspended" | "deleted";
+type StatusVariant = "active" | "inactive" | "suspended" | "deleted" | "all";
 
 export function StatusBadge({ status }: { status: string }) {
   const { t } = useTranslation();
@@ -11,6 +11,7 @@ export function StatusBadge({ status }: { status: string }) {
     "expired",
     "suspended",
     "deleted",
+    "all",
   ];
   let variantName: StatusVariant;
 

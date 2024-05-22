@@ -16,6 +16,7 @@ const badgeVariants = cva(
         active: "border border-success-7 text-success-11",
         inactive: "border border-warning-7 text-warning-11",
         deleted: "border border-neutral-7 text-neutral-11",
+        all: "border border-neutral-11 text-neutral-12",
       },
     },
     defaultVariants: {
