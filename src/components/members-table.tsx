@@ -399,10 +399,6 @@ export function DataTable({ search }: { search: string | null }) {
     onColumnFiltersChange: setColumnFilters,
   });
 
-  function handleFilterBadgeRemoval(index: number) {
-    setColumnFilters((prev) => prev.filter((_, i) => i !== index));
-  }
-
   function handleFilterBadgeAddition(filter: string) {
     setOpen(false);
     let filterId: string;
