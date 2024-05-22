@@ -473,7 +473,7 @@ export function DataTable({ search }: { search: string | null }) {
                       }
 
                       if (filter.id === "expirationDate") {
-                        filterVariant = "inactive";
+                        filterVariant = "expired";
                       }
 
                       if (filter.id === "suspendedTill") {
