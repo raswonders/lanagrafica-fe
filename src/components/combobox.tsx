@@ -60,10 +60,27 @@ export function Combobox({
     }
   }, [form, name, value]);
 
-  const matchingStart = data.filter((entry) => {
+  const matchingFirstWord = data.filter((entry) => {
+    return entry.toLowerCase().split(" ")[0] === search.toLowerCase();
+  });
+
+  const matchingAnyWord = data.filter((entry) => {
     return entry
       .toLowerCase()
       .split(" ")
+      .slice(1)
+      .some((word) => word === search.toLowerCase());
+  });
+
+  const matchingStartFirstWord = data.filter((entry) => {
+    return entry.toLowerCase().split(" ")[0].startsWith(search.toLowerCase());
+  });
+
+  const matchingStartAnyWord = data.filter((entry) => {
+    return entry
+      .toLowerCase()
+      .split(" ")
+      .slice(1)
       .some((word) => word.startsWith(search.toLowerCase()));
   });
 
@@ -72,7 +89,13 @@ export function Combobox({
   });
 
   const filteredData = [
-    ...new Set([...matchingStart, ...matchingSubstring]),
+    ...new Set([
+      ...matchingFirstWord,
+      ...matchingAnyWord,
+      ...matchingStartFirstWord,
+      ...matchingStartAnyWord,
+      ...matchingSubstring,
+    ]),
   ].slice(0, maxSuggested);
 
   return (
