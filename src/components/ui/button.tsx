@@ -33,6 +33,9 @@ const buttonVariants = cva(
         deleted: "bg-neutral-6 text-neutral-11 hover:bg-neutral-7",
         deletedOutline:
           "border border-neutral-7 text-neutral-11 hover:border-neutral-8 hover:bg-neutral-3 dark:hover:bg-neutral-2",
+        all: "bg-neutral-12 text-neutral-1 hover:bg-neutral-11",
+        allOutline:
+          "border border-neutral-7 text-neutral-1 hover:border-neutral-8 hover:bg-neutral-3 dark:hover:bg-neutral-2",
       },
       size: {
         default: "h-10 px-4 py-2",

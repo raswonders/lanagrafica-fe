@@ -407,6 +407,11 @@ export function DataTable({ search }: { search: string | null }) {
     let filterId: string;
     let filterValue: string | boolean;
 
+    if (filter === "all") {
+      setColumnFilters([]);
+      return;
+    }
+
     if (filter === "active") {
       filterId = "isActive";
       filterValue = true;
@@ -456,53 +461,61 @@ export function DataTable({ search }: { search: string | null }) {
                 <Button variant="outline" className="my-6">
                   <Filter className="w-4 mr-2" />
                   {t("membersTable.addFilter")}
-                  {columnFilters.map((filter, index) => {
-                    let filterName = "";
-                    let filterVariant = "";
+                  {columnFilters.length ? (
+                    columnFilters.map((filter) => {
+                      let filterName = "";
+                      let filterVariant = "";
 
-                    if (filter.id === "isActive" && filter.value === true) {
-                      filterName = "active";
-                      filterVariant = "active";
-                    }
+                      if (filter.id === "isActive" && filter.value === true) {
+                        filterName = "active";
+                        filterVariant = "active";
+                      }
 
-                    if (filter.id === "isActive" && filter.value === false) {
-                      filterName = "inactive";
-                      filterVariant = "inactive";
-                    }
+                      if (filter.id === "isActive" && filter.value === false) {
+                        filterName = "inactive";
+                        filterVariant = "inactive";
+                      }
 
-                    if (filter.id === "expirationDate") {
-                      filterName = "expired";
-                      filterVariant = "inactive";
-                    }
+                      if (filter.id === "expirationDate") {
+                        filterName = "expired";
+                        filterVariant = "inactive";
+                      }
 
-                    if (filter.id === "suspendedTill") {
-                      filterName = "suspended";
-                      filterVariant = "suspended";
-                    }
+                      if (filter.id === "suspendedTill") {
+                        filterName = "suspended";
+                        filterVariant = "suspended";
+                      }
 
-                    if (filter.id === "isDeleted") {
-                      filterName = "deleted";
-                      filterVariant = "deleted";
-                    }
+                      if (filter.id === "isDeleted") {
+                        filterName = "deleted";
+                        filterVariant = "deleted";
+                      }
 
-                    return (
-                      <div className="ml-2">
-                        <Button
-                          variant={
-                            filterVariant as
-                              | "active"
-                              | "inactive"
-                              | "suspended"
-                              | "deleted"
-                          }
-                          size="xs"
-                          key={filterName}
-                        >
-                          {t("membersTable." + filterName)}
-                        </Button>
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div className="ml-2">
+                          <Button
+                            variant={
+                              filterVariant as
+                                | "active"
+                                | "inactive"
+                                | "suspended"
+                                | "deleted"
+                            }
+                            size="xs"
+                            key={filterName}
+                          >
+                            {t("membersTable." + filterName)}
+                          </Button>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="ml-2">
+                      <Button variant="all" size="xs" key="all">
+                        {t("membersTable.all")}
+                      </Button>
+                    </div>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent>
@@ -550,6 +563,15 @@ export function DataTable({ search }: { search: string | null }) {
                       onClick={() => handleFilterBadgeAddition("deleted")}
                     >
                       {t("membersTable.deleted")}
+                    </Button>
+                  </li>
+                  <li>
+                    <Button
+                      size="sm"
+                      variant="all"
+                      onClick={() => handleFilterBadgeAddition("all")}
+                    >
+                      {t("membersTable.all")}
                     </Button>
                   </li>
                 </ul>
