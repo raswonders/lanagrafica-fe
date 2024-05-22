@@ -486,13 +486,13 @@ export function DataTable({ search }: { search: string | null }) {
                       }
 
                       return (
-                        <div className="ml-2">
+                        <div className="ml-2" key={filterVariant}>
                           <StatusBadge status={filterVariant} />
                         </div>
                       );
                     })
                   ) : (
-                    <div className="ml-2">
+                    <div className="ml-2" key="all">
                       <StatusBadge status="all" />
                     </div>
                   )}
