@@ -61,7 +61,6 @@ export function MemberDetails({
   row,
   updateMutation,
   children,
-  isMobile,
   variant = "personal",
 }: {
   row: Member;
@@ -170,7 +169,7 @@ export function MemberDetails({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <SheetContent className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}>
+      <SheetContent className="overflow-y-scroll w-full">
         <SheetHeader>
           <SheetTitle>
             <div className="flex gap-2 my-4">
@@ -181,7 +180,7 @@ export function MemberDetails({
         </SheetHeader>
 
         <div className="flex justify-center">
-          <Tabs defaultValue={variant} className="w-[400px] space-y-6">
+          <Tabs defaultValue={variant} className="w-full space-y-6">
             <TabsList>
               <TabsTrigger value="personal">
                 {t("memberDetails.personalTab")}
