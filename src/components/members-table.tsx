@@ -404,6 +404,7 @@ export function DataTable({ search }: { search: string | null }) {
   }
 
   function handleFilterBadgeAddition(filter: string) {
+    setOpen(false);
     let filterId: string;
     let filterValue: string | boolean;
 
@@ -451,12 +452,14 @@ export function DataTable({ search }: { search: string | null }) {
     });
   }
 
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <div className="flex justify-between">
         <div className="flex flex-wrap items-baseline">
           <div className="mr-2">
-            <Popover>
+            <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="my-6">
                   <Filter className="w-4 mr-2" />
