@@ -25,7 +25,7 @@ import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Ban, RefreshCcw } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Textarea } from "./ui/textarea";
@@ -61,11 +61,13 @@ export function MemberDetails({
   row,
   updateMutation,
   children,
+  isMobile,
   variant = "personal",
 }: {
   row: Member;
   updateMutation: UpdateMutation;
   children: React.ReactNode;
+  isMobile: boolean;
   variant?: "personal" | "membership" | "note";
 }) {
   const { t, i18n } = useTranslation();
@@ -148,25 +150,12 @@ export function MemberDetails({
     });
   }
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const country = form.watch("country");
   const isItaly = country === "Italy";
   const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
   const isExpired: boolean = hasExpired(new Date(form.watch("expirationDate")));
   const isRenewAllowed = !isSuspended && isExpired;
   const isActive = !isSuspended && !isExpired;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <Sheet>

@@ -189,6 +189,19 @@ export function DataTable({ search }: { search: string | null }) {
     },
   });
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const columns = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
@@ -268,7 +281,11 @@ export function DataTable({ search }: { search: string | null }) {
 
           return (
             <div className="flex">
-              <MemberDetails row={row.original} updateMutation={updateMutation}>
+              <MemberDetails
+                row={row.original}
+                updateMutation={updateMutation}
+                isMobile={isMobile}
+              >
                 <Button size="icon" variant="ghost">
                   <SquarePen className="w-5" />
                 </Button>
@@ -290,6 +307,7 @@ export function DataTable({ search }: { search: string | null }) {
                 row={row.original}
                 updateMutation={updateMutation}
                 variant="note"
+                isMobile={isMobile}
               >
                 <Button size="icon" variant="ghost" disabled={!hasNote}>
                   <MessageSquareText className="w-5" />
@@ -300,23 +318,38 @@ export function DataTable({ search }: { search: string | null }) {
         },
       },
     ],
-    [t, isRenewing, renewMutation, updateMutation],
+    [t, isRenewing, renewMutation, updateMutation, isMobile],
   );
 
-  const [columnVisibility, setColumnVisibility] = useState({
-    fullName: true,
-    birthDate: true,
-    status: true,
-    email: false,
-    suspendedTill: false,
-    expirationDate: true,
-    cardNumber: true,
-    isActive: false,
-    isDeleted: false,
-  });
+  const [columnVisibility, setColumnVisibility] = useState(
+    isMobile
+      ? {
+          fullName: true,
+          birthDate: false,
+          status: true,
+          email: false,
+          suspendedTill: false,
+          expirationDate: false,
+          cardNumber: false,
+          isActive: false,
+          isDeleted: false,
+          actions: true,
+        }
+      : {
+          fullName: true,
+          birthDate: true,
+          status: true,
+          email: false,
+          suspendedTill: false,
+          expirationDate: true,
+          cardNumber: true,
+          isActive: false,
+          isDeleted: false,
+          actions: true,
+        },
+  );
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
   const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
       queryKey: ["members"],
