@@ -25,7 +25,7 @@ import countries from "../assets/countries.json";
 import cities from "../assets/cities.json";
 import documents from "../assets/documents.json";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Ban, RefreshCcw } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Textarea } from "./ui/textarea";
@@ -61,11 +61,13 @@ export function MemberDetails({
   row,
   updateMutation,
   children,
+  isMobile,
   variant = "personal",
 }: {
   row: Member;
   updateMutation: UpdateMutation;
   children: React.ReactNode;
+  isMobile: boolean;
   variant?: "personal" | "membership" | "note";
 }) {
   const { t, i18n } = useTranslation();
@@ -148,7 +150,6 @@ export function MemberDetails({
     });
   }
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const country = form.watch("country");
   const isItaly = country === "Italy";
   const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
@@ -156,32 +157,24 @@ export function MemberDetails({
   const isRenewAllowed = !isSuspended && isExpired;
   const isActive = !isSuspended && !isExpired;
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <Sheet>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <SheetTrigger asChild>{children}</SheetTrigger>
-          </TooltipTrigger>
-          <TooltipContent className={variant === "note" ? "max-w-96" : ""}>
-            {variant === "personal" && t("membersTable.editMember")}
-            {variant === "note" && row.note}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <SheetContent className={`overflow-y-scroll ${isMobile ? "w-full" : ""}`}>
+      {isMobile ? (
+        <SheetTrigger asChild>{children}</SheetTrigger>
+      ) : (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <SheetTrigger asChild>{children}</SheetTrigger>
+            </TooltipTrigger>
+            <TooltipContent className={variant === "note" ? "max-w-96" : ""}>
+              {variant === "personal" && t("membersTable.editMember")}
+              {variant === "note" && row.note}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+      <SheetContent className="overflow-y-scroll w-full">
         <SheetHeader>
           <SheetTitle>
             <div className="flex gap-2 my-4">
@@ -192,7 +185,7 @@ export function MemberDetails({
         </SheetHeader>
 
         <div className="flex justify-center">
-          <Tabs defaultValue={variant} className="w-[400px] space-y-6">
+          <Tabs defaultValue={variant} className="w-full space-y-6">
             <TabsList>
               <TabsTrigger value="personal">
                 {t("memberDetails.personalTab")}
