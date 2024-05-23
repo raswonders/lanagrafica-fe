@@ -61,6 +61,7 @@ export function MemberDetails({
   row,
   updateMutation,
   children,
+  isMobile,
   variant = "personal",
 }: {
   row: Member;
@@ -158,17 +159,21 @@ export function MemberDetails({
 
   return (
     <Sheet>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <SheetTrigger asChild>{children}</SheetTrigger>
-          </TooltipTrigger>
-          <TooltipContent className={variant === "note" ? "max-w-96" : ""}>
-            {variant === "personal" && t("membersTable.editMember")}
-            {variant === "note" && row.note}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      {isMobile ? (
+        <SheetTrigger asChild>{children}</SheetTrigger>
+      ) : (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <SheetTrigger asChild>{children}</SheetTrigger>
+            </TooltipTrigger>
+            <TooltipContent className={variant === "note" ? "max-w-96" : ""}>
+              {variant === "personal" && t("membersTable.editMember")}
+              {variant === "note" && row.note}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
       <SheetContent className="overflow-y-scroll w-full">
         <SheetHeader>
           <SheetTitle>
@@ -358,7 +363,7 @@ export function MemberDetails({
                           control={form.control}
                           name="measure"
                           render={({ field }) => (
-                            <FormItem> 
+                            <FormItem>
                               <FormLabel>
                                 {t("memberDetails.suspensionLabel")}
                               </FormLabel>
