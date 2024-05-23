@@ -358,7 +358,7 @@ export function MemberDetails({
                           control={form.control}
                           name="measure"
                           render={({ field }) => (
-                            <FormItem>
+                            <FormItem> 
                               <FormLabel>
                                 {t("memberDetails.suspensionLabel")}
                               </FormLabel>
