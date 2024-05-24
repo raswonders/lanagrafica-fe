@@ -28,8 +28,6 @@ import { InputField } from "./input-field";
 import { Combobox } from "./combobox";
 import { SelectField } from "./select-field";
 import { DateField } from "./date-field";
-import { toast } from "sonner";
-import { supabase } from "./supabase";
 import { Plus } from "lucide-react";
 
 export interface SerializedMember {
@@ -52,7 +50,7 @@ export interface SerializedMember {
   suspended_till: string;
 }
 
-export function AddMember() {
+export function AddMember({ insertMutation }) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
@@ -123,34 +121,18 @@ export function AddMember() {
     return fromCamelToSnakeCase(extended);
   }
 
-  async function insertMember(member: Partial<SerializedMember>) {
-    const { error } = await supabase.from("member").insert(member);
-
-    if (error) {
-      console.error(t("newMember.insertError"), error);
-      toast.error(
-        t("newMember.insertError", {
-          name: `${member.name} ${member.surname}`,
-        }),
-      );
-    }
-
-    toast.success(
-      t("newMember.insertSuccess", {
-        name: `${member.name} ${member.surname}`,
-      }),
-    );
-  }
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const newMember = serializeForInsert(values);
-    await insertMember(newMember);
+    await insertMutation.mutate({
+      details: newMember,
+      name: newMember.name,
+    });
     resetForm();
   }
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger>
         <Button variant="outline">
           <Plus className="w-4 sm:mr-2" />
           <span className="hidden sm:inline-block">
