@@ -177,7 +177,7 @@ export function MemberDetails({
       <SheetContent className="overflow-y-scroll w-full">
         <SheetHeader>
           <SheetTitle>
-            <div className="flex gap-2 my-4">
+            <div className="flex gap-2">
               {`${row.name} ${row.surname}`}
               <StatusBadge status={row.status} />
             </div>

@@ -159,7 +159,7 @@ export function AddMember() {
         </Button>
       </SheetTrigger>
       <SheetContent className="overflow-y-scroll w-full">
-        <SheetHeader className="my-4">
+        <SheetHeader>
           <SheetTitle>{t("members.addMember")}</SheetTitle>
         </SheetHeader>
         <Form {...form}>
