@@ -150,7 +150,7 @@ export function AddMember() {
 
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button variant="outline">
           <Plus className="w-4 sm:mr-2" />
           <span className="hidden sm:inline-block">
