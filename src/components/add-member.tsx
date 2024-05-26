@@ -123,7 +123,17 @@ export function AddMember({
       details: newMember,
       name: newMember.name || "",
     });
+    resetForm();
     setOpen(false);
+  }
+
+  function resetForm() {
+    setDay("");
+    setMonth("");
+    setYear("");
+    setCountrySearch("");
+    setCitySearch("");
+    form.reset();
   }
 
   return (
