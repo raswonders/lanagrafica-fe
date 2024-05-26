@@ -29,6 +29,7 @@ import { Combobox } from "./combobox";
 import { SelectField } from "./select-field";
 import { DateField } from "./date-field";
 import { Plus } from "lucide-react";
+import { InsertMutation } from "./members-table";
 
 export interface SerializedMember {
   birth_date: string;
@@ -50,7 +51,11 @@ export interface SerializedMember {
   suspended_till: string;
 }
 
-export function AddMember({ insertMutation }) {
+export function AddMember({
+  insertMutation,
+}: {
+  insertMutation: InsertMutation;
+}) {
   const { t, i18n } = useTranslation();
   const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
@@ -118,7 +123,7 @@ export function AddMember({ insertMutation }) {
     const newMember = serializeForInsert(values);
     await insertMutation.mutate({
       details: newMember,
-      name: newMember.name,
+      name: newMember.name || "",
     });
     setOpen(false);
   }

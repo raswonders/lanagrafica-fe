@@ -96,6 +96,13 @@ export type UpdateMutation = {
   }) => void;
 };
 
+export type InsertMutation = {
+  mutate: (args: {
+    details: Partial<SerializedMember>;
+    name: string;
+  }) => void;
+};
+
 interface Row {
   original: Member;
 }
