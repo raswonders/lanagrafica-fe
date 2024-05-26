@@ -38,7 +38,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { SerializedMember } from "./pages/new-member";
+import { SerializedMember } from "./add-member";
 import { Member, UpdateMutation } from "./members-table";
 import { Input } from "./ui/input";
 import {

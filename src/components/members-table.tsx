@@ -76,7 +76,7 @@ import { RenewConfirm } from "./renew-confirm";
 import { toast } from "sonner";
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
-import { SerializedMember } from "./pages/new-member";
+import { SerializedMember } from "./add-member";
 import { AddMember } from "./add-member";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";

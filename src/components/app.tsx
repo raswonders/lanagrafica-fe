@@ -8,7 +8,6 @@ import {
 import { RootLayout } from "./layouts/root-layout";
 import { Background } from "./background";
 import { Members } from "./pages/members";
-import { NewMember } from "./pages/new-member";
 import { Toaster } from "./ui/sonner";
 
 const router = createBrowserRouter(
@@ -16,7 +15,6 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Members />} />
       <Route path="login" element={<Login />} />
-      <Route path="new-member" element={<NewMember />} />
     </Route>,
   ),
 );
