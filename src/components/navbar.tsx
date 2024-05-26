@@ -4,7 +4,6 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { UserRoundSearch } from "lucide-react";
 import { Logo } from "./logo";
 import { cn } from "@/lib/utils";
 
@@ -31,14 +30,11 @@ export function Navbar() {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "rounded-lg py-7 sm:py-0",
+                      "rounded-lg",
                       isActive && "text-accent-foreground bg-accent",
                     )}
                   >
-                    <UserRoundSearch className="h-8 w-8 sm:mr-1 sm:h-6 sm:w-6" />
-                    <span className="hidden sm:inline">
-                      {t("navbar.members")}
-                    </span>
+                    {t("navbar.members")}
                   </Button>
                 )}
               </NavLink>
