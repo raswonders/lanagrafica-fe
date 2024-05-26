@@ -206,17 +206,13 @@ export function DataTable() {
     }) => insertMember(variables.details),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["members"] });
-      toast.success(
-        t("newMember.insertSuccess", {
-          name: `${variables.name}`,
-        }),
-      );
+      toast.success(t("newMember.insertSuccess", { name: variables.name }));
     },
     onError: (error, variables) => {
       console.error(t("newMember.insertError"), error);
       toast.error(
         t("newMember.insertError", {
-          name: `${variables.name}`,
+          name: variables.name,
         }),
       );
     },
