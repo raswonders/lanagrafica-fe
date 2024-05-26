@@ -98,15 +98,6 @@ export function AddMember({ insertMutation }) {
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
-  // const resetForm = () => {
-  //   form.reset();
-  //   setCountrySearch("");
-  //   setCitySearch("");
-  //   setDay("");
-  //   setMonth("");
-  //   setYear("");
-  //   TODO
-  // };
 
   function serializeForInsert(
     row: z.infer<typeof formSchema>,
