@@ -14,7 +14,6 @@ import {
   parseYear,
   isAdult,
   isValidISODate,
-  isWithinRange,
   getCustomDate,
   hasExpired,
   getDateWeekLater,
@@ -38,7 +37,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { SerializedMember } from "./pages/new-member";
+import { SerializedMember } from "./add-member";
 import { Member, UpdateMutation } from "./members-table";
 import { Input } from "./ui/input";
 import {
@@ -85,7 +84,6 @@ export function MemberDetails({
       .string()
       .min(1, { message: t("validation.required") })
       .refine(isValidISODate, { message: t("validation.wrongDate") })
-      .refine(isWithinRange, { message: t("validation.notInRange") })
       .refine(isAdult, { message: t("validation.notAdult") }),
     birthPlace: z.string().min(1, { message: t("validation.required") }),
     country: z.string().min(1, { message: t("validation.required") }),
@@ -148,6 +146,7 @@ export function MemberDetails({
       details: serializedMember,
       name: row.name,
     });
+    setOpen(false);
   }
 
   const country = form.watch("country");
@@ -156,9 +155,10 @@ export function MemberDetails({
   const isExpired: boolean = hasExpired(new Date(form.watch("expirationDate")));
   const isRenewAllowed = !isSuspended && isExpired;
   const isActive = !isSuspended && !isExpired;
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       {isMobile ? (
         <SheetTrigger asChild>{children}</SheetTrigger>
       ) : (
@@ -177,7 +177,7 @@ export function MemberDetails({
       <SheetContent className="overflow-y-scroll w-full">
         <SheetHeader>
           <SheetTitle>
-            <div className="flex gap-2 my-4">
+            <div className="flex gap-2">
               {`${row.name} ${row.surname}`}
               <StatusBadge status={row.status} />
             </div>

@@ -76,7 +76,10 @@ import { RenewConfirm } from "./renew-confirm";
 import { toast } from "sonner";
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
-import { SerializedMember } from "./pages/new-member";
+import { SerializedMember } from "./add-member";
+import { AddMember } from "./add-member";
+import { SearchBar } from "./searchbar";
+import { Separator } from "@radix-ui/react-separator";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -88,6 +91,13 @@ export type RenewMutation = {
 export type UpdateMutation = {
   mutate: (args: {
     id: number;
+    details: Partial<SerializedMember>;
+    name: string;
+  }) => void;
+};
+
+export type InsertMutation = {
+  mutate: (args: {
     details: Partial<SerializedMember>;
     name: string;
   }) => void;
@@ -132,10 +142,17 @@ async function updateMember(
   return data;
 }
 
-export function DataTable({ search }: { search: string | null }) {
+async function insertMember(details: Partial<SerializedMember>) {
+  const { error } = await supabase.from("member").insert(details);
+
+  if (error) throw error;
+}
+
+export function DataTable() {
   const { t } = useTranslation();
   const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
   const queryClient = useQueryClient();
+  const [debouncedSearch, setDebouncedSearch] = useState<string | null>(null);
 
   const renewMutation = useMutation({
     mutationFn: (variables: {
@@ -183,6 +200,25 @@ export function DataTable({ search }: { search: string | null }) {
       console.error(t("membersTable.updateError"), error);
       toast.error(
         t("membersTable.updateError", {
+          name: variables.name,
+        }),
+      );
+    },
+  });
+
+  const insertMutation = useMutation({
+    mutationFn: (variables: {
+      details: Partial<SerializedMember>;
+      name: string;
+    }) => insertMember(variables.details),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      toast.success(t("newMember.insertSuccess", { name: variables.name }));
+    },
+    onError: (error, variables) => {
+      console.error(t("newMember.insertError"), error);
+      toast.error(
+        t("newMember.insertError", {
           name: variables.name,
         }),
       );
@@ -361,8 +397,8 @@ export function DataTable({ search }: { search: string | null }) {
     });
 
   useEffect(() => {
-    if (search !== null) refetch();
-  }, [refetch, search]);
+    if (debouncedSearch !== null) refetch();
+  }, [refetch, debouncedSearch]);
 
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
@@ -384,8 +420,8 @@ export function DataTable({ search }: { search: string | null }) {
     const pageEnd = pageStart + membersPerPage - 1;
 
     let data, count, error;
-    if (search) {
-      const searchWords = search.trim().split(/\s+/).filter(Boolean);
+    if (debouncedSearch) {
+      const searchWords = debouncedSearch.trim().split(/\s+/).filter(Boolean);
       const searchParam = searchWords.join(" & ");
       ({ data, count, error } = await supabase
         .from("member")
@@ -484,13 +520,18 @@ export function DataTable({ search }: { search: string | null }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <div className="w-full">
+      <div className="flex flex-row items-end justify-between gap-6 mt-6">
+        <AddMember insertMutation={insertMutation} />
+        <SearchBar setDebouncedSearch={setDebouncedSearch} />
+      </div>
+      <Separator className="h-0.5 bg-neutral-6 my-6" />
       <div className="flex justify-between">
         <div className="flex flex-wrap items-baseline">
           <div className="mr-2">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
-                <Button variant="outline" className="my-6">
+                <Button variant="outline" className="mb-6">
                   <Filter className="w-4 mr-2" />
                   {t("membersTable.addFilter")}
                   {columnFilters.length ? (
@@ -593,7 +634,7 @@ export function DataTable({ search }: { search: string | null }) {
         </div>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="my-6">
+            <Button variant="outline" className="mb-6">
               <EyeOff className="w-4 mr-2" />
               {t("membersTable.hideFields")}
             </Button>
@@ -695,6 +736,6 @@ export function DataTable({ search }: { search: string | null }) {
           </InfiniteScroll>
         )}
       </div>
-    </>
+    </div>
   );
 }

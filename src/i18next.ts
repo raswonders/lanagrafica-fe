@@ -51,6 +51,7 @@ i18n
           },
           members: {
             title: "Members",
+            addMember: "Add member",
             searchPlaceholder: "Search name",
           },
           validation: {
@@ -174,6 +175,7 @@ i18n
           members: {
             title: "Members",
             searchPlaceholder: "Cerca nome",
+            addMember: "Aggiungi membro",
           },
           validation: {
             required: "è richiesto",
