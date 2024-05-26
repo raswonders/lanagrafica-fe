@@ -21,7 +21,6 @@ import {
   getRegistrationDate,
   isAdult,
   isValidISODate,
-  isWithinRange,
 } from "@/lib/utils";
 import { useState } from "react";
 import { InputField } from "./input-field";
@@ -71,7 +70,6 @@ export function AddMember({
       .string()
       .min(1, { message: t("validation.required") })
       .refine(isValidISODate, { message: t("validation.wrongDate") })
-      .refine(isWithinRange, { message: t("validation.notInRange") })
       .refine(isAdult, { message: t("validation.notAdult") }),
     birthPlace: z.string().min(1, { message: t("validation.required") }),
     country: z.string().min(1, { message: t("validation.required") }),

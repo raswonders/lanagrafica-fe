@@ -11,6 +11,8 @@ export function delay(ms: number) {
 }
 
 export function createDateString(day: string, month: string, year: string) {
+  if (!year) return "year cannot be empty";
+
   const paddedDay = day.padStart(2, "0");
   const paddedMonth = month.padStart(2, "0");
   const paddedYear = year.padStart(2, "0");
@@ -41,14 +43,6 @@ export function parseYear(dateISO: string) {
 export function isValidISODate(value: string) {
   const date = new Date(value);
   return !isNaN(date.getTime()) && value === date.toISOString().slice(0, 10);
-}
-
-export function isWithinRange(value: string) {
-  const maxAge = 120;
-  const today = new Date();
-  const birthDate = new Date(value);
-  const ageDiff = today.getFullYear() - birthDate.getFullYear();
-  return ageDiff >= 0 && ageDiff <= maxAge;
 }
 
 export function isAdult(value: string) {
