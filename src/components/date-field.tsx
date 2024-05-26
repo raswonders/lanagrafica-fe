@@ -120,10 +120,10 @@ export function DateField({
               </Label>
               <Input
                 id="year"
-                maxLength={4}
+                maxLength={2}
                 inputMode="numeric"
                 value={year}
-                style={{ width: "calc(4ch + 1.5rem + 2px)" }}
+                style={{ width: "calc(2ch + 1.5rem + 2px)" }}
                 onTouchStart={(e) => (e.target as HTMLInputElement).select()}
                 ref={yearInputRef}
                 className="mt-2"

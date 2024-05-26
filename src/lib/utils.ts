@@ -13,7 +13,19 @@ export function delay(ms: number) {
 export function createDateString(day: string, month: string, year: string) {
   const paddedDay = day.padStart(2, "0");
   const paddedMonth = month.padStart(2, "0");
-  return `${year}-${paddedMonth}-${paddedDay}`;
+  const paddedYear = year.padStart(2, "0");
+
+  const currWholeYear = new Date().getFullYear();
+  const currCentury = Number(String(currWholeYear).slice(0, 2));
+  const currYear = Number(String(currWholeYear).slice(2));
+  let newYear: string;
+  if (0 <= Number(year) && Number(year) <= currYear) {
+    newYear = `${currCentury}${paddedYear}`;
+  } else {
+    newYear = `${currCentury - 1}${paddedYear}`;
+  }
+
+  return `${newYear}-${paddedMonth}-${paddedDay}`;
 }
 
 export function parseDay(dateISO: string) {
