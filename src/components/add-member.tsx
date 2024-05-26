@@ -140,7 +140,9 @@ export function AddMember({
       </SheetTrigger>
       <SheetContent className="overflow-y-scroll w-full">
         <SheetHeader>
-          <SheetTitle>{t("members.addMember")}</SheetTitle>
+          <div className="flex gap-2">
+            <SheetTitle>{t("members.addMember")}</SheetTitle>
+          </div>
         </SheetHeader>
         <Form {...form}>
           <form
