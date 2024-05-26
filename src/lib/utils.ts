@@ -37,7 +37,7 @@ export function parseMonth(dateISO: string) {
   return dateISO.split("-")[1];
 }
 export function parseYear(dateISO: string) {
-  return dateISO.split("-")[0];
+  return dateISO.split("-")[0].slice(2);
 }
 
 export function isValidISODate(value: string) {
