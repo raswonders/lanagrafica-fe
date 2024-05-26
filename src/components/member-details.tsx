@@ -148,6 +148,7 @@ export function MemberDetails({
       details: serializedMember,
       name: row.name,
     });
+    setOpen(false);
   }
 
   const country = form.watch("country");
@@ -156,9 +157,10 @@ export function MemberDetails({
   const isExpired: boolean = hasExpired(new Date(form.watch("expirationDate")));
   const isRenewAllowed = !isSuspended && isExpired;
   const isActive = !isSuspended && !isExpired;
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       {isMobile ? (
         <SheetTrigger asChild>{children}</SheetTrigger>
       ) : (
