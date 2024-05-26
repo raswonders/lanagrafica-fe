@@ -57,6 +57,7 @@ export function AddMember({ insertMutation }) {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+  const [open, setOpen] = useState(false);
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -97,14 +98,15 @@ export function AddMember({ insertMutation }) {
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
-  const resetForm = () => {
-    form.reset();
-    setCountrySearch("");
-    setCitySearch("");
-    setDay("");
-    setMonth("");
-    setYear("");
-  };
+  // const resetForm = () => {
+  //   form.reset();
+  //   setCountrySearch("");
+  //   setCitySearch("");
+  //   setDay("");
+  //   setMonth("");
+  //   setYear("");
+  //   TODO
+  // };
 
   function serializeForInsert(
     row: z.infer<typeof formSchema>,
@@ -127,12 +129,12 @@ export function AddMember({ insertMutation }) {
       details: newMember,
       name: newMember.name,
     });
-    resetForm();
+    setOpen(false);
   }
 
   return (
-    <Sheet>
-      <SheetTrigger>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
         <Button variant="outline">
           <Plus className="w-4 sm:mr-2" />
           <span className="hidden sm:inline-block">
