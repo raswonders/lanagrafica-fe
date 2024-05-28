@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/table";
 
 import { useEffect, useMemo, useState } from "react";
-import { supabase } from "@/components/supabase";
+import { supabase } from "@/api/supabase";
 import { useTranslation } from "react-i18next";
 import {
   extendDate,
