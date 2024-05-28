@@ -1,9 +1,9 @@
 import { Member } from "@/components/ui/members-table";
-import { supabase } from "./supabase"
+import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
 import { SerializedMember } from "@/components/ui/add-member";
 
-export async function renewMemberCard(
+export async function renewMember(
   id: number,
   expirationDate: string,
 ): Promise<Member | null> {

@@ -78,11 +78,7 @@ import { SerializedMember } from "./add-member";
 import { AddMember } from "./add-member";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
-import {
-  renewMemberCard,
-  updateMember,
-  insertMember,
-} from "@/api/memberService";
+import { renewMember, updateMember, insertMember } from "@/api/memberService";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -118,7 +114,7 @@ export function DataTable() {
       id: number;
       expirationDate: string;
       name: string;
-    }) => renewMemberCard(variables.id, variables.expirationDate),
+    }) => renewMember(variables.id, variables.expirationDate),
     onMutate: (variables) => {
       setIsRenewing((prev) => ({
         ...prev,
