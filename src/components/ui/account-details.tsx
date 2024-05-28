@@ -16,7 +16,7 @@ import { Globe, LogOut, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "../theme-provider";
+import { useTheme } from "../providers/theme-provider";
 
 export function AccountDetails() {
   const { user, signOut } = useAuth();

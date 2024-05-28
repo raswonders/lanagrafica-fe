@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./components/app.tsx";
 import "normalize.css";
 import "./index.css";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import { ThemeProvider } from "./components/providers/theme-provider.tsx";
 import "./i18next";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
