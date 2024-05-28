@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/table";
 
 import { useEffect, useMemo, useState } from "react";
-import { supabase } from "@/api/supabase";
 import { useTranslation } from "react-i18next";
 import {
   extendWithStatus,
@@ -78,7 +77,12 @@ import { SerializedMember } from "./add-member";
 import { AddMember } from "./add-member";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
-import { renewMember, updateMember, insertMember } from "@/api/memberService";
+import {
+  renewMember,
+  updateMember,
+  insertMember,
+  searchMember,
+} from "@/api/memberService";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -373,26 +377,11 @@ export function DataTable() {
   }): Promise<QueryMembersResult> {
     const pageStart = pageParam * membersPerPage;
     const pageEnd = pageStart + membersPerPage - 1;
-
-    let data, count, error;
-    if (debouncedSearch) {
-      const searchWords = debouncedSearch.trim().split(/\s+/).filter(Boolean);
-      const searchParam = searchWords.join(" & ");
-      ({ data, count, error } = await supabase
-        .from("member")
-        .select("*", { count: "exact" })
-        .order("id", { ascending: true })
-        .textSearch("name_surname", searchParam)
-        .range(pageStart, pageEnd));
-    } else {
-      ({ data, count, error } = await supabase
-        .from("member")
-        .select("*", { count: "exact" })
-        .order("id", { ascending: true })
-        .range(pageStart, pageEnd));
-    }
-
-    if (error) throw error;
+    const { data, count } = await searchMember(
+      debouncedSearch,
+      pageStart,
+      pageEnd,
+    );
 
     const total = count || 0;
     const dataNormalized = data ? (fromSnakeToCamelCase(data) as Member[]) : [];

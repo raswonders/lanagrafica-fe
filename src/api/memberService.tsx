@@ -43,3 +43,31 @@ export async function insertMember(details: Partial<SerializedMember>) {
 
   if (error) throw error;
 }
+
+export async function searchMember(
+  debouncedSearch: string | null,
+  pageStart: number,
+  pageEnd: number,
+) {
+  let data, count, error;
+  if (debouncedSearch) {
+    const searchWords = debouncedSearch.trim().split(/\s+/).filter(Boolean);
+    const searchParam = searchWords.join(" & ");
+    ({ data, count, error } = await supabase
+      .from("member")
+      .select("*", { count: "exact" })
+      .order("id", { ascending: true })
+      .textSearch("name_surname", searchParam)
+      .range(pageStart, pageEnd));
+  } else {
+    ({ data, count, error } = await supabase
+      .from("member")
+      .select("*", { count: "exact" })
+      .order("id", { ascending: true })
+      .range(pageStart, pageEnd));
+  }
+
+  if (error) throw error;
+
+  return { data, count };
+}
