@@ -1,4 +1,4 @@
-import { Login } from "./login";
+import { Login } from "./ui/login";
 import {
   Route,
   RouterProvider,
@@ -6,7 +6,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import { RootLayout } from "./layouts/root-layout";
-import { Background } from "./background";
+import { Background } from "./ui/background";
 import { Members } from "./pages/members";
 import { Toaster } from "./ui/sonner";
 

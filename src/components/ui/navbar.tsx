@@ -1,7 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { AccountDetails } from "./account-details";
 import { ModeToggle } from "./mode-toggle";
-import { Button } from "./ui/button";
+import { Button } from "./button";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Logo } from "./logo";

@@ -11,9 +11,9 @@ import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import countries from "../assets/countries.json";
-import cities from "../assets/cities.json";
-import documents from "../assets/documents.json";
+import countries from "@/assets/countries.json";
+import cities from "@/assets/cities.json";
+import documents from "@/assets/documents.json";
 import {
   fromCamelToSnakeCase,
   genCardNumber,
@@ -23,12 +23,12 @@ import {
   isValidISODate,
 } from "@/lib/utils";
 import { useState } from "react";
-import { InputField } from "./input-field";
-import { Combobox } from "./combobox";
-import { SelectField } from "./select-field";
-import { DateField } from "./date-field";
+import { InputField } from "@/components/ui/input-field";
+import { Combobox } from "@/components/ui/combobox";
+import { SelectField } from "@/components/ui/select-field";
+import { DateField } from "@/components/ui/date-field";
 import { Plus } from "lucide-react";
-import { InsertMutation } from "./members-table";
+import { InsertMutation } from "@/components/ui/members-table";
 
 export interface SerializedMember {
   birth_date: string;

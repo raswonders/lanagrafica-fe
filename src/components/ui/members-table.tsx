@@ -57,7 +57,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Checkbox } from "./ui/checkbox";
+import { Checkbox } from "./checkbox";
 import {
   EyeOff,
   Filter,
@@ -70,7 +70,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "./skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RenewConfirm } from "./renew-confirm";
 import { toast } from "sonner";
@@ -97,10 +97,7 @@ export type UpdateMutation = {
 };
 
 export type InsertMutation = {
-  mutate: (args: {
-    details: Partial<SerializedMember>;
-    name: string;
-  }) => void;
+  mutate: (args: { details: Partial<SerializedMember>; name: string }) => void;
 };
 
 interface Row {

@@ -5,8 +5,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Input } from "./input";
+import { Label } from "./label";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { createDateString } from "@/lib/utils";

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { AuthLayout } from "./auth-layout";
-import { Navbar } from "../navbar";
+import { Navbar } from "../ui/navbar";
 import { AuthProvider } from "../auth-provider";
 
 export function RootLayout() {

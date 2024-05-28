@@ -1,4 +1,4 @@
-import { Member } from "@/components/members-table";
+import { Member } from "@/components/ui/members-table";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

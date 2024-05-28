@@ -3,7 +3,7 @@ import { InputField } from "./input-field";
 import { DateField } from "./date-field";
 import { Combobox } from "./combobox";
 import { SelectField } from "./select-field";
-import { Button } from "./ui/button";
+import { Button } from "./button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -20,14 +20,14 @@ import {
   getDateMonthsLater,
   fromCamelToSnakeCase,
 } from "@/lib/utils";
-import countries from "../assets/countries.json";
-import cities from "../assets/cities.json";
-import documents from "../assets/documents.json";
+import countries from "../../assets/countries.json";
+import cities from "../../assets/cities.json";
+import documents from "../../assets/documents.json";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Ban, RefreshCcw } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Textarea } from "./ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Textarea } from "./textarea";
 
 import {
   Form,
@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/form";
 import { SerializedMember } from "./add-member";
 import { Member, UpdateMutation } from "./members-table";
-import { Input } from "./ui/input";
+import { Input } from "./input";
 import {
   Sheet,
   SheetContent,

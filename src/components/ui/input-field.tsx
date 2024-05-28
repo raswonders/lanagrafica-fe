@@ -5,7 +5,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
+import { Input } from "./input";
 
 type InputFieldProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
