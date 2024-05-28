@@ -20,10 +20,8 @@ import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/api/supabase";
 import { useTranslation } from "react-i18next";
 import {
-  extendDate,
   extendWithStatus,
   fromSnakeToCamelCase,
-  genCardNumber,
   getCustomDate,
   hasExpired,
 } from "@/lib/utils";
@@ -80,6 +78,11 @@ import { SerializedMember } from "./add-member";
 import { AddMember } from "./add-member";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
+import {
+  renewMemberCard,
+  updateMember,
+  insertMember,
+} from "@/api/memberService";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -102,47 +105,6 @@ export type InsertMutation = {
 
 interface Row {
   original: Member;
-}
-
-async function renewMemberCard(
-  id: number,
-  expirationDate: string,
-): Promise<Member | null> {
-  const cardNumber = genCardNumber();
-  const nextExpiration = extendDate(new Date(expirationDate));
-
-  const { data, error } = await supabase
-    .from("member")
-    .update({
-      card_number: String(cardNumber),
-      expiration_date: nextExpiration,
-      is_active: true,
-    })
-    .eq("id", id);
-
-  if (error) throw error;
-
-  return data;
-}
-
-async function updateMember(
-  id: number,
-  details: Partial<SerializedMember>,
-): Promise<Member | null> {
-  const { data, error } = await supabase
-    .from("member")
-    .update(details)
-    .eq("id", id);
-
-  if (error) throw error;
-
-  return data;
-}
-
-async function insertMember(details: Partial<SerializedMember>) {
-  const { error } = await supabase.from("member").insert(details);
-
-  if (error) throw error;
 }
 
 export function DataTable() {
