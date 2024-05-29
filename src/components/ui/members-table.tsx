@@ -83,7 +83,6 @@ interface Row {
 
 export function DataTable() {
   const { t } = useTranslation();
-  const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
   const [debouncedSearch, setDebouncedSearch] = useState<string | null>(null);
   const { renewMutation, updateMutation, insertMutation } =
     useMembersMutations();
@@ -172,7 +171,6 @@ export function DataTable() {
         header: () => <span className="ml-3">{t("membersTable.actions")}</span>,
         cell: ({ row }: { row: Row }) => {
           const isRenewForbidden =
-            isRenewing[row.original.id] ||
             row.original.status === "active" ||
             row.original.status === "suspended" ||
             row.original.status === "deleted";
@@ -217,7 +215,7 @@ export function DataTable() {
         },
       },
     ],
-    [t, isRenewing, renewMutation, updateMutation, isMobile],
+    [t, renewMutation, updateMutation, isMobile],
   );
 
   const [columnVisibility, setColumnVisibility] = useState(
