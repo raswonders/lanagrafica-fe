@@ -38,7 +38,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SerializedMember } from "./add-member";
-import { Member, UpdateMutation } from "./members-table";
+import { Member } from "./members-table";
 import { Input } from "./input";
 import {
   Sheet,
@@ -55,18 +55,18 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { StatusBadge } from "./status-badge";
+import { useWindowSize } from "@/hooks/use-window-size";
+import { UpdateMutation } from "@/hooks/use-table-mutations";
 
 export function MemberDetails({
   row,
   updateMutation,
   children,
-  isMobile,
   variant = "personal",
 }: {
   row: Member;
   updateMutation: UpdateMutation;
   children: React.ReactNode;
-  isMobile: boolean;
   variant?: "personal" | "membership" | "note";
 }) {
   const { t, i18n } = useTranslation();
@@ -76,6 +76,7 @@ export function MemberDetails({
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
   const focusDelay = 50;
+  const isMobile = useWindowSize();
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),

@@ -73,6 +73,7 @@ import { Separator } from "@radix-ui/react-separator";
 import { searchMember } from "@/api/memberService";
 import { useMembersMutations } from "@/hooks/use-table-mutations";
 import { AddMember } from "./add-member";
+import { useWindowSize } from "@/hooks/use-window-size";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -86,19 +87,7 @@ export function DataTable() {
   const [debouncedSearch, setDebouncedSearch] = useState<string | null>(null);
   const { renewMutation, updateMutation, insertMutation } =
     useMembersMutations();
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const isMobile = useWindowSize();
 
   const columns = useMemo(
     () => [
@@ -178,11 +167,7 @@ export function DataTable() {
 
           return (
             <div className="flex">
-              <MemberDetails
-                row={row.original}
-                updateMutation={updateMutation}
-                isMobile={isMobile}
-              >
+              <MemberDetails row={row.original} updateMutation={updateMutation}>
                 <Button size="icon" variant="ghost">
                   <SquarePen className="w-5" />
                 </Button>
@@ -204,7 +189,6 @@ export function DataTable() {
                 row={row.original}
                 updateMutation={updateMutation}
                 variant="note"
-                isMobile={isMobile}
               >
                 <Button size="icon" variant="ghost" disabled={!hasNote}>
                   <MessageSquareText className="w-5" />
@@ -215,7 +199,7 @@ export function DataTable() {
         },
       },
     ],
-    [t, renewMutation, updateMutation, isMobile],
+    [t, renewMutation, updateMutation],
   );
 
   const [columnVisibility, setColumnVisibility] = useState(
