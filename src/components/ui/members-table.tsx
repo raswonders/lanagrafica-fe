@@ -62,46 +62,20 @@ import {
   RefreshCcw,
   SquarePen,
 } from "lucide-react";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Skeleton } from "./skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RenewConfirm } from "./renew-confirm";
-import { toast } from "sonner";
 import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
-import { SerializedMember } from "./add-member";
-import { AddMember } from "./add-member";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
-import {
-  renewMember,
-  updateMember,
-  insertMember,
-  searchMember,
-} from "@/api/memberService";
+import { searchMember } from "@/api/memberService";
+import { useMembersMutations } from "@/hooks/use-table-mutations";
+import { AddMember } from "./add-member";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
-
-export type RenewMutation = {
-  mutate: (args: { id: number; expirationDate: string; name: string }) => void;
-};
-
-export type UpdateMutation = {
-  mutate: (args: {
-    id: number;
-    details: Partial<SerializedMember>;
-    name: string;
-  }) => void;
-};
-
-export type InsertMutation = {
-  mutate: (args: { details: Partial<SerializedMember>; name: string }) => void;
-};
 
 interface Row {
   original: Member;
@@ -110,79 +84,9 @@ interface Row {
 export function DataTable() {
   const { t } = useTranslation();
   const [isRenewing, setIsRenewing] = useState<Record<string, undefined>>({});
-  const queryClient = useQueryClient();
   const [debouncedSearch, setDebouncedSearch] = useState<string | null>(null);
-
-  const renewMutation = useMutation({
-    mutationFn: (variables: {
-      id: number;
-      expirationDate: string;
-      name: string;
-    }) => renewMember(variables.id, variables.expirationDate),
-    onMutate: (variables) => {
-      setIsRenewing((prev) => ({
-        ...prev,
-        [variables.id]: true,
-      }));
-    },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["members"] });
-      toast.success(t("membersTable.renewSuccess", { name: variables.name }));
-    },
-    onError: (error, variables) => {
-      console.error(t("membersTable.renewError"), error);
-      toast.error(
-        t("membersTable.renewError", {
-          name: variables.name,
-        }),
-      );
-    },
-    onSettled: (_, __, variables) => {
-      setIsRenewing((prev) => ({
-        ...prev,
-        [variables.id]: false,
-      }));
-    },
-  });
-
-  const updateMutation = useMutation({
-    mutationFn: (variables: {
-      id: number;
-      details: Partial<SerializedMember>;
-      name: string;
-    }) => updateMember(variables.id, variables.details),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["members"] });
-      toast.success(t("membersTable.updateSuccess", { name: variables.name }));
-    },
-    onError: (error, variables) => {
-      console.error(t("membersTable.updateError"), error);
-      toast.error(
-        t("membersTable.updateError", {
-          name: variables.name,
-        }),
-      );
-    },
-  });
-
-  const insertMutation = useMutation({
-    mutationFn: (variables: {
-      details: Partial<SerializedMember>;
-      name: string;
-    }) => insertMember(variables.details),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["members"] });
-      toast.success(t("newMember.insertSuccess", { name: variables.name }));
-    },
-    onError: (error, variables) => {
-      console.error(t("newMember.insertError"), error);
-      toast.error(
-        t("newMember.insertError", {
-          name: variables.name,
-        }),
-      );
-    },
-  });
+  const { renewMutation, updateMutation, insertMutation } =
+    useMembersMutations();
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   useEffect(() => {
