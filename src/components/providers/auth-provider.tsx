@@ -1,4 +1,4 @@
-import { useLocalUser } from "@/hooks/useLocalUser";
+import { useLocalUser } from "@/hooks/use-loca-user"; 
 import { delay } from "@/lib/utils";
 import { User } from "@/types/user";
 import { ReactNode, createContext } from "react";
