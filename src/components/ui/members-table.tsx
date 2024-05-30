@@ -224,7 +224,7 @@ export function DataTable() {
         },
   );
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  // Query data
   const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
     useMembersQuery(debouncedSearch, membersPerPage);
 
@@ -232,12 +232,13 @@ export function DataTable() {
     if (debouncedSearch !== null) refetch();
   }, [refetch, debouncedSearch]);
 
+  // Build table
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
       return [...acc, ...page.members];
     }, []);
   }, [data]);
-
   const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
   const tableColumns = isPending
     ? columns.map((row) => ({
