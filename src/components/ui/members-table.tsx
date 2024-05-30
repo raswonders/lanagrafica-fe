@@ -1,5 +1,6 @@
 import {
   ColumnFiltersState,
+  VisibilityState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
@@ -20,6 +21,26 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getCustomDate, hasExpired } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { MessageSquareText, RefreshCcw, SquarePen } from "lucide-react";
+import { Skeleton } from "./skeleton";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { RenewConfirm } from "./renew-confirm";
+import { MemberDetails } from "./member-details";
+import { StatusBadge } from "./status-badge";
+import { SearchBar } from "./searchbar";
+import { Separator } from "@radix-ui/react-separator";
+import { useMembersMutations } from "@/hooks/use-table-mutations";
+import { AddMember } from "./add-member";
+import { useWindowSize } from "@/hooks/use-window-size";
+import { useMembersQuery } from "@/hooks/use-members-query";
+import { FilterPopover } from "./filter-popover";
+import { HideFieldsPopover } from "./hide-fields-popover";
+
+const columnHelper = createColumnHelper<Member>();
+const membersPerPage = 20;
+interface Row {
+  original: Member;
+}
 
 export type Member = {
   id: number;
@@ -42,34 +63,6 @@ export type Member = {
   registrationDate: string;
   note: string;
 };
-
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Checkbox } from "./checkbox";
-import { EyeOff, MessageSquareText, RefreshCcw, SquarePen } from "lucide-react";
-import { Skeleton } from "./skeleton";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { RenewConfirm } from "./renew-confirm";
-import { MemberDetails } from "./member-details";
-import { StatusBadge } from "./status-badge";
-import { SearchBar } from "./searchbar";
-import { Separator } from "@radix-ui/react-separator";
-import { useMembersMutations } from "@/hooks/use-table-mutations";
-import { AddMember } from "./add-member";
-import { useWindowSize } from "@/hooks/use-window-size";
-import { useMembersQuery } from "@/hooks/use-members-query";
-import { FilterPopover } from "./filter-popover";
-
-const columnHelper = createColumnHelper<Member>();
-const membersPerPage = 20;
-
-interface Row {
-  original: Member;
-}
 
 export function DataTable() {
   const { t } = useTranslation();
@@ -191,7 +184,7 @@ export function DataTable() {
     [t, renewMutation, updateMutation],
   );
 
-  const [columnVisibility, setColumnVisibility] = useState(
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
     isMobile
       ? {
           fullName: true,
@@ -270,45 +263,12 @@ export function DataTable() {
             />
           </div>
         </div>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className="mb-6">
-              <EyeOff className="w-4 mr-2" />
-              {t("membersTable.hideFields")}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            {table.getAllColumns().map((col, index, self) => {
-              if (col.id === "isActive" || col.id === "isDeleted") return null;
-
-              return (
-                <div
-                  key={col.id}
-                  className={`flex ${index === self.length - 1 ? "" : "mb-4"}`}
-                >
-                  <Checkbox
-                    id={col.id}
-                    checked={
-                      columnVisibility[col.id as keyof typeof columnVisibility]
-                    }
-                    onCheckedChange={(checked) => {
-                      setColumnVisibility((prev) => ({
-                        ...prev,
-                        [col.id]: checked,
-                      }));
-                    }}
-                    className="mr-4"
-                  />
-                  <Label htmlFor={col.id} className="font-normal">
-                    {(col.columnDef.meta as string) || col.id}
-                  </Label>
-                </div>
-              );
-            })}
-          </PopoverContent>
-        </Popover>
+        <HideFieldsPopover
+          table={table}
+          columnVisibility={columnVisibility}
+          setColumnVisibility={setColumnVisibility}
+        />
       </div>
-
       <div className="rounded-md border">
         {error ? (
           <div className="flex items-center justify-center">
