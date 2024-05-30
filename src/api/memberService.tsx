@@ -1,7 +1,7 @@
-import { Member } from "@/components/ui/members-table";
 import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
 import { SerializedMember } from "@/components/ui/add-member";
+import { Member } from "@/types";
 
 export async function renewMember(
   id: number,

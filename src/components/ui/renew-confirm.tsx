@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { RenewMutation } from "./members-table";
 
 import {
   Tooltip,
@@ -19,6 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { RenewMutation } from "@/hooks/use-table-mutations";
 
 type RenewConfirmProps = {
   children: ReactNode;

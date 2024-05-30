@@ -1,6 +1,6 @@
 import { searchMember } from "@/api/memberService";
-import { Member } from "@/components/ui/members-table";
 import { extendWithStatus, fromSnakeToCamelCase } from "@/lib/utils";
+import { Member } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 type QueryMembersResult = {

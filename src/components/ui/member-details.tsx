@@ -38,7 +38,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SerializedMember } from "./add-member";
-import { Member } from "./members-table";
 import { Input } from "./input";
 import {
   Sheet,
@@ -57,6 +56,7 @@ import {
 import { StatusBadge } from "./status-badge";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { UpdateMutation } from "@/hooks/use-table-mutations";
+import { Member } from "@/types";
 
 export function MemberDetails({
   row,

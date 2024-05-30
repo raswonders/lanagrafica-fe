@@ -28,8 +28,7 @@ import { Combobox } from "@/components/ui/combobox";
 import { SelectField } from "@/components/ui/select-field";
 import { DateField } from "@/components/ui/date-field";
 import { Plus } from "lucide-react";
-import { InsertMutation } from "@/components/ui/members-table";
-
+import { InsertMutation } from "@/hooks/use-table-mutations";
 export interface SerializedMember {
   birth_date: string;
   birth_place: string;
