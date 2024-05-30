@@ -18,12 +18,7 @@ import {
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  extendWithStatus,
-  fromSnakeToCamelCase,
-  getCustomDate,
-  hasExpired,
-} from "@/lib/utils";
+import { getCustomDate, hasExpired } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export type Member = {
@@ -62,7 +57,6 @@ import {
   RefreshCcw,
   SquarePen,
 } from "lucide-react";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { Skeleton } from "./skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RenewConfirm } from "./renew-confirm";
@@ -70,10 +64,10 @@ import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
-import { searchMember } from "@/api/memberService";
 import { useMembersMutations } from "@/hooks/use-table-mutations";
 import { AddMember } from "./add-member";
 import { useWindowSize } from "@/hooks/use-window-size";
+import { useMembersQuery } from "@/hooks/use-members-query";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -232,14 +226,7 @@ export function DataTable() {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
-    useInfiniteQuery({
-      queryKey: ["members"],
-      queryFn: queryMembers,
-      getNextPageParam: (lastPage, _, lastPageParam) => {
-        return lastPageParam < lastPage.maxPageParam ? lastPageParam + 1 : null;
-      },
-      initialPageParam: 0,
-    });
+    useMembersQuery(debouncedSearch, membersPerPage);
 
   useEffect(() => {
     if (debouncedSearch !== null) refetch();
@@ -250,33 +237,6 @@ export function DataTable() {
       return [...acc, ...page.members];
     }, []);
   }, [data]);
-
-  type QueryMembersResult = {
-    members: Member[];
-    maxPageParam: number;
-  };
-
-  async function queryMembers({
-    pageParam,
-  }: {
-    pageParam: number;
-  }): Promise<QueryMembersResult> {
-    const pageStart = pageParam * membersPerPage;
-    const pageEnd = pageStart + membersPerPage - 1;
-    const { data, count } = await searchMember(
-      debouncedSearch,
-      pageStart,
-      pageEnd,
-    );
-
-    const total = count || 0;
-    const dataNormalized = data ? (fromSnakeToCamelCase(data) as Member[]) : [];
-
-    return {
-      members: extendWithStatus(dataNormalized),
-      maxPageParam: Math.floor(total / membersPerPage),
-    };
-  }
 
   const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
   const tableColumns = isPending
