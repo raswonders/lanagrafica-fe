@@ -1,8 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { InputField } from "./input-field";
-import { DateField } from "./date-field";
-import { Combobox } from "./combobox";
-import { SelectField } from "./select-field";
 import { Button } from "./button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -20,9 +16,6 @@ import {
   getDateMonthsLater,
   fromCamelToSnakeCase,
 } from "@/lib/utils";
-import countries from "../../assets/countries.json";
-import cities from "../../assets/cities.json";
-import documents from "../../assets/documents.json";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Ban, RefreshCcw } from "lucide-react";
@@ -57,6 +50,7 @@ import { StatusBadge } from "./status-badge";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { UpdateMutation } from "@/hooks/use-table-mutations";
 import { Member } from "@/types";
+import { PersonalTab } from "./personal-tab";
 
 export function MemberDetails({
   row,
@@ -69,9 +63,7 @@ export function MemberDetails({
   children: React.ReactNode;
   variant?: "personal" | "membership" | "note";
 }) {
-  const { t, i18n } = useTranslation();
-  const [countrySearch, setCountrySearch] = useState("");
-  const [citySearch, setCitySearch] = useState("");
+  const { t } = useTranslation();
   const [day, setDay] = useState(parseDay(row.birthDate));
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
@@ -150,8 +142,6 @@ export function MemberDetails({
     setOpen(false);
   }
 
-  const country = form.watch("country");
-  const isItaly = country === "Italy";
   const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
   const isExpired: boolean = hasExpired(new Date(form.watch("expirationDate")));
   const isRenewAllowed = !isSuspended && isExpired;
@@ -201,77 +191,16 @@ export function MemberDetails({
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <TabsContent value="personal">
-                  <div className="space-y-8 flex flex-col">
-                    <InputField
-                      form={form}
-                      label={t("newMember.nameFieldLabel")}
-                      name="name"
-                    />
-                    <InputField
-                      form={form}
-                      label={t("newMember.surnameFieldLabel")}
-                      name="surname"
-                    />
-                    <DateField
-                      form={form}
-                      label={t("newMember.dateFieldLabel")}
-                      name="birthDate"
-                      day={day}
-                      month={month}
-                      year={year}
-                      setDay={setDay}
-                      setMonth={setMonth}
-                      setYear={setYear}
-                    />
-                    <Combobox
-                      form={form}
-                      name="country"
-                      label={t("newMember.countryFieldLabel")}
-                      data={[
-                        i18n.language === "it" ? "__Altro__" : "__Other__",
-                        ...countries.map((entry) => entry.en),
-                      ]}
-                      search={countrySearch}
-                      setSearch={setCountrySearch}
-                    />
-                    <Combobox
-                      form={form}
-                      name="birthPlace"
-                      label={t("newMember.cityFieldLabel")}
-                      data={[
-                        i18n.language === "it" ? "__Altro__" : "__Other__",
-                        ...cities,
-                      ]}
-                      search={citySearch}
-                      setSearch={setCitySearch}
-                      value={
-                        isItaly
-                          ? cities.includes(row.birthPlace)
-                            ? row.birthPlace
-                            : ""
-                          : country
-                      }
-                      disabled={!isItaly}
-                    />
-                    <SelectField
-                      form={form}
-                      name="docType"
-                      label={t("newMember.docTypeFieldLabel")}
-                      data={documents.map((entry) =>
-                        i18n.language === "it" ? entry.it : entry.en,
-                      )}
-                    />
-                    <InputField
-                      form={form}
-                      label={t("newMember.docIdFieldLabel")}
-                      name="docId"
-                    />
-                    <InputField
-                      form={form}
-                      label={t("newMember.emailFieldLabel")}
-                      name="email"
-                    />
-                  </div>
+                  <PersonalTab
+                    form={form}
+                    day={day}
+                    month={month}
+                    year={year}
+                    setDay={setDay}
+                    setMonth={setMonth}
+                    setYear={setYear}
+                    row={row}
+                  />
                 </TabsContent>
                 <TabsContent value="membership">
                   <div className="flex flex-col space-y-8">
