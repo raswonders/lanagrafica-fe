@@ -20,12 +20,8 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getCustomDate, hasExpired } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { MessageSquareText, RefreshCcw, SquarePen } from "lucide-react";
 import { Skeleton } from "./skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { RenewConfirm } from "./renew-confirm";
-import { MemberDetails } from "./member-details";
 import { StatusBadge } from "./status-badge";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
@@ -35,6 +31,7 @@ import { useWindowSize } from "@/hooks/use-window-size";
 import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
+import { ActionButtons } from "./action-buttons";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -141,43 +138,7 @@ export function DataTable() {
         id: "actions",
         header: () => <span className="ml-3">{t("membersTable.actions")}</span>,
         cell: ({ row }: { row: Row }) => {
-          const isRenewForbidden =
-            row.original.status === "active" ||
-            row.original.status === "suspended" ||
-            row.original.status === "deleted";
-          const hasNote = Boolean(row.original.note);
-
-          return (
-            <div className="flex">
-              <MemberDetails row={row.original} updateMutation={updateMutation}>
-                <Button size="icon" variant="ghost">
-                  <SquarePen className="w-5" />
-                </Button>
-              </MemberDetails>
-
-              <RenewConfirm
-                isOpenForbidden={isRenewForbidden}
-                id={row.original.id}
-                name={`${row.original.name} ${row.original.surname}`}
-                expirationDate={row.original.expirationDate}
-                renewMutation={renewMutation}
-              >
-                <Button size="icon" variant="ghost" disabled={isRenewForbidden}>
-                  <RefreshCcw className={`w-5`} />
-                </Button>
-              </RenewConfirm>
-
-              <MemberDetails
-                row={row.original}
-                updateMutation={updateMutation}
-                variant="note"
-              >
-                <Button size="icon" variant="ghost" disabled={!hasNote}>
-                  <MessageSquareText className="w-5" />
-                </Button>
-              </MemberDetails>
-            </div>
-          );
+          return <ActionButtons row={row.original} />;
         },
       },
     ],
