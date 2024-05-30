@@ -62,7 +62,7 @@ export function isAdult(value: string) {
   if (dayDiff <= 0) return false;
 }
 
-export function getCustomDate(value: string) {
+export function getCustomDate(value: string | void) {
   if (!value) return "";
 
   const date = new Date(value);

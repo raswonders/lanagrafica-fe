@@ -8,8 +8,10 @@ import { InputField } from "./input-field";
 import { SelectField } from "./select-field";
 import { useState } from "react";
 import { Member } from "@/types";
+import { UseFormReturn } from "react-hook-form";
 
 type PersonalTabProps = {
+  form: UseFormReturn<Member>;
   row: Member;
   day: string;
   month: string;

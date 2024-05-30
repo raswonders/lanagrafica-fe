@@ -91,7 +91,7 @@ export function MemberDetails({
     expirationDate: z.string(),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<Member>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: row.name,
@@ -110,27 +110,18 @@ export function MemberDetails({
   });
 
   const { isDirty } = form.formState;
-  interface ExtendedRow extends z.infer<typeof formSchema> {
-    [key: string]: unknown;
-    isActive: boolean;
-  }
 
-  function serializeForUpdate(
-    row: z.infer<typeof formSchema>,
-  ): Partial<SerializedMember> {
-    const extended: ExtendedRow = {
-      ...row,
-      isActive: isActive,
-    };
+  function serializeForUpdate(row: Partial<Member>): Partial<SerializedMember> {
+    const updatedRow: Partial<SerializedMember> = {};
 
-    Object.keys(extended).forEach((key: string) => {
-      extended[key] = extended[key] || null;
+    Object.keys(row).forEach((key: string) => {
+      updatedRow[key] = row[key] || null;
     });
 
-    return fromCamelToSnakeCase(extended);
+    return fromCamelToSnakeCase(row);
   }
 
-  async function onSubmit(member: z.infer<typeof formSchema>) {
+  async function onSubmit(member: Partial<Member>) {
     const serializedMember = serializeForUpdate(member);
     console.log("member", member);
     console.log("serialized", serializedMember);
@@ -143,7 +134,7 @@ export function MemberDetails({
   }
 
   const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
-  const isExpired: boolean = hasExpired(new Date(form.watch("expirationDate")));
+  const isExpired = hasExpired(new Date(form.watch("expirationDate")));
   const isRenewAllowed = !isSuspended && isExpired;
   const isActive = !isSuspended && !isExpired;
   const [open, setOpen] = useState(false);

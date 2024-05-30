@@ -27,4 +27,5 @@ export type Member = {
   measure: string;
   registrationDate: string;
   note: string;
+  [key: string]: string | boolean | number;
 };

@@ -47,6 +47,7 @@ export interface SerializedMember {
   surname: string;
   province: string;
   suspended_till: string;
+  [key: string]: string | boolean | number | null;
 }
 
 export function AddMember({
