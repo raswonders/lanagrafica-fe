@@ -29,28 +29,7 @@ import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
-
-export type Member = {
-  id: number;
-  name: string;
-  surname: string;
-  province: string;
-  birthDate: string;
-  birthPlace: string;
-  email: string;
-  docType: string;
-  docId: string;
-  country: string;
-  suspendedTill: string;
-  expirationDate: string;
-  cardNumber: string;
-  isActive: boolean;
-  isDeleted: boolean;
-  status: string;
-  measure: string;
-  registrationDate: string;
-  note: string;
-};
+import { Member } from "@/types";
 
 const membersPerPage = 20;
 

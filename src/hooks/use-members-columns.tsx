@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMembersMutations } from "./use-table-mutations";
 import { createColumnHelper } from "@tanstack/react-table";
-import { Member } from "@/components/ui/members-table";
 import { getCustomDate, hasExpired } from "@/lib/utils";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ActionButtons } from "@/components/ui/action-buttons";
+import { Member } from "@/types";
 
 interface Row {
   original: Member;

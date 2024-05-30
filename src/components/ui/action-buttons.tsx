@@ -3,7 +3,7 @@ import { Button } from "./button";
 import { MemberDetails } from "./member-details";
 import { RenewConfirm } from "./renew-confirm";
 import { useMembersMutations } from "@/hooks/use-table-mutations";
-import { Member } from "./members-table";
+import { Member } from "@/types";
 
 type ActionButtonsProps = {
   row: Member;

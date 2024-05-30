@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Checkbox } from "./checkbox";
 import { Label } from "./label";
 import { Table, VisibilityState } from "@tanstack/react-table";
-import { Member } from "./members-table";
+import { Member } from "@/types";
 
 type HideFieldsPopoverProps = {
   table: Table<Member>;

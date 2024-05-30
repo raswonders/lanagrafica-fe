@@ -1,4 +1,4 @@
-import { User, UserSchema } from "@/types/types";
+import { User, UserSchema } from "@/types";
 import { useEffect, useState } from "react";
 
 const key = "user";
