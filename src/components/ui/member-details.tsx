@@ -118,7 +118,9 @@ export function MemberDetails({
       updatedRow[key] = row[key] || null;
     });
 
-    return fromCamelToSnakeCase(row);
+    updatedRow.is_active = isActive;
+
+    return fromCamelToSnakeCase(updatedRow);
   }
 
   async function onSubmit(member: Partial<Member>) {
