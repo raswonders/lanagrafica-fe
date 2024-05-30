@@ -54,7 +54,7 @@ export type Member = {
 
 const membersPerPage = 20;
 
-export function DataTable() {
+export function MembersTable() {
   const { t } = useTranslation();
   const { insertMutation } = useMembersMutations();
   const isMobile = useWindowSize();
