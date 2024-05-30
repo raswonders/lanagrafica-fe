@@ -63,11 +63,40 @@ export type Member = {
 
 export function DataTable() {
   const { t } = useTranslation();
-  const [debouncedSearch, setDebouncedSearch] = useState<string | null>(null);
   const { renewMutation, updateMutation, insertMutation } =
     useMembersMutations();
   const isMobile = useWindowSize();
+  const [debouncedSearch, setDebouncedSearch] = useState<string | null>(null);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    isMobile
+      ? {
+          birthDate: false,
+          email: false,
+          suspendedTill: false,
+          expirationDate: false,
+          cardNumber: false,
+          isActive: false,
+          isDeleted: false,
+        }
+      : {
+          email: false,
+          suspendedTill: false,
+          expirationDate: false,
+          isActive: false,
+          isDeleted: false,
+        },
+  );
 
+  // Query data
+  const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
+    useMembersQuery(debouncedSearch, membersPerPage);
+
+  useEffect(() => {
+    if (debouncedSearch !== null) refetch();
+  }, [refetch, debouncedSearch]);
+
+  // Build table
   const columns = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
@@ -145,49 +174,12 @@ export function DataTable() {
     [t, renewMutation, updateMutation],
   );
 
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
-    isMobile
-      ? {
-          fullName: true,
-          birthDate: false,
-          status: true,
-          email: false,
-          suspendedTill: false,
-          expirationDate: false,
-          cardNumber: false,
-          isActive: false,
-          isDeleted: false,
-          actions: true,
-        }
-      : {
-          fullName: true,
-          birthDate: true,
-          status: true,
-          email: false,
-          suspendedTill: false,
-          expirationDate: true,
-          cardNumber: true,
-          isActive: false,
-          isDeleted: false,
-          actions: true,
-        },
-  );
-
-  // Query data
-  const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
-    useMembersQuery(debouncedSearch, membersPerPage);
-
-  useEffect(() => {
-    if (debouncedSearch !== null) refetch();
-  }, [refetch, debouncedSearch]);
-
-  // Build table
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
       return [...acc, ...page.members];
     }, []);
   }, [data]);
+
   const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
   const tableColumns = isPending
     ? columns.map((row) => ({
