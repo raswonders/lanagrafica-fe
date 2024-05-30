@@ -50,13 +50,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "./checkbox";
-import {
-  EyeOff,
-  Filter,
-  MessageSquareText,
-  RefreshCcw,
-  SquarePen,
-} from "lucide-react";
+import { EyeOff, MessageSquareText, RefreshCcw, SquarePen } from "lucide-react";
 import { Skeleton } from "./skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RenewConfirm } from "./renew-confirm";
@@ -68,6 +62,7 @@ import { useMembersMutations } from "@/hooks/use-table-mutations";
 import { AddMember } from "./add-member";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { useMembersQuery } from "@/hooks/use-members-query";
+import { FilterPopover } from "./filter-popover";
 
 const columnHelper = createColumnHelper<Member>();
 const membersPerPage = 20;
@@ -259,57 +254,6 @@ export function DataTable() {
     onColumnFiltersChange: setColumnFilters,
   });
 
-  function handleFilterBadgeAddition(filter: string) {
-    setOpen(false);
-    let filterId: string;
-    let filterValue: string | boolean;
-
-    if (filter === "all") {
-      setColumnFilters([]);
-      return;
-    }
-
-    if (filter === "active") {
-      filterId = "isActive";
-      filterValue = true;
-    }
-    if (filter === "inactive") {
-      filterId = "isActive";
-      filterValue = false;
-    }
-    if (filter === "deleted") {
-      filterId = "isDeleted";
-      filterValue = true;
-    }
-
-    if (filter === "expired") {
-      filterId = "expirationDate";
-      filterValue = filter;
-    }
-
-    if (filter === "suspended") {
-      filterId = "suspendedTill";
-      filterValue = filter;
-    }
-
-    setColumnFilters((prev) => {
-      if (
-        prev.find((item) => item.id === filterId && item.value === filterValue)
-      ) {
-        return prev;
-      }
-
-      return [
-        {
-          id: filterId,
-          value: filterValue,
-        },
-      ];
-    });
-  }
-
-  const [open, setOpen] = useState(false);
-
   return (
     <div className="w-full">
       <div className="flex flex-row items-end justify-between gap-6 mt-6">
@@ -320,107 +264,10 @@ export function DataTable() {
       <div className="flex justify-between">
         <div className="flex flex-wrap items-baseline">
           <div className="mr-2">
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button variant="outline" className="mb-6">
-                  <Filter className="w-4 mr-2" />
-                  {t("membersTable.addFilter")}
-                  {columnFilters.length ? (
-                    columnFilters.map((filter) => {
-                      let filterVariant = "";
-
-                      if (filter.id === "isActive" && filter.value === true) {
-                        filterVariant = "active";
-                      }
-
-                      if (filter.id === "isActive" && filter.value === false) {
-                        filterVariant = "inactive";
-                      }
-
-                      if (filter.id === "expirationDate") {
-                        filterVariant = "expired";
-                      }
-
-                      if (filter.id === "suspendedTill") {
-                        filterVariant = "suspended";
-                      }
-
-                      if (filter.id === "isDeleted") {
-                        filterVariant = "deleted";
-                      }
-
-                      return (
-                        <div className="ml-2" key={filterVariant}>
-                          <StatusBadge status={filterVariant} />
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div className="ml-2" key="all">
-                      <StatusBadge status="all" />
-                    </div>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <ul className="space-y-2">
-                  <li>
-                    <Button
-                      size="sm"
-                      variant="active"
-                      onClick={() => handleFilterBadgeAddition("active")}
-                    >
-                      {t("membersTable.active")}
-                    </Button>
-                  </li>
-                  <li>
-                    <Button
-                      size="sm"
-                      variant="inactive"
-                      onClick={() => handleFilterBadgeAddition("inactive")}
-                    >
-                      {t("membersTable.inactive")}
-                    </Button>
-                  </li>
-                  <li>
-                    <Button
-                      size="sm"
-                      variant="inactive"
-                      onClick={() => handleFilterBadgeAddition("expired")}
-                    >
-                      {t("membersTable.expired")}
-                    </Button>
-                  </li>
-                  <li>
-                    <Button
-                      size="sm"
-                      variant="suspended"
-                      onClick={() => handleFilterBadgeAddition("suspended")}
-                    >
-                      {t("membersTable.suspended")}
-                    </Button>
-                  </li>
-                  <li>
-                    <Button
-                      size="sm"
-                      variant="deleted"
-                      onClick={() => handleFilterBadgeAddition("deleted")}
-                    >
-                      {t("membersTable.deleted")}
-                    </Button>
-                  </li>
-                  <li>
-                    <Button
-                      size="sm"
-                      variant="all"
-                      onClick={() => handleFilterBadgeAddition("all")}
-                    >
-                      {t("membersTable.all")}
-                    </Button>
-                  </li>
-                </ul>
-              </PopoverContent>
-            </Popover>
+            <FilterPopover
+              columnFilters={columnFilters}
+              setColumnFilters={setColumnFilters}
+            />
           </div>
         </div>
         <Popover>
