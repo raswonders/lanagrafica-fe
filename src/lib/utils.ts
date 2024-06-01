@@ -1,4 +1,4 @@
-import { Member } from "@/types";
+import { Member, MemberDTO } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -86,7 +86,7 @@ export function fromSnakeToCamelCase(arr: object[]) {
   });
 }
 
-export function fromCamelToSnakeCase(obj: object) {
+export function fromCamelToSnakeCase(obj: Member) {
   return Object.fromEntries(
     Object.entries(obj).map(([key, value]) => {
       const newKey = key
@@ -95,7 +95,7 @@ export function fromCamelToSnakeCase(obj: object) {
         .join("_");
       return [newKey, value];
     }),
-  );
+  ) as MemberDTO;
 }
 
 export function extendWithStatus(data: Member[]) {

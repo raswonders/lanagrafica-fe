@@ -27,5 +27,25 @@ export type Member = {
   measure: string;
   registrationDate: string;
   note: string;
-  [key: string]: string | boolean | number;
+};
+
+export type MemberDTO = {
+  id: number;
+  name: string;
+  surname: string;
+  province: string;
+  birth_date: string;
+  birth_place: string;
+  email: string;
+  doc_type: string;
+  doc_id: string;
+  country: string;
+  suspended_till: string | null;
+  expiration_date: string;
+  card_number: string | null;
+  isActive: boolean;
+  isDeleted: boolean;
+  measure: string | null;
+  registrationDate: string;
+  note: string | null;
 };

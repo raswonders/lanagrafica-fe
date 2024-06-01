@@ -1,12 +1,11 @@
 import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
-import { SerializedMember } from "@/components/ui/add-member";
-import { Member } from "@/types";
+import { MemberDTO } from "@/types";
 
 export async function renewMember(
   id: number,
   expirationDate: string,
-): Promise<Member | null> {
+): Promise<MemberDTO | null> {
   const cardNumber = genCardNumber();
   const nextExpiration = extendDate(new Date(expirationDate));
 
@@ -26,8 +25,8 @@ export async function renewMember(
 
 export async function updateMember(
   id: number,
-  details: Partial<SerializedMember>,
-): Promise<Member | null> {
+  details: MemberDTO,
+): Promise<MemberDTO | null> {
   const { data, error } = await supabase
     .from("member")
     .update(details)
@@ -38,7 +37,7 @@ export async function updateMember(
   return data;
 }
 
-export async function insertMember(details: Partial<SerializedMember>) {
+export async function insertMember(details: MemberDTO) {
   const { error } = await supabase.from("member").insert(details);
 
   if (error) throw error;

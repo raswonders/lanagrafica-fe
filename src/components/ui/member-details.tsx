@@ -30,7 +30,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { SerializedMember } from "./add-member";
 import { Input } from "./input";
 import {
   Sheet,
@@ -49,7 +48,7 @@ import {
 import { StatusBadge } from "./status-badge";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { UpdateMutation } from "@/hooks/use-table-mutations";
-import { Member } from "@/types";
+import { Member, MemberDTO } from "@/types";
 import { PersonalTab } from "./personal-tab";
 
 export function MemberDetails({
@@ -111,22 +110,18 @@ export function MemberDetails({
 
   const { isDirty } = form.formState;
 
-  function serializeForUpdate(row: Partial<Member>): Partial<SerializedMember> {
-    const updatedRow: Partial<SerializedMember> = {};
+  function serializeForUpdate<T extends Member>(row: T): MemberDTO {
+    const updatedRow: Record<string, unknown> = { isActive: isActive };
 
-    Object.keys(row).forEach((key: string) => {
+    for (let key in row) {
       updatedRow[key] = row[key] || null;
-    });
+    }
 
-    updatedRow.is_active = isActive;
-
-    return fromCamelToSnakeCase(updatedRow);
+    return fromCamelToSnakeCase(updatedRow as Member);
   }
 
-  async function onSubmit(member: Partial<Member>) {
+  async function onSubmit(member: Member) {
     const serializedMember = serializeForUpdate(member);
-    console.log("member", member);
-    console.log("serialized", serializedMember);
     await updateMutation.mutate({
       id: row.id,
       details: serializedMember,
