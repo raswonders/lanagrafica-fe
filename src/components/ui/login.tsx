@@ -7,14 +7,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
+} from "./form";
 
-import { Input } from "./ui/input";
+import { Input } from "./input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "./ui/button";
-import { useAuth } from "@/hooks/useAuth";
+import { Button } from "./button";
+import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "react-i18next";
 
 export function Login() {

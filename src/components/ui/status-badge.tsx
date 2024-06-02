@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Badge } from "./ui/badge";
+import { Badge } from "./badge";
 
 type StatusVariant = "active" | "inactive" | "suspended" | "deleted" | "all";
 

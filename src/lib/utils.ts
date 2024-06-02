@@ -1,4 +1,4 @@
-import { Member } from "@/components/members-table";
+import { Member, MemberDTO } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -62,7 +62,7 @@ export function isAdult(value: string) {
   if (dayDiff <= 0) return false;
 }
 
-export function getCustomDate(value: string) {
+export function getCustomDate(value: string | void) {
   if (!value) return "";
 
   const date = new Date(value);
@@ -86,7 +86,7 @@ export function fromSnakeToCamelCase(arr: object[]) {
   });
 }
 
-export function fromCamelToSnakeCase(obj: object) {
+export function fromCamelToSnakeCase(obj: Member) {
   return Object.fromEntries(
     Object.entries(obj).map(([key, value]) => {
       const newKey = key
@@ -95,7 +95,7 @@ export function fromCamelToSnakeCase(obj: object) {
         .join("_");
       return [newKey, value];
     }),
-  );
+  ) as MemberDTO;
 }
 
 export function extendWithStatus(data: Member[]) {
@@ -146,4 +146,17 @@ export function getDateMonthsLater(count: number) {
   const date = new Date();
   date.setMonth(date.getMonth() + count);
   return date.toISOString().split("T")[0];
+}
+
+export function serializeForUpdate<T extends Member>(
+  row: T,
+  isActive: boolean,
+): MemberDTO {
+  const updatedRow: Record<string, unknown> = { isActive: isActive };
+
+  for (let key in row) {
+    updatedRow[key] = row[key] || null;
+  }
+
+  return fromCamelToSnakeCase(updatedRow as Member);
 }

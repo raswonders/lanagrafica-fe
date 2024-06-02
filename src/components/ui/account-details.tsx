@@ -11,12 +11,12 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "./ui/button";
+import { Button } from "./button";
 import { Globe, LogOut, Moon, Sun } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "../providers/theme-provider";
 
 export function AccountDetails() {
   const { user, signOut } = useAuth();

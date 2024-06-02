@@ -1,6 +1,6 @@
-import { useLocalUser } from "@/hooks/useLocalUser";
+import { useLocalUser } from "@/hooks/use-local-user";
 import { delay } from "@/lib/utils";
-import { User } from "@/types/user";
+import { User } from "@/types";
 import { ReactNode, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 

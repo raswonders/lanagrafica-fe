@@ -11,9 +11,9 @@ import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import countries from "../assets/countries.json";
-import cities from "../assets/cities.json";
-import documents from "../assets/documents.json";
+import countries from "@/assets/countries.json";
+import cities from "@/assets/cities.json";
+import documents from "@/assets/documents.json";
 import {
   fromCamelToSnakeCase,
   genCardNumber,
@@ -23,32 +23,13 @@ import {
   isValidISODate,
 } from "@/lib/utils";
 import { useState } from "react";
-import { InputField } from "./input-field";
-import { Combobox } from "./combobox";
-import { SelectField } from "./select-field";
-import { DateField } from "./date-field";
+import { InputField } from "@/components/ui/input-field";
+import { Combobox } from "@/components/ui/combobox";
+import { SelectField } from "@/components/ui/select-field";
+import { DateField } from "@/components/ui/date-field";
 import { Plus } from "lucide-react";
-import { InsertMutation } from "./members-table";
-
-export interface SerializedMember {
-  birth_date: string;
-  birth_place: string;
-  card_number: string;
-  country: string;
-  doc_id: string;
-  doc_type: string;
-  email: string;
-  expiration_date: string;
-  is_active: boolean;
-  is_deleted: boolean;
-  measure: string;
-  name: string;
-  note: string;
-  registration_date: string;
-  surname: string;
-  province: string;
-  suspended_till: string;
-}
+import { InsertMutation } from "@/hooks/use-table-mutations";
+import { Member, MemberDTO } from "@/types";
 
 export function AddMember({
   insertMutation,
@@ -78,7 +59,7 @@ export function AddMember({
     email: z.string(),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<Member>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -91,21 +72,12 @@ export function AddMember({
       email: "",
     },
   });
-  interface ExtendedRow extends z.infer<typeof formSchema> {
-    registrationDate: string;
-    expirationDate: string;
-    cardNumber: string;
-    isActive: boolean;
-    isDeleted: boolean;
-  }
 
   const country = form.watch("country");
   const isItaly = country === "Italy";
 
-  function serializeForInsert(
-    row: z.infer<typeof formSchema>,
-  ): Partial<SerializedMember> {
-    const extended: ExtendedRow = {
+  function serializeForInsert(row: Member): MemberDTO {
+    const updatedRow: Member = {
       ...row,
       registrationDate: getRegistrationDate(),
       expirationDate: getExpirationDate(),
@@ -114,10 +86,10 @@ export function AddMember({
       isDeleted: false,
     };
 
-    return fromCamelToSnakeCase(extended);
+    return fromCamelToSnakeCase(updatedRow);
   }
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: Member) {
     const newMember = serializeForInsert(values);
     await insertMutation.mutate({
       details: newMember,
