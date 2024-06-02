@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { UseFormReturn } from "react-hook-form";
 import { Member } from "@/types";
 import { getDateMonthsLater, getDateWeekLater } from "@/lib/utils";
+import { SuspendPopoverItem } from "./suspend-popover-item";
 
 type SuspendPopoverProps = {
   form: UseFormReturn<Member>;
@@ -17,7 +18,6 @@ type SuspendPopoverProps = {
 
 export function SuspendPopover({ form, isSuspended }: SuspendPopoverProps) {
   const { t } = useTranslation();
-  const focusDelay = 50;
 
   return (
     <Popover>
@@ -35,84 +35,39 @@ export function SuspendPopover({ form, isSuspended }: SuspendPopoverProps) {
       <PopoverContent>
         <ul className="space-y-2">
           <li>
-            <Button
-              size="sm"
-              variant="suspended"
-              onClick={() => {
-                form.setValue("suspendedTill", getDateWeekLater(), {
-                  shouldDirty: true,
-                });
-                setTimeout(() => {
-                  form.setFocus("measure");
-                }, focusDelay);
-              }}
-            >
-              {t("durations.week", { count: 1 })}
-            </Button>
+            <SuspendPopoverItem
+              form={form}
+              title={t("durations.week", { count: 1 })}
+              period={getDateWeekLater()}
+            />
           </li>
           <li>
-            <Button
-              size="sm"
-              variant="suspended"
-              onClick={() => {
-                form.setValue("suspendedTill", getDateMonthsLater(1), {
-                  shouldDirty: true,
-                });
-                setTimeout(() => {
-                  form.setFocus("measure");
-                }, focusDelay);
-              }}
-            >
-              {t("durations.month", { count: 1 })}
-            </Button>
+            <SuspendPopoverItem
+              form={form}
+              title={t("durations.month", { count: 1 })}
+              period={getDateMonthsLater(1)}
+            />
           </li>
           <li>
-            <Button
-              size="sm"
-              variant="suspended"
-              onClick={() => {
-                form.setValue("suspendedTill", getDateMonthsLater(3), {
-                  shouldDirty: true,
-                });
-                setTimeout(() => {
-                  form.setFocus("measure");
-                }, focusDelay);
-              }}
-            >
-              {t("durations.month", { count: 3 })}
-            </Button>
+            <SuspendPopoverItem
+              form={form}
+              title={t("durations.month", { count: 3 })}
+              period={getDateMonthsLater(3)}
+            />
           </li>
           <li>
-            <Button
-              size="sm"
-              variant="suspended"
-              onClick={() => {
-                form.setValue("suspendedTill", getDateMonthsLater(6), {
-                  shouldDirty: true,
-                });
-                setTimeout(() => {
-                  form.setFocus("measure");
-                }, focusDelay);
-              }}
-            >
-              {t("durations.month", { count: 6 })}
-            </Button>
+            <SuspendPopoverItem
+              form={form}
+              title={t("durations.month", { count: 6 })}
+              period={getDateMonthsLater(6)}
+            />
           </li>
           <li>
-            <Button
-              size="sm"
-              variant="suspended"
-              onClick={() => {
-                form.setValue("suspendedTill", getDateMonthsLater(12), {
-                  shouldDirty: true,
-                });
-                setTimeout(() => {
-                  form.setFocus("measure");
-                }, focusDelay);
-              }}
-            >
-              {t("durations.year", { count: 1 })}
-            </Button>
+            <SuspendPopoverItem
+              form={form}
+              title={t("durations.year", { count: 1 })}
+              period={getDateMonthsLater(12)}
+            />
           </li>
         </ul>
       </PopoverContent>
