@@ -9,6 +9,7 @@ import { SelectField } from "./select-field";
 import { useState } from "react";
 import { Member } from "@/types";
 import { UseFormReturn } from "react-hook-form";
+import { TabsContent } from "@radix-ui/react-tabs";
 
 type PersonalTabProps = {
   form: UseFormReturn<Member>;
@@ -38,73 +39,75 @@ export function PersonalTab({
   const [citySearch, setCitySearch] = useState("");
 
   return (
-    <div className="space-y-8 flex flex-col">
-      <InputField
-        form={form}
-        label={t("newMember.nameFieldLabel")}
-        name="name"
-      />
-      <InputField
-        form={form}
-        label={t("newMember.surnameFieldLabel")}
-        name="surname"
-      />
-      <DateField
-        form={form}
-        label={t("newMember.dateFieldLabel")}
-        name="birthDate"
-        day={day}
-        month={month}
-        year={year}
-        setDay={setDay}
-        setMonth={setMonth}
-        setYear={setYear}
-      />
-      <Combobox
-        form={form}
-        name="country"
-        label={t("newMember.countryFieldLabel")}
-        data={[
-          i18n.language === "it" ? "__Altro__" : "__Other__",
-          ...countries.map((entry) => entry.en),
-        ]}
-        search={countrySearch}
-        setSearch={setCountrySearch}
-      />
-      <Combobox
-        form={form}
-        name="birthPlace"
-        label={t("newMember.cityFieldLabel")}
-        data={[i18n.language === "it" ? "__Altro__" : "__Other__", ...cities]}
-        search={citySearch}
-        setSearch={setCitySearch}
-        value={
-          isItaly
-            ? cities.includes(row.birthPlace)
-              ? row.birthPlace
-              : ""
-            : country
-        }
-        disabled={!isItaly}
-      />
-      <SelectField
-        form={form}
-        name="docType"
-        label={t("newMember.docTypeFieldLabel")}
-        data={documents.map((entry) =>
-          i18n.language === "it" ? entry.it : entry.en,
-        )}
-      />
-      <InputField
-        form={form}
-        label={t("newMember.docIdFieldLabel")}
-        name="docId"
-      />
-      <InputField
-        form={form}
-        label={t("newMember.emailFieldLabel")}
-        name="email"
-      />
-    </div>
+    <TabsContent value="personal">
+      <div className="space-y-8 flex flex-col">
+        <InputField
+          form={form}
+          label={t("newMember.nameFieldLabel")}
+          name="name"
+        />
+        <InputField
+          form={form}
+          label={t("newMember.surnameFieldLabel")}
+          name="surname"
+        />
+        <DateField
+          form={form}
+          label={t("newMember.dateFieldLabel")}
+          name="birthDate"
+          day={day}
+          month={month}
+          year={year}
+          setDay={setDay}
+          setMonth={setMonth}
+          setYear={setYear}
+        />
+        <Combobox
+          form={form}
+          name="country"
+          label={t("newMember.countryFieldLabel")}
+          data={[
+            i18n.language === "it" ? "__Altro__" : "__Other__",
+            ...countries.map((entry) => entry.en),
+          ]}
+          search={countrySearch}
+          setSearch={setCountrySearch}
+        />
+        <Combobox
+          form={form}
+          name="birthPlace"
+          label={t("newMember.cityFieldLabel")}
+          data={[i18n.language === "it" ? "__Altro__" : "__Other__", ...cities]}
+          search={citySearch}
+          setSearch={setCitySearch}
+          value={
+            isItaly
+              ? cities.includes(row.birthPlace)
+                ? row.birthPlace
+                : ""
+              : country
+          }
+          disabled={!isItaly}
+        />
+        <SelectField
+          form={form}
+          name="docType"
+          label={t("newMember.docTypeFieldLabel")}
+          data={documents.map((entry) =>
+            i18n.language === "it" ? entry.it : entry.en,
+          )}
+        />
+        <InputField
+          form={form}
+          label={t("newMember.docIdFieldLabel")}
+          name="docId"
+        />
+        <InputField
+          form={form}
+          label={t("newMember.emailFieldLabel")}
+          name="email"
+        />
+      </div>
+    </TabsContent>
   );
 }

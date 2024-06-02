@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "./button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -152,29 +152,23 @@ export function MemberDetails({
             </TabsList>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <TabsContent value="personal">
-                  <PersonalTab
-                    form={form}
-                    day={day}
-                    month={month}
-                    year={year}
-                    setDay={setDay}
-                    setMonth={setMonth}
-                    setYear={setYear}
-                    row={row}
-                  />
-                </TabsContent>
-                <TabsContent value="membership">
-                  <MembershipTab
-                    form={form}
-                    row={row}
-                    isExpired={isExpired}
-                    isSuspended={isSuspended}
-                  />
-                </TabsContent>
-                <TabsContent value="note">
-                  <NoteTab form={form} />
-                </TabsContent>
+                <PersonalTab
+                  form={form}
+                  day={day}
+                  month={month}
+                  year={year}
+                  setDay={setDay}
+                  setMonth={setMonth}
+                  setYear={setYear}
+                  row={row}
+                />
+                <MembershipTab
+                  form={form}
+                  row={row}
+                  isExpired={isExpired}
+                  isSuspended={isSuspended}
+                />
+                <NoteTab form={form} />
                 <Button
                   disabled={!isDirty || form.formState.isSubmitting}
                   type="submit"

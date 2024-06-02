@@ -9,6 +9,7 @@ import {
 import { Textarea } from "./textarea";
 import { Member } from "@/types";
 import { UseFormReturn } from "react-hook-form";
+import { TabsContent } from "@radix-ui/react-tabs";
 
 type NoteTabProps = {
   form: UseFormReturn<Member>;
@@ -17,18 +18,20 @@ type NoteTabProps = {
 export function NoteTab({ form }: NoteTabProps) {
   const { t } = useTranslation();
   return (
-    <FormField
-      control={form.control}
-      name="note"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{t("memberDetails.noteLabel")}</FormLabel>
-          <FormControl>
-            <Textarea className="resize-none" {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+    <TabsContent value="note">
+      <FormField
+        control={form.control}
+        name="note"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("memberDetails.noteLabel")}</FormLabel>
+            <FormControl>
+              <Textarea className="resize-none" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </TabsContent>
   );
 }
