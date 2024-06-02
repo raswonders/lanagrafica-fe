@@ -15,15 +15,7 @@ import {
 } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { Textarea } from "./textarea";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import {
   Sheet,
   SheetContent,
@@ -43,6 +35,7 @@ import { UpdateMutation } from "@/hooks/use-table-mutations";
 import { Member } from "@/types";
 import { PersonalTab } from "./personal-tab";
 import { MembershipTab } from "./membership-tab";
+import { NoteTab } from "./note-tab";
 
 export function MemberDetails({
   row,
@@ -180,19 +173,7 @@ export function MemberDetails({
                   />
                 </TabsContent>
                 <TabsContent value="note">
-                  <FormField
-                    control={form.control}
-                    name="note"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("memberDetails.noteLabel")}</FormLabel>
-                        <FormControl>
-                          <Textarea className="resize-none" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <NoteTab form={form} />
                 </TabsContent>
                 <Button
                   disabled={!isDirty || form.formState.isSubmitting}
