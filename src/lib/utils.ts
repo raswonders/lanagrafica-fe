@@ -147,3 +147,16 @@ export function getDateMonthsLater(count: number) {
   date.setMonth(date.getMonth() + count);
   return date.toISOString().split("T")[0];
 }
+
+export function serializeForUpdate<T extends Member>(
+  row: T,
+  isActive: boolean,
+): MemberDTO {
+  const updatedRow: Record<string, unknown> = { isActive: isActive };
+
+  for (let key in row) {
+    updatedRow[key] = row[key] || null;
+  }
+
+  return fromCamelToSnakeCase(updatedRow as Member);
+}

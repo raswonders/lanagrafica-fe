@@ -14,7 +14,7 @@ import {
   hasExpired,
   getDateWeekLater,
   getDateMonthsLater,
-  fromCamelToSnakeCase,
+  serializeForUpdate,
 } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -48,7 +48,7 @@ import {
 import { StatusBadge } from "./status-badge";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { UpdateMutation } from "@/hooks/use-table-mutations";
-import { Member, MemberDTO } from "@/types";
+import { Member } from "@/types";
 import { PersonalTab } from "./personal-tab";
 
 export function MemberDetails({
@@ -110,18 +110,8 @@ export function MemberDetails({
 
   const { isDirty } = form.formState;
 
-  function serializeForUpdate<T extends Member>(row: T): MemberDTO {
-    const updatedRow: Record<string, unknown> = { isActive: isActive };
-
-    for (let key in row) {
-      updatedRow[key] = row[key] || null;
-    }
-
-    return fromCamelToSnakeCase(updatedRow as Member);
-  }
-
   async function onSubmit(member: Member) {
-    const serializedMember = serializeForUpdate(member);
+    const serializedMember = serializeForUpdate(member, isActive);
     await updateMutation.mutate({
       id: row.id,
       details: serializedMember,
