@@ -49,10 +49,11 @@ export function MemberDetails({
   variant?: "personal" | "membership" | "note";
 }) {
   const { t } = useTranslation();
+
+  const [open, setOpen] = useState(false);
   const [day, setDay] = useState(parseDay(row.birthDate));
   const [month, setMonth] = useState(parseMonth(row.birthDate));
   const [year, setYear] = useState(parseYear(row.birthDate));
-  const isMobile = useWindowSize();
 
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
@@ -94,6 +95,10 @@ export function MemberDetails({
   });
 
   const { isDirty } = form.formState;
+  const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
+  const isExpired = hasExpired(new Date(form.watch("expirationDate")));
+  const isActive = !isSuspended && !isExpired;
+  const isMobile = useWindowSize();
 
   async function onSubmit(member: Member) {
     const serializedMember = serializeForUpdate(member, isActive);
@@ -104,11 +109,6 @@ export function MemberDetails({
     });
     setOpen(false);
   }
-
-  const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
-  const isExpired = hasExpired(new Date(form.watch("expirationDate")));
-  const isActive = !isSuspended && !isExpired;
-  const [open, setOpen] = useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
