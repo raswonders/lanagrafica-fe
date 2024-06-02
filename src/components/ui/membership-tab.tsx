@@ -8,17 +8,13 @@ import {
 } from "./form";
 import { Input } from "./input";
 import { Member } from "@/types";
-import {
-  getCustomDate,
-  getDateMonthsLater,
-  getDateWeekLater,
-} from "@/lib/utils";
+import { getCustomDate, getDateMonthsLater } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { Button } from "./button";
 import { Ban, RefreshCcw } from "lucide-react";
 import { Textarea } from "./textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { TabsContent } from "@radix-ui/react-tabs";
+import { SuspendPopover } from "./suspend-popover";
 
 type MembershipTabProps = {
   form: UseFormReturn<Member>;
@@ -35,7 +31,6 @@ export function MembershipTab({
 }: MembershipTabProps) {
   const { t } = useTranslation();
   const isRenewAllowed = !isSuspended && isExpired;
-  const focusDelay = 50;
 
   return (
     <TabsContent value="membership">
@@ -151,119 +146,7 @@ export function MembershipTab({
                 {t("memberDetails.resume")}
               </Button>
             ) : (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    disabled={form.formState.isSubmitting || isSuspended}
-                    type="button"
-                    variant="suspended"
-                    className="self-start"
-                  >
-                    <Ban className={"w-5 mr-3"} />
-                    {t("memberDetails.suspend")}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <ul className="space-y-2">
-                    <li>
-                      <Button
-                        size="sm"
-                        variant="suspended"
-                        onClick={() => {
-                          form.setValue("suspendedTill", getDateWeekLater(), {
-                            shouldDirty: true,
-                          });
-                          setTimeout(() => {
-                            form.setFocus("measure");
-                          }, focusDelay);
-                        }}
-                      >
-                        {t("durations.week", { count: 1 })}
-                      </Button>
-                    </li>
-                    <li>
-                      <Button
-                        size="sm"
-                        variant="suspended"
-                        onClick={() => {
-                          form.setValue(
-                            "suspendedTill",
-                            getDateMonthsLater(1),
-                            {
-                              shouldDirty: true,
-                            },
-                          );
-                          setTimeout(() => {
-                            form.setFocus("measure");
-                          }, focusDelay);
-                        }}
-                      >
-                        {t("durations.month", { count: 1 })}
-                      </Button>
-                    </li>
-                    <li>
-                      <Button
-                        size="sm"
-                        variant="suspended"
-                        onClick={() => {
-                          form.setValue(
-                            "suspendedTill",
-                            getDateMonthsLater(3),
-                            {
-                              shouldDirty: true,
-                            },
-                          );
-                          setTimeout(() => {
-                            form.setFocus("measure");
-                          }, focusDelay);
-                        }}
-                      >
-                        {t("durations.month", { count: 3 })}
-                      </Button>
-                    </li>
-                    <li>
-                      <Button
-                        size="sm"
-                        variant="suspended"
-                        onClick={() => {
-                          form.setValue(
-                            "suspendedTill",
-                            getDateMonthsLater(6),
-                            {
-                              shouldDirty: true,
-                            },
-                          );
-                          setTimeout(() => {
-                            form.setFocus("measure");
-                          }, focusDelay);
-                        }}
-                      >
-                        {t("durations.month", { count: 6 })}
-                      </Button>
-                    </li>
-                    <li>
-                      <Button
-                        size="sm"
-                        variant="suspended"
-                        onClick={() => {
-                          form.setValue(
-                            "suspendedTill",
-                            getDateMonthsLater(12),
-                            {
-                              shouldDirty: true,
-                            },
-                          );
-                          setTimeout(() => {
-                            form.setFocus("measure");
-                          }, focusDelay);
-                        }}
-                      >
-                        {t("durations.year", { count: 1 })}
-                      </Button>
-                    </li>
-                  </ul>
-                </PopoverContent>
-              </Popover>
+              <SuspendPopover form={form} isSuspended={isSuspended} />
             )}
           </div>
         </div>
