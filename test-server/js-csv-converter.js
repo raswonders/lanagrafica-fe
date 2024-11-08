@@ -1,6 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const { parse } = require("json2csv");
+import fs from "fs";
+import path from "path";
+import { parse } from "json2csv";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 fs.readFile(
   path.join(__dirname, "../src/assets/members-test.json"),
