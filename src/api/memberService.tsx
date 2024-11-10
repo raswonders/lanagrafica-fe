@@ -7,7 +7,7 @@ export async function renewMember(
   expirationDate: string,
 ): Promise<MemberDTO | null> {
   const cardNumber = genCardNumber();
-  const nextExpiration = extendDate(new Date(expirationDate));
+  const nextExpiration = extendDate(expirationDate);
 
   const { data, error } = await supabase
     .from("members")
