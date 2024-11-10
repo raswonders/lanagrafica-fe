@@ -10,7 +10,7 @@ export async function renewMember(
   const nextExpiration = extendDate(new Date(expirationDate));
 
   const { data, error } = await supabase
-    .from("member")
+    .from("members")
     .update({
       card_number: String(cardNumber),
       expiration_date: nextExpiration,
@@ -28,7 +28,7 @@ export async function updateMember(
   details: MemberDTO,
 ): Promise<MemberDTO | null> {
   const { data, error } = await supabase
-    .from("member")
+    .from("members")
     .update(details)
     .eq("id", id);
 
@@ -38,7 +38,7 @@ export async function updateMember(
 }
 
 export async function insertMember(details: MemberDTO) {
-  const { error } = await supabase.from("member").insert(details);
+  const { error } = await supabase.from("members").insert(details);
 
   if (error) throw error;
 }
@@ -53,14 +53,14 @@ export async function searchMember(
     const searchWords = debouncedSearch.trim().split(/\s+/).filter(Boolean);
     const searchParam = searchWords.join(" & ");
     ({ data, count, error } = await supabase
-      .from("member")
+      .from("members")
       .select("*", { count: "exact" })
       .order("id", { ascending: true })
       .textSearch("name_surname", searchParam)
       .range(pageStart, pageEnd));
   } else {
     ({ data, count, error } = await supabase
-      .from("member")
+      .from("members")
       .select("*", { count: "exact" })
       .order("id", { ascending: true })
       .range(pageStart, pageEnd));
