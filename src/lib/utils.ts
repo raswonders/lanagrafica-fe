@@ -42,7 +42,10 @@ export function parseYear(dateISO: string) {
 
 export function isValidISODate(value: string) {
   const date = new Date(value);
-  return !isNaN(date.getTime()) && value === date.toISOString().slice(0, 10);
+  return (
+    !isNaN(date.getTime()) &&
+    value.slice(0, 10) === date.toISOString().slice(0, 10)
+  );
 }
 
 export function isAdult(value: string) {
