@@ -12,6 +12,7 @@ import {
   isValidISODate,
   hasExpired,
   serializeForUpdate,
+  hasBeenSuspended,
 } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -95,7 +96,7 @@ export function MemberDetails({
   });
 
   const { isDirty } = form.formState;
-  const isSuspended: boolean = Boolean(form.watch("suspendedTill"));
+  const isSuspended = hasBeenSuspended(new Date(form.watch("suspendedTill")));
   const isExpired = hasExpired(new Date(form.watch("expirationDate")));
   const isActive = !isSuspended && !isExpired;
   const isMobile = useWindowSize();

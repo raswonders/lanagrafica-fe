@@ -42,7 +42,10 @@ export function parseYear(dateISO: string) {
 
 export function isValidISODate(value: string) {
   const date = new Date(value);
-  return !isNaN(date.getTime()) && value === date.toISOString().slice(0, 10);
+  return (
+    !isNaN(date.getTime()) &&
+    value.slice(0, 10) === date.toISOString().slice(0, 10)
+  );
 }
 
 export function isAdult(value: string) {
@@ -103,7 +106,7 @@ export function extendWithStatus(data: Member[]) {
     let status = "inactive";
     if (row.isActive) status = "active";
     if (hasExpired(new Date(row.expirationDate))) status = "expired";
-    if (isSuspended(new Date(row.suspendedTill))) status = "suspended";
+    if (hasBeenSuspended(new Date(row.suspendedTill))) status = "suspended";
     if (row.isDeleted) status = "deleted";
     return { ...row, status };
   });
@@ -113,13 +116,17 @@ export function hasExpired(date: Date) {
   return new Date() > date;
 }
 
-export function isSuspended(date: Date) {
-  return date ? new Date() < date : false;
+export function hasBeenSuspended(suspendsionDate: Date) {
+  const today = new Date();
+  return today < suspendsionDate;
 }
 
-export function extendDate(date: Date) {
-  date.setFullYear(date.getFullYear() + 1);
-  return date.toISOString();
+export function extendDate(expirationStr: string) {
+  const expirationDate = new Date(expirationStr);
+  const today = new Date();
+  const nextExpirationDate = expirationDate > today ? expirationDate : today;
+  nextExpirationDate.setFullYear(nextExpirationDate.getFullYear() + 1);
+  return nextExpirationDate.toISOString();
 }
 
 export function genCardNumber() {
