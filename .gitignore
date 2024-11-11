@@ -25,3 +25,8 @@ dist-ssr
 .env
 
 todo.md
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/test-exmples
