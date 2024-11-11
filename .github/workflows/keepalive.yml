@@ -3,8 +3,8 @@ name: Run Supabase Keepalive Tests
 on:
   schedule:
     # Run the workflow at 00:00 UTC every Monday and Wednesday
-    - cron: '0 0 * * 1'  # Every Monday at 00:00 UTC
-    - cron: '0 0 * * 3'  # Every Wednesday at 00:00 UTC
+    - cron: "0 0 * * 1" # Every Monday at 00:00 UTC
+    - cron: "0 0 * * 3" # Every Wednesday at 00:00 UTC
 
   # Allow the workflow to be manually triggered
   workflow_dispatch:
@@ -12,23 +12,23 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    
+
     steps:
       # Check out the code
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Set up Node.js (adjust version as needed)
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'  # Replace with the version you're using
+          node-version: "20" # Replace with the version you're using
 
       # Install dependencies
       - name: Install Dependencies
         run: |
           npm install
-          
+
       # Run the Playwright tests
       - name: Run Supabase Keepalive Tests
         run: |
