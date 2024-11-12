@@ -3,11 +3,6 @@ import { extendWithStatus, fromSnakeToCamelCase } from "@/lib/utils";
 import { Member } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-type QueryMembersResult = {
-  members: Member[];
-  maxPageParam: number;
-};
-
 export function useMembersQuery(
   debouncedSearch: string | null,
   membersPerPage: number,
@@ -16,30 +11,22 @@ export function useMembersQuery(
     pageParam,
   }: {
     pageParam: number;
-  }): Promise<QueryMembersResult> {
+  }): Promise<Member[]> {
     const pageStart = pageParam * membersPerPage;
     const pageEnd = pageStart + membersPerPage - 1;
-    const { data, count } = await searchMember(
-      debouncedSearch,
-      pageStart,
-      pageEnd,
-    );
+    const { data } = await searchMember(debouncedSearch, pageStart, pageEnd);
 
-    const total = count || 0;
     const dataNormalized = data ? (fromSnakeToCamelCase(data) as Member[]) : [];
 
-    return {
-      members: extendWithStatus(dataNormalized),
-      maxPageParam: Math.floor(total / membersPerPage),
-    };
+    return extendWithStatus(dataNormalized);
   }
 
+  // FIXME should return TData make sure all row transformation happens before 
   return useInfiniteQuery({
     queryKey: ["members"],
     queryFn: queryMembers,
-    getNextPageParam: (lastPage, _, lastPageParam) => {
-      return lastPageParam < lastPage.maxPageParam ? lastPageParam + 1 : null;
-    },
+    getNextPageParam: (lastPage, _, lastPageParam) =>
+      lastPage.length === membersPerPage ? lastPageParam + 1 : null,
     initialPageParam: 0,
   });
 }

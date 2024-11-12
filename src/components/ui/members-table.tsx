@@ -70,10 +70,11 @@ export function MembersTable() {
   const columns = useMembersColumns(isPending);
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
-      return [...acc, ...page.members];
+      return [...acc, ...page];
     }, []);
   }, [data]);
 
+  // TODO shouldn't this be a placeholder? 
   const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
 
   const table = useReactTable({
@@ -82,7 +83,7 @@ export function MembersTable() {
       columnFilters,
     },
     columns,
-    // TODO make sure we pass correct TDate in here
+    // TODO make sure we pass correct TData in here
     data: tableRows,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -112,6 +113,7 @@ export function MembersTable() {
         />
       </div>
       <div className="rounded-md border">
+        {/* TODO make error more nice */}
         {error ? (
           <div className="flex items-center justify-center">
             <div>
