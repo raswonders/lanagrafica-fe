@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useMembersMutations } from "./use-table-mutations";
 import { createColumnHelper } from "@tanstack/react-table";
 import { getCustomDate, hasExpired } from "@/lib/utils";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ActionButtons } from "@/components/ui/action-buttons";
 import { Member } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Row {
   original: Member;
@@ -13,11 +13,10 @@ interface Row {
 
 const columnHelper = createColumnHelper<Member>();
 
-export function useMembersColumns() {
+export function useMembersColumns(isPending: boolean) {
   const { t } = useTranslation();
-  const { updateMutation, renewMutation } = useMembersMutations();
 
-  return useMemo(
+  const columnDefs = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
         id: "fullName",
@@ -91,6 +90,13 @@ export function useMembersColumns() {
         },
       },
     ],
-    [t, renewMutation, updateMutation],
+    [t],
   );
+
+  return isPending
+    ? columnDefs.map((row) => ({
+        ...row,
+        cell: () => <Skeleton className="w-[150px] h-[24px] rounded-full" />,
+      }))
+    : columnDefs;
 }

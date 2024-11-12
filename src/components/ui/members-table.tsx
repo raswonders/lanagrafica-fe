@@ -18,7 +18,6 @@ import {
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Skeleton } from "./skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
@@ -68,7 +67,7 @@ export function MembersTable() {
   }, [refetch, debouncedSearch]);
 
   // Build table
-  const columns = useMembersColumns();
+  const columns = useMembersColumns(isPending);
   const members = useMemo(() => {
     return data?.pages.reduce<Member[]>((acc, page) => {
       return [...acc, ...page.members];
@@ -76,19 +75,14 @@ export function MembersTable() {
   }, [data]);
 
   const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
-  const tableColumns = isPending
-    ? columns.map((row) => ({
-        ...row,
-        cell: () => <Skeleton className="w-[150px] h-[24px] rounded-full" />,
-      }))
-    : columns;
 
   const table = useReactTable({
     state: {
       columnVisibility,
       columnFilters,
     },
-    columns: tableColumns,
+    columns,
+    // TODO make sure we pass correct TDate in here
     data: tableRows,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
