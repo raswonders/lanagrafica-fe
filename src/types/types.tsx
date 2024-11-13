@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Tables } from "./supabase.types";
 
 export const UserSchema = z.object({
   username: z.string(),
@@ -6,6 +7,8 @@ export const UserSchema = z.object({
 });
 
 export type User = z.infer<typeof UserSchema> | null;
+
+export type MemberDB = Tables<"members">;
 
 export type Member = {
   id: number;
