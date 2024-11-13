@@ -1,6 +1,6 @@
 import { searchMember } from "@/api/memberService";
 import { extendWithStatus, fromSnakeToCamelCase } from "@/lib/utils";
-import { Member } from "@/types";
+import { Member } from "@/types/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export function useMembersQuery(
@@ -14,14 +14,14 @@ export function useMembersQuery(
   }): Promise<Member[]> {
     const pageStart = pageParam * membersPerPage;
     const pageEnd = pageStart + membersPerPage - 1;
-    const { data } = await searchMember(debouncedSearch, pageStart, pageEnd);
+    const data = await searchMember(debouncedSearch, pageStart, pageEnd);
 
     const dataNormalized = data ? (fromSnakeToCamelCase(data) as Member[]) : [];
 
     return extendWithStatus(dataNormalized);
   }
 
-  // FIXME should return TData make sure all row transformation happens before 
+  // FIXME should return TData make sure all row transformation happens before
   return useInfiniteQuery({
     queryKey: ["members"],
     queryFn: queryMembers,

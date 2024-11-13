@@ -4,7 +4,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { getCustomDate, hasExpired } from "@/lib/utils";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ActionButtons } from "@/components/ui/action-buttons";
-import { Member } from "@/types";
+import { Member } from "@/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface Row {

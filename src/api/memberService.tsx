@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
-import { MemberDTO } from "@/types";
+import { MemberDTO } from "@/types/types";
 
 export async function renewMember(
   id: number,
@@ -47,26 +47,26 @@ export async function searchMember(
   debouncedSearch: string | null,
   pageStart: number,
   pageEnd: number,
-) {
-  let data, count, error;
+): Promise<MemberDTO> {
+  let data, error;
   if (debouncedSearch) {
     const searchWords = debouncedSearch.trim().split(/\s+/).filter(Boolean);
     const searchParam = searchWords.join(" & ");
-    ({ data, count, error } = await supabase
+    ({ data, error } = await supabase
       .from("members")
-      .select("*", { count: "exact" })
+      .select("*")
       .order("id", { ascending: true })
       .textSearch("name_surname", searchParam)
       .range(pageStart, pageEnd));
   } else {
-    ({ data, count, error } = await supabase
+    ({ data, error } = await supabase
       .from("members")
-      .select("*", { count: "exact" })
+      .select("*")
       .order("id", { ascending: true })
       .range(pageStart, pageEnd));
   }
 
   if (error) throw error;
 
-  return { data, count };
+  return data;
 }

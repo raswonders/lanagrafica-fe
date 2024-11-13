@@ -28,7 +28,7 @@ import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
-import { Member } from "@/types";
+import { Member } from "@/types/types";
 
 const membersPerPage = 20;
 
@@ -74,7 +74,7 @@ export function MembersTable() {
     }, []);
   }, [data]);
 
-  // TODO shouldn't this be a placeholder? 
+  // TODO shouldn't this be a placeholder?
   const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
 
   const table = useReactTable({

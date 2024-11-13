@@ -1,5 +1,5 @@
 import { insertMember, renewMember, updateMember } from "@/api/memberService";
-import { MemberDTO } from "@/types";
+import { MemberDTO } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";

@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "./form";
 import { Textarea } from "./textarea";
-import { Member } from "@/types";
+import { Member } from "@/types/types";
 import { UseFormReturn } from "react-hook-form";
 import { TabsContent } from "@radix-ui/react-tabs";
 

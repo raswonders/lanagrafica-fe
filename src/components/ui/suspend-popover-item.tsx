@@ -1,6 +1,6 @@
 import { Button } from "./button";
 import { UseFormReturn } from "react-hook-form";
-import { Member } from "@/types";
+import { Member } from "@/types/types";
 
 const focusDelay = 50;
 

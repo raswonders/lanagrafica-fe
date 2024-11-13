@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "./form";
 import { Input } from "./input";
-import { Member } from "@/types";
+import { Member } from "@/types/types";
 import { getCustomDate, getDateMonthsLater } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { Button } from "./button";

@@ -29,7 +29,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { DateField } from "@/components/ui/date-field";
 import { Plus } from "lucide-react";
 import { InsertMutation } from "@/hooks/use-table-mutations";
-import { Member, MemberDTO } from "@/types";
+import { Member, MemberDTO } from "@/types/types";
 
 export function AddMember({
   insertMutation,

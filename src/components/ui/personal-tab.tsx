@@ -7,7 +7,7 @@ import { DateField } from "./date-field";
 import { InputField } from "./input-field";
 import { SelectField } from "./select-field";
 import { useState } from "react";
-import { Member } from "@/types";
+import { Member } from "@/types/types";
 import { UseFormReturn } from "react-hook-form";
 import { TabsContent } from "@radix-ui/react-tabs";
 
