@@ -7,12 +7,12 @@ import { Button } from "./button";
 import { Ban } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { UseFormReturn } from "react-hook-form";
-import { Member } from "@/types/types";
+import { MemberExt } from "@/types/types";
 import { getDateMonthsLater, getDateWeekLater } from "@/lib/utils";
 import { SuspendPopoverItem } from "./suspend-popover-item";
 
 type SuspendPopoverProps = {
-  form: UseFormReturn<Member>;
+  form: UseFormReturn<MemberExt>;
   isSuspended: boolean;
 };
 

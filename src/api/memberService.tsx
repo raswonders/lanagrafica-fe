@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
-import { MemberDTO } from "@/types/types";
+import { MemberDB, MemberDTO, MemberInsert, MemberUpdate } from "@/types/types";
 
 export async function renewMember(
   id: number,
@@ -23,10 +23,7 @@ export async function renewMember(
   return data;
 }
 
-export async function updateMember(
-  id: number,
-  details: MemberDTO,
-): Promise<MemberDTO | null> {
+export async function updateMember(id: number, details: MemberUpdate) {
   const { data, error } = await supabase
     .from("members")
     .update(details)
@@ -37,7 +34,7 @@ export async function updateMember(
   return data;
 }
 
-export async function insertMember(details: MemberDTO) {
+export async function insertMember(details: MemberInsert) {
   const { error } = await supabase.from("members").insert(details);
 
   if (error) throw error;
@@ -47,7 +44,7 @@ export async function searchMember(
   debouncedSearch: string | null,
   pageStart: number,
   pageEnd: number,
-): Promise<MemberDTO> {
+) {
   let data, error;
   if (debouncedSearch) {
     const searchWords = debouncedSearch.trim().split(/\s+/).filter(Boolean);

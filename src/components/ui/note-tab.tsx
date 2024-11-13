@@ -7,12 +7,12 @@ import {
   FormMessage,
 } from "./form";
 import { Textarea } from "./textarea";
-import { Member } from "@/types/types";
+import { MemberExt } from "@/types/types";
 import { UseFormReturn } from "react-hook-form";
 import { TabsContent } from "@radix-ui/react-tabs";
 
 type NoteTabProps = {
-  form: UseFormReturn<Member>;
+  form: UseFormReturn<MemberExt>;
 };
 
 export function NoteTab({ form }: NoteTabProps) {
@@ -26,7 +26,11 @@ export function NoteTab({ form }: NoteTabProps) {
           <FormItem>
             <FormLabel>{t("memberDetails.noteLabel")}</FormLabel>
             <FormControl>
-              <Textarea className="resize-none" {...field} />
+              <Textarea
+                className="resize-none"
+                {...field}
+                value={field.value || ""}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

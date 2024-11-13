@@ -1,5 +1,5 @@
 import { insertMember, renewMember, updateMember } from "@/api/memberService";
-import { MemberDTO } from "@/types/types";
+import { MemberInsert, MemberUpdate } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -9,11 +9,11 @@ export type RenewMutation = {
 };
 
 export type UpdateMutation = {
-  mutate: (args: { id: number; details: MemberDTO; name: string }) => void;
+  mutate: (args: { id: number; details: MemberUpdate; name: string }) => void;
 };
 
 export type InsertMutation = {
-  mutate: (args: { details: MemberDTO; name: string }) => void;
+  mutate: (args: { details: MemberInsert; name: string }) => void;
 };
 
 export function useMembersMutations() {
@@ -41,8 +41,11 @@ export function useMembersMutations() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: (variables: { id: number; details: MemberDTO; name: string }) =>
-      updateMember(variables.id, variables.details),
+    mutationFn: (variables: {
+      id: number;
+      details: MemberUpdate;
+      name: string;
+    }) => updateMember(variables.id, variables.details),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["members"] });
       toast.success(t("membersTable.updateSuccess", { name: variables.name }));
@@ -58,7 +61,7 @@ export function useMembersMutations() {
   });
 
   const insertMutation = useMutation({
-    mutationFn: (variables: { details: MemberDTO; name: string }) =>
+    mutationFn: (variables: { details: MemberInsert; name: string }) =>
       insertMember(variables.details),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["members"] });

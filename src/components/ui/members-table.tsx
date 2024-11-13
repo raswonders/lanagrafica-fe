@@ -28,7 +28,6 @@ import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
-import { Member } from "@/types/types";
 
 const membersPerPage = 20;
 
@@ -69,7 +68,7 @@ export function MembersTable() {
   // Build table
   const columns = useMembersColumns(isPending);
   const members = useMemo(() => {
-    return data?.pages.reduce<Member[]>((acc, page) => {
+    return data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
     }, []);
   }, [data]);

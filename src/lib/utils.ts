@@ -1,4 +1,4 @@
-import { Member, MemberDTO } from "@/types/types";
+import { Member, MemberDB, MemberDTO } from "@/types/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -76,6 +76,7 @@ export function getCustomDate(value: string | void) {
   return `${day}/${month}/${year}`;
 }
 
+// TODO possibly remove if we don't use it
 export function fromSnakeToCamelCase(arr: object[]) {
   return arr.map((row: object) => {
     return Object.fromEntries(
@@ -101,13 +102,14 @@ export function fromCamelToSnakeCase(obj: Member) {
   ) as MemberDTO;
 }
 
-export function extendWithStatus(data: Member[]) {
+export function extendWithStatus(data: MemberDB[]) {
   return data.map((row) => {
     let status = "inactive";
-    if (row.isActive) status = "active";
-    if (hasExpired(new Date(row.expirationDate))) status = "expired";
-    if (hasBeenSuspended(new Date(row.suspendedTill))) status = "suspended";
-    if (row.isDeleted) status = "deleted";
+    if (row.is_active) status = "active";
+    if (hasExpired(new Date(row.expiration_date || ""))) status = "expired";
+    if (hasBeenSuspended(new Date(row.suspended_till || "")))
+      status = "suspended";
+    if (row.is_deleted) status = "deleted";
     return { ...row, status };
   });
 }
@@ -155,15 +157,16 @@ export function getDateMonthsLater(count: number) {
   return date.toISOString().split("T")[0];
 }
 
-export function serializeForUpdate<T extends Member>(
-  row: T,
-  isActive: boolean,
-): MemberDTO {
-  const updatedRow: Record<string, unknown> = { isActive: isActive };
+// TODO remove this
+// export function serializeForUpdate<T extends Member>(
+//   row: T,
+//   isActive: boolean,
+// ): MemberDTO {
+//   const updatedRow: Record<string, unknown> = { isActive: isActive };
 
-  for (let key in row) {
-    updatedRow[key] = row[key] || null;
-  }
+//   for (let key in row) {
+//     updatedRow[key] = row[key] || null;
+//   }
 
-  return fromCamelToSnakeCase(updatedRow as Member);
-}
+//   return fromCamelToSnakeCase(updatedRow as Member);
+// }
