@@ -1,15 +1,12 @@
 import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
-import { MemberDB, MemberDTO, MemberInsert, MemberUpdate } from "@/types/types";
+import { MemberInsert, MemberUpdate } from "@/types/types";
 
-export async function renewMember(
-  id: number,
-  expirationDate: string,
-): Promise<MemberDTO | null> {
+export async function renewMember(id: number, expirationDate: string) {
   const cardNumber = genCardNumber();
   const nextExpiration = extendDate(expirationDate);
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("members")
     .update({
       card_number: String(cardNumber),
@@ -19,19 +16,12 @@ export async function renewMember(
     .eq("id", id);
 
   if (error) throw error;
-
-  return data;
 }
 
 export async function updateMember(id: number, details: MemberUpdate) {
-  const { data, error } = await supabase
-    .from("members")
-    .update(details)
-    .eq("id", id);
+  const { error } = await supabase.from("members").update(details).eq("id", id);
 
   if (error) throw error;
-
-  return data;
 }
 
 export async function insertMember(details: MemberInsert) {
