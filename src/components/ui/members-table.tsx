@@ -28,6 +28,7 @@ import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
+import { MemberExt } from "@/types/types";
 
 const membersPerPage = 20;
 
@@ -68,12 +69,16 @@ export function MembersTable() {
   // Build table
   const columns = useMembersColumns(isPending);
   const members = useMemo(() => {
-    return data?.pages.reduce((acc, page) => {
-      return [...acc, ...page];
-    }, []) ?? [];
+    return (
+      data?.pages.reduce((acc, page) => {
+        return [...acc, ...page];
+      }, []) ?? []
+    );
   }, [data]);
 
-  const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
+  const tableRows: MemberExt[] = isPending
+    ? Array(membersPerPage).fill({})
+    : members;
 
   const table = useReactTable({
     state: {
@@ -81,7 +86,6 @@ export function MembersTable() {
       columnFilters,
     },
     columns,
-    // TODO make sure we pass correct TData in here
     data: tableRows,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
