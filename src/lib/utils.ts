@@ -1,4 +1,4 @@
-import { MemberDB } from "@/types/types";
+import { MemberRow } from "@/types/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -76,7 +76,7 @@ export function getCustomDate(value: string | void) {
   return `${day}/${month}/${year}`;
 }
 
-export function extendWithStatus(data: MemberDB[]) {
+export function extendWithStatus(data: MemberRow[]) {
   return data.map((row) => {
     let status = "inactive";
     if (row.is_active) status = "active";
