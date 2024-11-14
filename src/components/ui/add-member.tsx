@@ -15,7 +15,6 @@ import countries from "@/assets/countries.json";
 import cities from "@/assets/cities.json";
 import documents from "@/assets/documents.json";
 import {
-  fromCamelToSnakeCase,
   genCardNumber,
   getExpirationDate,
   getRegistrationDate,
@@ -29,7 +28,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { DateField } from "@/components/ui/date-field";
 import { Plus } from "lucide-react";
 import { InsertMutation } from "@/hooks/use-table-mutations";
-import { Member, MemberDTO } from "@/types/types";
+import { MemberExt, MemberInsert } from "@/types/types";
 
 export function AddMember({
   insertMutation,
@@ -59,16 +58,16 @@ export function AddMember({
     email: z.string(),
   });
 
-  const form = useForm<Member>({
+  const form = useForm<MemberExt>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       surname: "",
-      birthDate: "",
-      birthPlace: "",
+      birth_date: "",
+      birth_place: "",
       country: "Italy",
-      docType: "",
-      docId: "",
+      doc_type: "",
+      doc_id: "",
       email: "",
     },
   });
@@ -76,20 +75,23 @@ export function AddMember({
   const country = form.watch("country");
   const isItaly = country === "Italy";
 
-  function serializeForInsert(row: Member): MemberDTO {
-    const updatedRow: Member = {
-      ...row,
-      registrationDate: getRegistrationDate(),
-      expirationDate: getExpirationDate(),
-      cardNumber: genCardNumber(),
-      isActive: true,
-      isDeleted: false,
+  function serializeForInsert(row: MemberExt): MemberInsert {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...rest } = row;
+
+    const updatedRow = {
+      ...rest,
+      registration_date: getRegistrationDate(),
+      expiration_date: getExpirationDate(),
+      card_number: genCardNumber(),
+      is_active: true,
+      is_deleted: false,
     };
 
-    return fromCamelToSnakeCase(updatedRow);
+    return updatedRow;
   }
 
-  async function onSubmit(values: Member) {
+  async function onSubmit(values: MemberExt) {
     const newMember = serializeForInsert(values);
     await insertMutation.mutate({
       details: newMember,
@@ -171,7 +173,7 @@ export function AddMember({
               ]}
               search={citySearch}
               setSearch={setCitySearch}
-              value={isItaly ? "" : country}
+              value={isItaly ? "" : country || ""}
               disabled={!isItaly}
             />
             <SelectField
