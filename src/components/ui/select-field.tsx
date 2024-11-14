@@ -14,11 +14,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { UseFormReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 type SelectFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: any;
+  form: UseFormReturn;
   name: string;
   label: string;
   data: string[];

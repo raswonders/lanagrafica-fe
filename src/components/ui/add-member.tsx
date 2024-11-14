@@ -28,7 +28,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { DateField } from "@/components/ui/date-field";
 import { Plus } from "lucide-react";
 import { InsertMutation } from "@/hooks/use-table-mutations";
-import { MemberExt, MemberInsert } from "@/types/types";
+import { MemberInsert } from "@/types/types";
 
 export function AddMember({
   insertMutation,
@@ -46,19 +46,21 @@ export function AddMember({
   const formSchema = z.object({
     name: z.string().min(1, { message: t("validation.required") }),
     surname: z.string().min(1, { message: t("validation.required") }),
-    birthDate: z
+    birth_date: z
       .string()
       .min(1, { message: t("validation.required") })
       .refine(isValidISODate, { message: t("validation.wrongDate") })
       .refine(isAdult, { message: t("validation.notAdult") }),
-    birthPlace: z.string().min(1, { message: t("validation.required") }),
+    birth_place: z.string().min(1, { message: t("validation.required") }),
     country: z.string().min(1, { message: t("validation.required") }),
-    docType: z.string().min(1, { message: t("validation.required") }),
-    docId: z.string().min(1, { message: t("validation.required") }),
+    doc_type: z.string().min(1, { message: t("validation.required") }),
+    doc_id: z.string().min(1, { message: t("validation.required") }),
     email: z.string(),
   });
 
-  const form = useForm<MemberExt>({
+  type FormData = z.infer<typeof formSchema>;
+
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -75,12 +77,9 @@ export function AddMember({
   const country = form.watch("country");
   const isItaly = country === "Italy";
 
-  function toInsert(member: MemberExt): MemberInsert {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, ...rest } = member;
-
+  function toInsert(data: FormData): MemberInsert {
     const updateFields = {
-      ...rest,
+      ...data,
       registration_date: getRegistrationDate(),
       expiration_date: getExpirationDate(),
       card_number: genCardNumber(),
@@ -91,8 +90,8 @@ export function AddMember({
     return updateFields;
   }
 
-  async function onSubmit(member: MemberExt) {
-    const memberSerialized = toInsert(member);
+  async function onSubmit(data: FormData) {
+    const memberSerialized = toInsert(data);
     await insertMutation.mutate({
       details: memberSerialized,
       name: memberSerialized.name || "",
@@ -132,16 +131,19 @@ export function AddMember({
             className="space-y-8 flex flex-col"
           >
             <InputField
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               label={t("newMember.nameFieldLabel")}
               name="name"
             />
             <InputField
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               label={t("newMember.surnameFieldLabel")}
               name="surname"
             />
             <DateField
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               label={t("newMember.dateFieldLabel")}
               name="birthDate"
@@ -153,6 +155,7 @@ export function AddMember({
               setYear={setYear}
             />
             <Combobox
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               name="country"
               label={t("newMember.countryFieldLabel")}
@@ -164,6 +167,7 @@ export function AddMember({
               setSearch={setCountrySearch}
             />
             <Combobox
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               name="birthPlace"
               label={t("newMember.cityFieldLabel")}
@@ -177,6 +181,7 @@ export function AddMember({
               disabled={!isItaly}
             />
             <SelectField
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               name="docType"
               label={t("newMember.docTypeFieldLabel")}
@@ -185,11 +190,13 @@ export function AddMember({
               )}
             />
             <InputField
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               label={t("newMember.docIdFieldLabel")}
               name="docId"
             />
             <InputField
+              // @ts-expect-error - due to FormData cannot be exported
               form={form}
               label={t("newMember.emailFieldLabel")}
               name="email"
