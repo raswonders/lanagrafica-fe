@@ -6,7 +6,7 @@ export function useMembersQuery(
   debouncedSearch: string | null,
   membersPerPage: number,
 ) {
-  async function queryMembers({ pageParam }: { pageParam: number }) {
+  async function fetchMembers({ pageParam }: { pageParam: number }) {
     const pageStart = pageParam * membersPerPage;
     const pageEnd = pageStart + membersPerPage - 1;
     const data =
@@ -14,10 +14,9 @@ export function useMembersQuery(
     return extendWithStatus(data);
   }
 
-  // FIXME should return TData make sure all row transformation happens before
   return useInfiniteQuery({
     queryKey: ["members"],
-    queryFn: queryMembers,
+    queryFn: fetchMembers,
     getNextPageParam: (lastPage, _, lastPageParam) =>
       lastPage.length === membersPerPage ? lastPageParam + 1 : null,
     initialPageParam: 0,
