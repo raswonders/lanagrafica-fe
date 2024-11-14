@@ -10,10 +10,10 @@ import { Label } from "./label";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { createDateString } from "@/lib/utils";
+import { UseFormReturn } from "react-hook-form";
 
 type DateFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: any;
+  form: UseFormReturn;
   name: string;
   label: string;
   day: string;

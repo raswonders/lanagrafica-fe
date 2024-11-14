@@ -7,12 +7,11 @@ import {
   FormMessage,
 } from "./form";
 import { Textarea } from "./textarea";
-import { MemberExt } from "@/types/types";
 import { UseFormReturn } from "react-hook-form";
 import { TabsContent } from "@radix-ui/react-tabs";
 
 type NoteTabProps = {
-  form: UseFormReturn<MemberExt>;
+  form: UseFormReturn;
 };
 
 export function NoteTab({ form }: NoteTabProps) {

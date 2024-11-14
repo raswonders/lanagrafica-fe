@@ -1,11 +1,10 @@
 import { Button } from "./button";
 import { UseFormReturn } from "react-hook-form";
-import { MemberExt } from "@/types/types";
 
 const focusDelay = 50;
 
 type SuspendPopoverItemProps = {
-  form: UseFormReturn<MemberExt>;
+  form: UseFormReturn;
   title: string;
   period: string;
 };

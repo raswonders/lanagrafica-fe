@@ -17,7 +17,7 @@ import { TabsContent } from "@radix-ui/react-tabs";
 import { SuspendPopover } from "./suspend-popover";
 
 type MembershipTabProps = {
-  form: UseFormReturn<MemberExt>;
+  form: UseFormReturn;
   row: MemberExt;
   isExpired: boolean;
   isSuspended: boolean;

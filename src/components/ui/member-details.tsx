@@ -76,16 +76,18 @@ export function MemberDetails({
     expiration_date: z.string(),
   });
 
-  const form = useForm<MemberExt>({
+  type FormData = z.infer<typeof formSchema>;
+
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: row.name,
-      surname: row.surname,
+      name: row.name || "",
+      surname: row.surname || "",
       birth_date: createDateString(day, month, year),
       birth_place: row.birth_date,
-      country: row.country,
-      doc_type: row.doc_type,
-      doc_id: row.doc_id,
+      country: row.country || "",
+      doc_type: row.doc_type || "",
+      doc_id: row.doc_id || "",
       email: row.email || "",
       measure: row.measure || "",
       note: row.note || "",
@@ -94,7 +96,7 @@ export function MemberDetails({
     },
   });
 
-  const { isDirty } = form.formState;
+  const { isDirty, dirtyFields } = form.formState;
   const isSuspended = hasBeenSuspended(
     new Date(form.watch("suspended_till") || ""),
   );
@@ -102,13 +104,16 @@ export function MemberDetails({
   const isActive = !isSuspended && !isExpired;
   const isMobile = useWindowSize();
 
-  async function onSubmit(member: MemberExt) {
-    // FIXME uptade this object to contain only dirty fields from form
-    const changedFields = { is_active: isActive };
+  async function onSubmit(data: FormData) {
+    const modifiedFields = Object.keys(dirtyFields) as Array<keyof FormData>;
+    const modifiedData = modifiedFields.reduce((acc, field) => {
+      acc[field] = data[field];
+      return acc;
+    }, {} as Partial<FormData>);
 
     await updateMutation.mutate({
       id: row.id,
-      details: changedFields,
+      details: { ...modifiedData, is_active: isActive },
       name: row.name || "",
     });
     setOpen(false);
@@ -157,6 +162,7 @@ export function MemberDetails({
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <PersonalTab
+                  // @ts-expect-error - FormData type cannot be exported
                   form={form}
                   day={day}
                   month={month}
@@ -167,12 +173,16 @@ export function MemberDetails({
                   row={row}
                 />
                 <MembershipTab
+                  // @ts-expect-error - FormData type cannot be exported
                   form={form}
                   row={row}
                   isExpired={isExpired}
                   isSuspended={isSuspended}
                 />
-                <NoteTab form={form} />
+                <NoteTab
+                  // @ts-expect-error - FormData type cannot be exported
+                  form={form}
+                />
                 <Button
                   disabled={!isDirty || form.formState.isSubmitting}
                   type="submit"

@@ -12,7 +12,7 @@ import { UseFormReturn } from "react-hook-form";
 import { TabsContent } from "@radix-ui/react-tabs";
 
 type PersonalTabProps = {
-  form: UseFormReturn<MemberExt>;
+  form: UseFormReturn;
   row: MemberExt;
   day: string;
   month: string;
