@@ -1,15 +1,12 @@
 import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
-import { MemberDTO } from "@/types";
+import { MemberInsert, MemberUpdate } from "@/types/types";
 
-export async function renewMember(
-  id: number,
-  expirationDate: string,
-): Promise<MemberDTO | null> {
+export async function renewMember(id: number, expirationDate: string) {
   const cardNumber = genCardNumber();
   const nextExpiration = extendDate(expirationDate);
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("members")
     .update({
       card_number: String(cardNumber),
@@ -19,25 +16,15 @@ export async function renewMember(
     .eq("id", id);
 
   if (error) throw error;
-
-  return data;
 }
 
-export async function updateMember(
-  id: number,
-  details: MemberDTO,
-): Promise<MemberDTO | null> {
-  const { data, error } = await supabase
-    .from("members")
-    .update(details)
-    .eq("id", id);
+export async function updateMember(id: number, details: MemberUpdate) {
+  const { error } = await supabase.from("members").update(details).eq("id", id);
 
   if (error) throw error;
-
-  return data;
 }
 
-export async function insertMember(details: MemberDTO) {
+export async function insertMember(details: MemberInsert) {
   const { error } = await supabase.from("members").insert(details);
 
   if (error) throw error;
@@ -48,25 +35,25 @@ export async function searchMember(
   pageStart: number,
   pageEnd: number,
 ) {
-  let data, count, error;
+  let data, error;
   if (debouncedSearch) {
     const searchWords = debouncedSearch.trim().split(/\s+/).filter(Boolean);
     const searchParam = searchWords.join(" & ");
-    ({ data, count, error } = await supabase
+    ({ data, error } = await supabase
       .from("members")
-      .select("*", { count: "exact" })
+      .select("*")
       .order("id", { ascending: true })
       .textSearch("name_surname", searchParam)
       .range(pageStart, pageEnd));
   } else {
-    ({ data, count, error } = await supabase
+    ({ data, error } = await supabase
       .from("members")
-      .select("*", { count: "exact" })
+      .select("*")
       .order("id", { ascending: true })
       .range(pageStart, pageEnd));
   }
 
   if (error) throw error;
 
-  return { data, count };
+  return data;
 }

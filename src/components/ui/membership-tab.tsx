@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "./form";
 import { Input } from "./input";
-import { Member } from "@/types";
+import { MemberExt } from "@/types/types";
 import { getCustomDate, getDateMonthsLater } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { Button } from "./button";
@@ -17,8 +17,8 @@ import { TabsContent } from "@radix-ui/react-tabs";
 import { SuspendPopover } from "./suspend-popover";
 
 type MembershipTabProps = {
-  form: UseFormReturn<Member>;
-  row: Member;
+  form: UseFormReturn;
+  row: MemberExt;
   isExpired: boolean;
   isSuspended: boolean;
 };
@@ -43,7 +43,7 @@ export function MembershipTab({
               <FormControl>
                 <Input
                   disabled={true}
-                  value={getCustomDate(row.registrationDate)}
+                  value={getCustomDate(row.registration_date || "")}
                 />
               </FormControl>
             </FormItem>
@@ -52,7 +52,7 @@ export function MembershipTab({
 
         <FormField
           control={form.control}
-          name="expirationDate"
+          name="expiration_date"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -65,7 +65,7 @@ export function MembershipTab({
                   disabled={true}
                   placeholder={t("memberDetails.notSuspended")}
                   {...field}
-                  value={getCustomDate(form.watch("expirationDate"))}
+                  value={getCustomDate(form.watch("expiration_date") || "")}
                 />
               </FormControl>
             </FormItem>
@@ -78,7 +78,7 @@ export function MembershipTab({
             variant="active"
             className="self-start"
             onClick={() =>
-              form.setValue("expirationDate", getDateMonthsLater(12), {
+              form.setValue("expiration_date", getDateMonthsLater(12), {
                 shouldDirty: true,
               })
             }
@@ -90,7 +90,7 @@ export function MembershipTab({
         <div className="flex flex-col gap-4">
           <FormField
             control={form.control}
-            name="suspendedTill"
+            name="suspended_till"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("memberDetails.suspended")}</FormLabel>
@@ -101,7 +101,7 @@ export function MembershipTab({
                     {...field}
                     value={
                       isSuspended
-                        ? getCustomDate(form.watch("suspendedTill"))
+                        ? getCustomDate(form.watch("suspended_till") || "")
                         : ""
                     }
                   />
@@ -121,6 +121,7 @@ export function MembershipTab({
                       disabled={!isSuspended}
                       className="resize-none"
                       {...field}
+                      value={field.value || ""}
                     />
                   </FormControl>
                   <FormMessage />
@@ -134,7 +135,7 @@ export function MembershipTab({
                 variant="suspended"
                 className="self-start"
                 onClick={() => {
-                  form.setValue("suspendedTill", "", {
+                  form.setValue("suspended_till", "", {
                     shouldDirty: true,
                   });
                   form.setValue("measure", "", {

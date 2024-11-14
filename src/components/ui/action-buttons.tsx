@@ -3,10 +3,10 @@ import { Button } from "./button";
 import { MemberDetails } from "./member-details";
 import { RenewConfirm } from "./renew-confirm";
 import { useMembersMutations } from "@/hooks/use-table-mutations";
-import { Member } from "@/types";
+import { MemberExt } from "@/types/types";
 
 type ActionButtonsProps = {
-  row: Member;
+  row: MemberExt;
 };
 
 export function ActionButtons({ row }: ActionButtonsProps) {
@@ -30,7 +30,7 @@ export function ActionButtons({ row }: ActionButtonsProps) {
         isOpenForbidden={isRenewForbidden}
         id={row.id}
         name={`${row.name} ${row.surname}`}
-        expirationDate={row.expirationDate}
+        expirationDate={row.expiration_date || ""}
         renewMutation={renewMutation}
       >
         <Button size="icon" variant="ghost" disabled={isRenewForbidden}>

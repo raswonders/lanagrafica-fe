@@ -6,10 +6,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "./input";
+import { UseFormReturn } from "react-hook-form";
 
 type InputFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: any;
+  form: UseFormReturn;
   name: string;
   label: string;
   type?: string;

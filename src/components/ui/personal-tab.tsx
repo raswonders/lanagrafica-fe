@@ -7,13 +7,13 @@ import { DateField } from "./date-field";
 import { InputField } from "./input-field";
 import { SelectField } from "./select-field";
 import { useState } from "react";
-import { Member } from "@/types";
+import { MemberExt } from "@/types/types";
 import { UseFormReturn } from "react-hook-form";
 import { TabsContent } from "@radix-ui/react-tabs";
 
 type PersonalTabProps = {
-  form: UseFormReturn<Member>;
-  row: Member;
+  form: UseFormReturn;
+  row: MemberExt;
   day: string;
   month: string;
   year: string;
@@ -82,10 +82,10 @@ export function PersonalTab({
           setSearch={setCitySearch}
           value={
             isItaly
-              ? cities.includes(row.birthPlace)
-                ? row.birthPlace
+              ? cities.includes(row.birth_place || "")
+                ? row.birth_place || ""
                 : ""
-              : country
+              : country || ""
           }
           disabled={!isItaly}
         />

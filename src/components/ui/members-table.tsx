@@ -18,7 +18,6 @@ import {
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Skeleton } from "./skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchBar } from "./searchbar";
 import { Separator } from "@radix-ui/react-separator";
@@ -29,7 +28,7 @@ import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
-import { Member } from "@/types";
+import { MemberExt } from "@/types/types";
 
 const membersPerPage = 20;
 
@@ -68,27 +67,25 @@ export function MembersTable() {
   }, [refetch, debouncedSearch]);
 
   // Build table
-  const columns = useMembersColumns();
+  const columns = useMembersColumns(isPending);
   const members = useMemo(() => {
-    return data?.pages.reduce<Member[]>((acc, page) => {
-      return [...acc, ...page.members];
-    }, []);
+    return (
+      data?.pages.reduce((acc, page) => {
+        return [...acc, ...page];
+      }, []) ?? []
+    );
   }, [data]);
 
-  const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
-  const tableColumns = isPending
-    ? columns.map((row) => ({
-        ...row,
-        cell: () => <Skeleton className="w-[150px] h-[24px] rounded-full" />,
-      }))
-    : columns;
+  const tableRows: MemberExt[] = isPending
+    ? Array(membersPerPage).fill({})
+    : members;
 
   const table = useReactTable({
     state: {
       columnVisibility,
       columnFilters,
     },
-    columns: tableColumns,
+    columns,
     data: tableRows,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -118,6 +115,7 @@ export function MembersTable() {
         />
       </div>
       <div className="rounded-md border">
+        {/* TODO make error more nice */}
         {error ? (
           <div className="flex items-center justify-center">
             <div>

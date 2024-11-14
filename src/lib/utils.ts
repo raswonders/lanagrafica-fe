@@ -1,4 +1,4 @@
-import { Member, MemberDTO } from "@/types";
+import { MemberRow } from "@/types/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -76,38 +76,14 @@ export function getCustomDate(value: string | void) {
   return `${day}/${month}/${year}`;
 }
 
-export function fromSnakeToCamelCase(arr: object[]) {
-  return arr.map((row: object) => {
-    return Object.fromEntries(
-      Object.entries(row).map(([key, value]) => {
-        const newKey = key.replace(/_[a-z]/g, (group) =>
-          group.toUpperCase().replace("_", ""),
-        );
-        return [newKey, value];
-      }),
-    );
-  });
-}
-
-export function fromCamelToSnakeCase(obj: Member) {
-  return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => {
-      const newKey = key
-        .split(/(?=[A-Z])/)
-        .map((word) => word.toLocaleLowerCase())
-        .join("_");
-      return [newKey, value];
-    }),
-  ) as MemberDTO;
-}
-
-export function extendWithStatus(data: Member[]) {
+export function extendWithStatus(data: MemberRow[]) {
   return data.map((row) => {
     let status = "inactive";
-    if (row.isActive) status = "active";
-    if (hasExpired(new Date(row.expirationDate))) status = "expired";
-    if (hasBeenSuspended(new Date(row.suspendedTill))) status = "suspended";
-    if (row.isDeleted) status = "deleted";
+    if (row.is_active) status = "active";
+    if (hasExpired(new Date(row.expiration_date || ""))) status = "expired";
+    if (hasBeenSuspended(new Date(row.suspended_till || "")))
+      status = "suspended";
+    if (row.is_deleted) status = "deleted";
     return { ...row, status };
   });
 }
@@ -153,17 +129,4 @@ export function getDateMonthsLater(count: number) {
   const date = new Date();
   date.setMonth(date.getMonth() + count);
   return date.toISOString().split("T")[0];
-}
-
-export function serializeForUpdate<T extends Member>(
-  row: T,
-  isActive: boolean,
-): MemberDTO {
-  const updatedRow: Record<string, unknown> = { isActive: isActive };
-
-  for (let key in row) {
-    updatedRow[key] = row[key] || null;
-  }
-
-  return fromCamelToSnakeCase(updatedRow as Member);
 }
