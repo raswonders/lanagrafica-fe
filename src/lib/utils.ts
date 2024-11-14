@@ -1,4 +1,4 @@
-import { Member, MemberDB, MemberDTO } from "@/types/types";
+import { MemberDB } from "@/types/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -76,32 +76,6 @@ export function getCustomDate(value: string | void) {
   return `${day}/${month}/${year}`;
 }
 
-// TODO possibly remove if we don't use it
-export function fromSnakeToCamelCase(arr: object[]) {
-  return arr.map((row: object) => {
-    return Object.fromEntries(
-      Object.entries(row).map(([key, value]) => {
-        const newKey = key.replace(/_[a-z]/g, (group) =>
-          group.toUpperCase().replace("_", ""),
-        );
-        return [newKey, value];
-      }),
-    );
-  });
-}
-
-export function fromCamelToSnakeCase(obj: Member) {
-  return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => {
-      const newKey = key
-        .split(/(?=[A-Z])/)
-        .map((word) => word.toLocaleLowerCase())
-        .join("_");
-      return [newKey, value];
-    }),
-  ) as MemberDTO;
-}
-
 export function extendWithStatus(data: MemberDB[]) {
   return data.map((row) => {
     let status = "inactive";
@@ -156,17 +130,3 @@ export function getDateMonthsLater(count: number) {
   date.setMonth(date.getMonth() + count);
   return date.toISOString().split("T")[0];
 }
-
-// TODO remove this
-// export function serializeForUpdate<T extends Member>(
-//   row: T,
-//   isActive: boolean,
-// ): MemberDTO {
-//   const updatedRow: Record<string, unknown> = { isActive: isActive };
-
-//   for (let key in row) {
-//     updatedRow[key] = row[key] || null;
-//   }
-
-//   return fromCamelToSnakeCase(updatedRow as Member);
-// }
