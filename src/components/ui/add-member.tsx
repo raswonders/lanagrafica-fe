@@ -75,11 +75,11 @@ export function AddMember({
   const country = form.watch("country");
   const isItaly = country === "Italy";
 
-  function serializeForInsert(row: MemberExt): MemberInsert {
+  function toInsert(member: MemberExt): MemberInsert {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, ...rest } = row;
+    const { id, ...rest } = member;
 
-    const updatedRow = {
+    const updateFields = {
       ...rest,
       registration_date: getRegistrationDate(),
       expiration_date: getExpirationDate(),
@@ -88,14 +88,14 @@ export function AddMember({
       is_deleted: false,
     };
 
-    return updatedRow;
+    return updateFields;
   }
 
-  async function onSubmit(values: MemberExt) {
-    const newMember = serializeForInsert(values);
+  async function onSubmit(member: MemberExt) {
+    const memberSerialized = toInsert(member);
     await insertMutation.mutate({
-      details: newMember,
-      name: newMember.name || "",
+      details: memberSerialized,
+      name: memberSerialized.name || "",
     });
     resetForm();
     setOpen(false);
