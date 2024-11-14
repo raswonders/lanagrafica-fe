@@ -70,10 +70,9 @@ export function MembersTable() {
   const members = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
-    }, []);
+    }, []) ?? [];
   }, [data]);
 
-  // TODO shouldn't this be a placeholder?
   const tableRows = isPending ? Array(membersPerPage).fill({}) : members || [];
 
   const table = useReactTable({
