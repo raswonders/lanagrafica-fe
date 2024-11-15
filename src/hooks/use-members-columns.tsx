@@ -7,10 +7,6 @@ import { ActionButtons } from "@/components/ui/action-buttons";
 import { MemberExt } from "@/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
-interface Row {
-  original: MemberExt;
-}
-
 const columnHelper = createColumnHelper<MemberExt>();
 
 export function useMembersColumns(isPending: boolean) {
@@ -81,14 +77,14 @@ export function useMembersColumns(isPending: boolean) {
         header: () => <span>{t("membersTable.isDeleted")}</span>,
         filterFn: "equals",
       }),
-      {
+      columnHelper.display({
         meta: t("membersTable.actions"),
         id: "actions",
         header: () => <span className="ml-3">{t("membersTable.actions")}</span>,
-        cell: ({ row }: { row: Row }) => {
-          return <ActionButtons row={row.original} />;
+        cell: (info) => {
+          return <ActionButtons row={info.row.original} />;
         },
-      },
+      }),
     ],
     [t],
   );
