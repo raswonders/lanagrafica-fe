@@ -148,7 +148,7 @@ export function MemberDetails({
 
         <div className="flex justify-center">
           <Tabs defaultValue={variant} className="w-full space-y-6">
-            <TabsList>
+            <TabsList className="gap-1">
               <TabsTrigger value="personal">
                 {t("memberDetails.personalTab")}
               </TabsTrigger>
