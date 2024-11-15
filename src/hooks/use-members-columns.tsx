@@ -5,14 +5,13 @@ import { getCustomDate, hasExpired } from "@/lib/utils";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ActionButtons } from "@/components/ui/action-buttons";
 import { MemberExt } from "@/types/types";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const columnHelper = createColumnHelper<MemberExt>();
 
-export function useMembersColumns(isPending: boolean) {
+export function useMembersColumns() {
   const { t } = useTranslation();
 
-  const columnDefs = useMemo(
+  return useMemo(
     () => [
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
         id: "fullName",
@@ -88,11 +87,4 @@ export function useMembersColumns(isPending: boolean) {
     ],
     [t],
   );
-
-  return isPending
-    ? columnDefs.map((row) => ({
-        ...row,
-        cell: () => <Skeleton className="w-[150px] h-[24px] rounded-full" />,
-      }))
-    : columnDefs;
 }

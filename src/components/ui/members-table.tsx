@@ -28,7 +28,6 @@ import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
-import { MemberExt } from "@/types/types";
 
 const membersPerPage = 20;
 
@@ -59,7 +58,7 @@ export function MembersTable() {
   );
 
   // Query data
-  const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
+  const { error, data, fetchNextPage, hasNextPage, refetch } =
     useMembersQuery(debouncedSearch, membersPerPage);
 
   useEffect(() => {
@@ -67,8 +66,8 @@ export function MembersTable() {
   }, [refetch, debouncedSearch]);
 
   // Build table
-  const columns = useMembersColumns(isPending);
-  const members = useMemo(() => {
+  const columns = useMembersColumns();
+  const rows = useMemo(() => {
     return (
       data?.pages.reduce((acc, page) => {
         return [...acc, ...page];
@@ -76,17 +75,13 @@ export function MembersTable() {
     );
   }, [data]);
 
-  const tableRows: MemberExt[] = isPending
-    ? Array(membersPerPage).fill({})
-    : members;
-
   const table = useReactTable({
     state: {
       columnVisibility,
       columnFilters,
     },
     columns,
-    data: tableRows,
+    data: rows,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -124,7 +119,7 @@ export function MembersTable() {
           </div>
         ) : (
           <InfiniteScroll
-            dataLength={tableRows ? tableRows.length : 0}
+            dataLength={rows ? rows.length : 0}
             next={() => fetchNextPage()}
             hasMore={hasNextPage}
             loader={<div className="h-24">Loading...</div>}

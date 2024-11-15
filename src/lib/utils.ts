@@ -1,4 +1,4 @@
-import { MemberRow } from "@/types/types";
+import { MemberExt, MemberRow, MemberStatus } from "@/types/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -76,14 +76,15 @@ export function getCustomDate(value: string | void) {
   return `${day}/${month}/${year}`;
 }
 
-export function extendWithStatus(data: MemberRow[]) {
+export function extendWithStatus(data: MemberRow[]): MemberExt[] {
   return data.map((row) => {
-    let status = "inactive";
+    let status: MemberStatus = "inactive";
     if (row.is_active) status = "active";
     if (hasExpired(new Date(row.expiration_date || ""))) status = "expired";
     if (hasBeenSuspended(new Date(row.suspended_till || "")))
       status = "suspended";
     if (row.is_deleted) status = "deleted";
+
     return { ...row, status };
   });
 }
