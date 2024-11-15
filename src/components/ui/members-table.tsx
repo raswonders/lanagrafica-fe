@@ -28,6 +28,8 @@ import { useMembersQuery } from "@/hooks/use-members-query";
 import { FilterPopover } from "./filter-popover";
 import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
+import loadingAnimation from "@/assets/loading.json";
+import Lottie from "lottie-react";
 
 const membersPerPage = 20;
 
@@ -58,7 +60,7 @@ export function MembersTable() {
   );
 
   // Query data
-  const { error, data, fetchNextPage, hasNextPage, refetch } =
+  const { isPending, error, data, fetchNextPage, hasNextPage, refetch } =
     useMembersQuery(debouncedSearch, membersPerPage);
 
   useEffect(() => {
@@ -74,7 +76,6 @@ export function MembersTable() {
       }, []) ?? []
     );
   }, [data]);
-
   const table = useReactTable({
     state: {
       columnVisibility,
@@ -122,7 +123,14 @@ export function MembersTable() {
             dataLength={rows ? rows.length : 0}
             next={() => fetchNextPage()}
             hasMore={hasNextPage}
-            loader={<div className="h-24">Loading...</div>}
+            loader={
+              <Lottie
+                animationData={loadingAnimation}
+                loop={true}
+                autoplay={true}
+                className="h-8 my-2"
+              />
+            }
           >
             <Table>
               <TableHeader>
@@ -162,11 +170,17 @@ export function MembersTable() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      {t("membersTable.noResults")}
+                    <TableCell colSpan={columns.length} className="text-center">
+                      {isPending ? (
+                        <Lottie
+                          animationData={loadingAnimation}
+                          loop={true}
+                          autoplay={true}
+                          className="h-8"
+                        />
+                      ) : (
+                        t("membersTable.noResults")
+                      )}
                     </TableCell>
                   </TableRow>
                 )}
