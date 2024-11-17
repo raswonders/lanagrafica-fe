@@ -30,3 +30,5 @@ todo.md
 /blob-report/
 /playwright/.cache/
 /test-exmples
+
+/playwright/.auth
