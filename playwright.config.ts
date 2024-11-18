@@ -1,4 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * Read environment variables from file.
@@ -68,9 +70,12 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "pnpm dev",
-    url: "http://localhost:5173",
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer:
+    process.env.PLAYWRIGHT_DEV_SERVER === "true"
+      ? {
+          command: "pnpm dev",
+          url: "http://localhost:5173",
+          reuseExistingServer: !process.env.CI,
+        }
+      : undefined,
 });
