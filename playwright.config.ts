@@ -48,6 +48,13 @@ export default defineConfig({
       dependencies: ["setup"],
     },
 
+    {
+      name: "headless",
+      use: {
+        headless: true,
+      },
+    },
+
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',

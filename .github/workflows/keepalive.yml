@@ -32,4 +32,4 @@ jobs:
       # Run the Playwright tests
       - name: Run Supabase Keepalive Tests
         run: |
-          npx playwright test supabase-keepalive.spec.ts
+          npx playwright test supabase-keepalive.spec.ts --project=headless
