@@ -157,6 +157,7 @@ export function MembersTable() {
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
+                      data-row="true"
                     >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
