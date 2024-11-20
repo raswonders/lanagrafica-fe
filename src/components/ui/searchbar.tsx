@@ -24,6 +24,7 @@ export function SearchBar({ setDebouncedSearch }: SearchBarProps) {
   return (
     <div className="w-[350px] relative">
       <Input
+        type="search"
         id="searchInput"
         placeholder={t("members.searchPlaceholder")}
         value={search || ""}

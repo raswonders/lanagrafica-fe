@@ -19,3 +19,12 @@ test("renders rows", async ({ page }) => {
   const afterScrollCount = await rows.count();
   expect(afterScrollCount).toBeGreaterThan(initialRowCount);
 });
+
+test("returns a member on search", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("input[type=search]").fill("giulia");
+  const rows = page.locator('tr[data-row="true"]');
+  await rows.first().waitFor();
+  const rowsCount = await rows.count();
+  expect(rowsCount).toBeGreaterThan(0);
+});
