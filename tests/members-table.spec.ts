@@ -65,3 +65,26 @@ test("shows errors for missing fields", async ({ page }) => {
   await page.getByRole("button", { name: "Create member" }).click();
   await expect(page.getByText("is required")).toHaveCount(6);
 });
+
+test("updates member details", async ({ page }) => {
+  await page.goto("/");
+  const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+  const editButton = memberRow.getByRole("button").first();
+  await editButton.click();
+
+  const saveButton = page.getByRole("button", { name: "Save" });
+  await expect(saveButton).toBeDisabled();
+
+  // Perform update 
+  await page.getByLabel("day").fill("11");
+  await saveButton.click();
+
+  const toast = page.getByRole("status");
+  await expect(toast).toBeInViewport();
+  await expect(toast).toContainText("successful");
+  await expect(toast).not.toBeInViewport({ timeout: 10000 });
+
+  // Form was reset
+  await editButton.click();
+  await expect(saveButton).toBeDisabled();
+});
