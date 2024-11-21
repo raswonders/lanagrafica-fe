@@ -146,7 +146,7 @@ export function AddMember({
               // @ts-expect-error - due to FormData cannot be exported
               form={form}
               label={t("newMember.dateFieldLabel")}
-              name="birthDate"
+              name="birth_date"
               day={day}
               month={month}
               year={year}
@@ -169,7 +169,7 @@ export function AddMember({
             <Combobox
               // @ts-expect-error - due to FormData cannot be exported
               form={form}
-              name="birthPlace"
+              name="birth_place"
               label={t("newMember.cityFieldLabel")}
               data={[
                 i18n.language === "it" ? "__Altro__" : "__Other__",
@@ -183,7 +183,7 @@ export function AddMember({
             <SelectField
               // @ts-expect-error - due to FormData cannot be exported
               form={form}
-              name="docType"
+              name="doc_type"
               label={t("newMember.docTypeFieldLabel")}
               data={documents.map((entry) =>
                 i18n.language === "it" ? entry.it : entry.en,
@@ -193,7 +193,7 @@ export function AddMember({
               // @ts-expect-error - due to FormData cannot be exported
               form={form}
               label={t("newMember.docIdFieldLabel")}
-              name="docId"
+              name="doc_id"
             />
             <InputField
               // @ts-expect-error - due to FormData cannot be exported
