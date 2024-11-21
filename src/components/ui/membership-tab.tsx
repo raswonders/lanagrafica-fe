@@ -36,7 +36,7 @@ export function MembershipTab({
     <TabsContent value="membership">
       <div className="flex flex-col space-y-8">
         <FormField
-          name="registrationDate"
+          name="registration_date"
           render={() => (
             <FormItem>
               <FormLabel>{t("memberDetails.registered")}</FormLabel>

@@ -31,25 +31,25 @@ export function FilterPopover({
     }
 
     if (filter === "active") {
-      filterId = "isActive";
+      filterId = "is_active";
       filterValue = true;
     }
     if (filter === "inactive") {
-      filterId = "isActive";
+      filterId = "is_active";
       filterValue = false;
     }
     if (filter === "deleted") {
-      filterId = "isDeleted";
+      filterId = "is_deleted";
       filterValue = true;
     }
 
     if (filter === "expired") {
-      filterId = "expirationDate";
+      filterId = "expiration_date";
       filterValue = filter;
     }
 
     if (filter === "suspended") {
-      filterId = "suspendedTill";
+      filterId = "suspended_till";
       filterValue = filter;
     }
 
@@ -78,23 +78,23 @@ export function FilterPopover({
             columnFilters.map((filter) => {
               let filterVariant = "";
 
-              if (filter.id === "isActive" && filter.value === true) {
+              if (filter.id === "is_active" && filter.value === true) {
                 filterVariant = "active";
               }
 
-              if (filter.id === "isActive" && filter.value === false) {
+              if (filter.id === "is_active" && filter.value === false) {
                 filterVariant = "inactive";
               }
 
-              if (filter.id === "expirationDate") {
+              if (filter.id === "expiration_date") {
                 filterVariant = "expired";
               }
 
-              if (filter.id === "suspendedTill") {
+              if (filter.id === "suspended_till") {
                 filterVariant = "suspended";
               }
 
-              if (filter.id === "isDeleted") {
+              if (filter.id === "is_deleted") {
                 filterVariant = "deleted";
               }
 

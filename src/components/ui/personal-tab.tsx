@@ -54,7 +54,7 @@ export function PersonalTab({
         <DateField
           form={form}
           label={t("newMember.dateFieldLabel")}
-          name="birthDate"
+          name="birth_date"
           day={day}
           month={month}
           year={year}
@@ -75,7 +75,7 @@ export function PersonalTab({
         />
         <Combobox
           form={form}
-          name="birthPlace"
+          name="birth_place"
           label={t("newMember.cityFieldLabel")}
           data={[i18n.language === "it" ? "__Altro__" : "__Other__", ...cities]}
           search={citySearch}
@@ -91,7 +91,7 @@ export function PersonalTab({
         />
         <SelectField
           form={form}
-          name="docType"
+          name="doc_type"
           label={t("newMember.docTypeFieldLabel")}
           data={documents.map((entry) =>
             i18n.language === "it" ? entry.it : entry.en,
@@ -100,7 +100,7 @@ export function PersonalTab({
         <InputField
           form={form}
           label={t("newMember.docIdFieldLabel")}
-          name="docId"
+          name="doc_id"
         />
         <InputField
           form={form}

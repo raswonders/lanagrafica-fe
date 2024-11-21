@@ -42,20 +42,20 @@ export function MembersTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
     isMobile
       ? {
-          birthDate: false,
+          birth_date: false,
           email: false,
-          suspendedTill: false,
-          expirationDate: false,
-          cardNumber: false,
-          isActive: false,
-          isDeleted: false,
+          suspended_till: false,
+          expiration_date: false,
+          card_number: false,
+          is_active: false,
+          is_deleted: false,
         }
       : {
           email: false,
-          suspendedTill: false,
-          expirationDate: false,
-          isActive: false,
-          isDeleted: false,
+          suspended_till: false,
+          expiration_date: false,
+          is_active: false,
+          is_deleted: false,
         },
   );
 
