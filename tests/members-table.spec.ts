@@ -75,7 +75,7 @@ test("updates member details", async ({ page }) => {
   const saveButton = page.getByRole("button", { name: "Save" });
   await expect(saveButton).toBeDisabled();
 
-  // Perform update 
+  // Perform update
   await page.getByLabel("day").fill("11");
   await saveButton.click();
 
@@ -87,4 +87,17 @@ test("updates member details", async ({ page }) => {
   // Form was reset
   await editButton.click();
   await expect(saveButton).toBeDisabled();
+});
+
+test("prevents member update when personal tab in error", async ({ page }) => {
+  await page.goto("/");
+  const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+  const editButton = memberRow.getByRole("button").first();
+  await editButton.click();
+
+  await page.getByLabel("First name").fill("");
+
+  const saveButton = page.getByRole("button", { name: "Save" });
+  await saveButton.click();
+  await expect(page.getByText("is required")).toBeVisible();
 });
