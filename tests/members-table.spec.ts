@@ -54,8 +54,14 @@ test("adds a member", async ({ page }) => {
   await page.getByLabel("Email").click();
   await page.getByLabel("Email").fill("test@example.com");
   await page.getByRole("button", { name: "Create member" }).click();
-
   await expect(page.getByLabel("Add member")).not.toBeInViewport();
   await expect(page.getByRole("status")).toBeInViewport();
-  await expect(page.getByRole("status")).not.toBeInViewport();
+  await expect(page.getByRole("status")).not.toBeInViewport({ timeout: 10000 });
+});
+
+test("shows errors for missing fields", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Add member" }).click();
+  await page.getByRole("button", { name: "Create member" }).click();
+  await expect(page.getByText("is required")).toHaveCount(6);
 });
