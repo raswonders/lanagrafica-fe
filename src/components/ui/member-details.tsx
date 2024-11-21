@@ -116,6 +116,7 @@ export function MemberDetails({
       details: { ...modifiedData, is_active: isActive },
       name: row.name || "",
     });
+    form.reset();
     setOpen(false);
   }
 
