@@ -121,9 +121,10 @@ export function getExpirationDate(): string {
 }
 
 export function getDateWeekLater() {
-  const date = new Date();
-  date.setDate(date.getDay() + 7);
-  return date.toISOString().split("T")[0];
+  const today = new Date();
+  const nextWeek = new Date();
+  nextWeek.setDate(today.getDate() + 7);
+  return nextWeek.toISOString().split("T")[0];
 }
 
 export function getDateMonthsLater(count: number) {
