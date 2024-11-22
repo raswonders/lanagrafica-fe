@@ -66,38 +66,42 @@ test("shows errors for missing fields", async ({ page }) => {
   await expect(page.getByText("is required")).toHaveCount(6);
 });
 
-test("updates member details", async ({ page }) => {
-  await page.goto("/");
-  const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
-  const editButton = memberRow.getByRole("button").first();
-  await editButton.click();
+test.describe("updates member", () => {
+  test("updates personal details", async ({ page }) => {
+    await page.goto("/");
+    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const editButton = memberRow.getByRole("button").first();
+    await editButton.click();
 
-  const saveButton = page.getByRole("button", { name: "Save" });
-  await expect(saveButton).toBeDisabled();
+    const saveButton = page.getByRole("button", { name: "Save" });
+    await expect(saveButton).toBeDisabled();
 
-  // Perform update
-  await page.getByLabel("day").fill("11");
-  await saveButton.click();
+    // Perform update
+    await page.getByLabel("day").fill("11");
+    await saveButton.click();
 
-  const toast = page.getByRole("status");
-  await expect(toast).toBeInViewport();
-  await expect(toast).toContainText("successful");
-  await expect(toast).not.toBeInViewport({ timeout: 10000 });
+    const toast = page.getByRole("status");
+    await expect(toast).toBeInViewport();
+    await expect(toast).toContainText("successful");
+    await expect(toast).not.toBeInViewport({ timeout: 10000 });
 
-  // Form was reset
-  await editButton.click();
-  await expect(saveButton).toBeDisabled();
-});
+    // Form was reset
+    await editButton.click();
+    await expect(saveButton).toBeDisabled();
+  });
 
-test("prevents member update when personal tab in error", async ({ page }) => {
-  await page.goto("/");
-  const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
-  const editButton = memberRow.getByRole("button").first();
-  await editButton.click();
+  test("shows error when name is missing", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const editButton = memberRow.getByRole("button").first();
+    await editButton.click();
 
-  await page.getByLabel("First name").fill("");
+    await page.getByLabel("First name").fill("");
 
-  const saveButton = page.getByRole("button", { name: "Save" });
-  await saveButton.click();
-  await expect(page.getByText("is required")).toBeVisible();
+    const saveButton = page.getByRole("button", { name: "Save" });
+    await saveButton.click();
+    await expect(page.getByText("is required")).toBeVisible();
+  });
 });
