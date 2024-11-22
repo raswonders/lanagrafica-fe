@@ -14,7 +14,7 @@ import {
   hasBeenSuspended,
 } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Form } from "@/components/ui/form";
 import {
   Sheet,
@@ -78,12 +78,15 @@ export function MemberDetails({
 
   type FormData = z.infer<typeof formSchema>;
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+  const rowValues = useMemo(
+    () => ({
       name: row.name || "",
       surname: row.surname || "",
-      birth_date: createDateString(day, month, year),
+      birth_date: createDateString(
+        parseDay(row.birth_date),
+        parseMonth(row.birth_date),
+        parseYear(row.birth_date),
+      ),
       birth_place: row.birth_date,
       country: row.country || "",
       doc_type: row.doc_type || "",
@@ -93,9 +96,14 @@ export function MemberDetails({
       note: row.note || "",
       suspended_till: row.suspended_till || "",
       expiration_date: row.expiration_date || "",
-    },
-  });
+    }),
+    [row],
+  );
 
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: rowValues,
+  });
   const { isDirty, dirtyFields } = form.formState;
   const isSuspended = hasBeenSuspended(
     new Date(form.watch("suspended_till") || ""),
@@ -103,6 +111,17 @@ export function MemberDetails({
   const isExpired = hasExpired(new Date(form.watch("expiration_date") || ""));
   const isActive = !isSuspended && !isExpired;
   const isMobile = useWindowSize();
+
+  // Re-initialize form when row changes
+  useEffect(() => {
+    form.reset(rowValues);
+  }, [row, form, rowValues]);
+
+  useEffect(() => {
+    if (isDirty && !open) {
+      form.reset(rowValues);
+    }
+  }, [open, form, rowValues, isDirty]);
 
   async function onSubmit(data: FormData) {
     const modifiedFields = Object.keys(dirtyFields) as Array<keyof FormData>;
@@ -116,7 +135,6 @@ export function MemberDetails({
       details: { ...modifiedData, is_active: isActive },
       name: row.name || "",
     });
-    form.reset();
     setOpen(false);
   }
 
