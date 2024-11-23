@@ -2,6 +2,15 @@ import { supabase } from "./supabase";
 import { extendDate, genCardNumber } from "@/lib/utils";
 import { MemberInsert, MemberUpdate } from "@/types/types";
 
+function serialize<T extends MemberUpdate | MemberInsert>(data: T) {
+  const serialized = Object.entries(data).map((item) => {
+    item[1] = item[1] === "" ? null : item[1];
+    return item;
+  });
+
+  return Object.fromEntries(serialized) as T;
+}
+
 export async function renewMember(id: number, expirationDate: string) {
   const cardNumber = genCardNumber();
   const nextExpiration = extendDate(expirationDate);
@@ -19,13 +28,16 @@ export async function renewMember(id: number, expirationDate: string) {
 }
 
 export async function updateMember(id: number, details: MemberUpdate) {
-  const { error } = await supabase.from("members").update(details).eq("id", id);
+  const { error } = await supabase
+    .from("members")
+    .update(serialize(details))
+    .eq("id", id);
 
   if (error) throw error;
 }
 
 export async function insertMember(details: MemberInsert) {
-  const { error } = await supabase.from("members").insert(details);
+  const { error } = await supabase.from("members").insert(serialize(details));
 
   if (error) throw error;
 }
