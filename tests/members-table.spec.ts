@@ -66,7 +66,7 @@ test("shows errors for missing fields", async ({ page }) => {
   await expect(page.getByText("is required")).toHaveCount(6);
 });
 
-test.describe("updates member", () => {
+test.describe("member details - personal tab", () => {
   test("updates personal details", async ({ page }) => {
     await page.goto("/");
     const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
@@ -90,9 +90,7 @@ test.describe("updates member", () => {
     await expect(saveButton).toBeDisabled();
   });
 
-  test("shows error when name is missing", async ({
-    page,
-  }) => {
+  test("shows error when name is missing", async ({ page }) => {
     await page.goto("/");
     const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
     const editButton = memberRow.getByRole("button").first();
@@ -103,5 +101,50 @@ test.describe("updates member", () => {
     const saveButton = page.getByRole("button", { name: "Save" });
     await saveButton.click();
     await expect(page.getByText("is required")).toBeVisible();
+  });
+});
+
+test.describe("member details: membership tab", () => {
+  test("suspends member for a week", async ({ page }) => {
+    await page.goto("/");
+    const memberRow = page.getByRole("row", { name: "Fabio Barbieri" });
+    const editButton = memberRow.getByRole("button").first();
+    await editButton.click();
+    await page.getByRole("tab", { name: "Membership" }).click();
+
+    const suspendButton = page.getByRole("button", { name: "Suspend" });
+    await suspendButton.click();
+    const weekButton = page.getByRole("button", { name: "week" });
+    await weekButton.click();
+    const saveButton = page.getByRole("button", { name: "Save" });
+    await saveButton.click();
+    await expect(page.getByText("is required")).toBeVisible();
+
+    await page.getByLabel("Reason for suspension").fill("just a test");
+    await saveButton.click();
+    const toast = page.getByRole("status");
+    await expect(toast).toBeInViewport();
+    await expect(toast).toContainText("successful");
+    await expect(toast).not.toBeInViewport({ timeout: 10000 });
+  });
+
+  test("cancels suspension", async ({ page }) => {
+    await page.goto("/");
+    const memberRow = page.getByRole("row", { name: "Fabio Barbieri" });
+    const editButton = memberRow.getByRole("button").first();
+    await editButton.click();
+    await page.getByRole("tab", { name: "Membership" }).click();
+
+    const cancelButton = page.getByRole("button", {
+      name: "Cancel suspension",
+    });
+
+    await cancelButton.click();
+    const saveButton = page.getByRole("button", { name: "Save" });
+    await saveButton.click();
+    const toast = page.getByRole("status");
+    await expect(toast).toBeInViewport();
+    await expect(toast).toContainText("successful");
+    await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
 });
