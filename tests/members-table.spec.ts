@@ -80,9 +80,8 @@ test.describe("member details - personal tab", () => {
     await page.getByLabel("day").fill("11");
     await saveButton.click();
 
-    const toast = page.getByRole("status");
+    const toast = page.getByText('Update successful');
     await expect(toast).toBeInViewport();
-    await expect(toast).toContainText("successful");
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
 
     // Form was reset
@@ -122,9 +121,8 @@ test.describe("member details: membership tab", () => {
 
     await page.getByLabel("Reason for suspension").fill("just a test");
     await saveButton.click();
-    const toast = page.getByRole("status");
+    const toast = page.getByText('Update successful');
     await expect(toast).toBeInViewport();
-    await expect(toast).toContainText("successful");
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
 
@@ -142,9 +140,8 @@ test.describe("member details: membership tab", () => {
     await cancelButton.click();
     const saveButton = page.getByRole("button", { name: "Save" });
     await saveButton.click();
-    const toast = page.getByRole("status");
+    const toast = page.getByText('Update successful');
     await expect(toast).toBeInViewport();
-    await expect(toast).toContainText("successful");
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
 });
