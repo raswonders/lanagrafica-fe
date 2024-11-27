@@ -141,7 +141,9 @@ test.describe("member details: membership tab", () => {
 
   test("cancels suspension", async ({ page }) => {
     await page.goto("/");
-    const memberRow = page.getByRole("row", { name: "Lucaa Bianchi" });
+    await page.locator("input[type=search]").click();
+    await page.locator("input[type=search]").fill("Bianchi");
+    const memberRow = page.getByRole("row", { name: "Luca Bianchi" });
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
     await page.getByRole("tab", { name: "Membership" }).click();
