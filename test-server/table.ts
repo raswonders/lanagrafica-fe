@@ -1,4 +1,5 @@
 import { sql } from "./db";
+import fs from "fs";
 
 export async function createSnapshot(options?: { overwrite: boolean }) {
   if (options?.overwrite) {
@@ -24,4 +25,17 @@ export async function restoreFromSnapshot() {
   await sql`CREATE TABLE members AS TABLE members_snapshot`;
 
   return true;
+}
+
+export async function exportMembersData() {
+  const filename = "members-dump.json";
+  try {
+    const rows = await sql`SELECT * FROM members`;
+    fs.writeFileSync(filename, JSON.stringify(rows, null, 2), "utf-8");
+    console.log(`Members exported to ${filename}`);
+  } catch (error) {
+    console.error("Error exporting data:", error);
+  } finally {
+    await sql.end();
+  }
 }
