@@ -1,5 +1,13 @@
 import { test, expect } from "@playwright/test";
-import { restoreFromSnapshot } from "../test-server/table";
+import { createSnapshot, restoreFromSnapshot } from "../test-server/table";
+
+test.beforeAll(async () => {
+  await createSnapshot();
+});
+
+test.afterAll(async () => {
+  await restoreFromSnapshot();
+});
 
 test.beforeEach(async () => {
   await restoreFromSnapshot();
