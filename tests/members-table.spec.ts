@@ -1,4 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { restoreFromSnapshot } from "../test-server/table";
+
+test.beforeEach(async () => {
+  await restoreFromSnapshot();
+});
 
 test("renders rows", async ({ page }) => {
   // renders rows on navigation
