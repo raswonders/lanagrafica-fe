@@ -39,3 +39,21 @@ export async function exportMembersData() {
     await sql.end();
   }
 }
+
+export async function insertMembersData() {
+  const filename = "members-dump.json";
+  try {
+    const data = JSON.parse(fs.readFileSync(filename, "utf-8"));
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const { id, name_surname, ...row } of data) {
+      await sql`INSERT INTO members ${sql(row)}`;
+    }
+
+    console.log("Members inserted");
+  } catch (error) {
+    console.error("Errors inserting members", error);
+  } finally {
+    await sql.end();
+  }
+}
