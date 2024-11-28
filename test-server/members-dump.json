@@ -21,27 +21,6 @@
     "name_surname": "Giulia Rossi"
   },
   {
-    "id": "2",
-    "birth_date": "1990-04-20T00:00:00.000Z",
-    "birth_place": "Torino",
-    "card_number": null,
-    "country": "Italy",
-    "doc_id": "ABCDE12345",
-    "doc_type": "Driver's license",
-    "email": "luca.bianchi@example.com",
-    "expiration_date": "2023-12-10T00:00:00.000Z",
-    "is_active": false,
-    "is_deleted": false,
-    "measure": null,
-    "name": "Luca",
-    "note": null,
-    "province": "TO",
-    "registration_date": "2022-12-10T00:00:00.000Z",
-    "surname": "Bianchi",
-    "suspended_till": null,
-    "name_surname": "Luca Bianchi"
-  },
-  {
     "id": "3",
     "birth_date": "1982-06-25T00:00:00.000Z",
     "birth_place": "Napoli",
@@ -1888,5 +1867,26 @@
     "surname": "Gatti",
     "suspended_till": null,
     "name_surname": "Valeria Gatti"
+  },
+  {
+    "id": "2",
+    "birth_date": "1990-04-20T00:00:00.000Z",
+    "birth_place": "Torino",
+    "card_number": null,
+    "country": "Italy",
+    "doc_id": "ABCDE12345",
+    "doc_type": "Driver's license",
+    "email": "luca.bianchi@example.com",
+    "expiration_date": "2023-12-10T00:00:00.000Z",
+    "is_active": false,
+    "is_deleted": false,
+    "measure": "not good",
+    "name": "Luca",
+    "note": null,
+    "province": "TO",
+    "registration_date": "2022-12-10T00:00:00.000Z",
+    "surname": "Bianchi",
+    "suspended_till": "2025-11-27T00:00:00.000Z",
+    "name_surname": "Luca Bianchi"
   }
 ]
