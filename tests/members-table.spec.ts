@@ -160,3 +160,42 @@ test.describe("member details: membership tab", () => {
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
 });
+
+test.describe("renews member", () => {
+  test("renews member via member details", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("input[type=search]").fill("Giulia Rossi");
+    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const editButton = memberRow.getByRole("button").first();
+    await editButton.click();
+    await page.getByRole("tab", { name: "Membership" }).click();
+
+    const renewButton = page.getByRole("button", {
+      name: "Renew",
+    });
+
+    await renewButton.click();
+    const saveButton = page.getByRole("button", { name: "Save" });
+    await saveButton.click();
+    const toast = page.getByText("Update successful");
+    await expect(toast).toBeInViewport();
+    await expect(toast).not.toBeInViewport({ timeout: 10000 });
+  });
+
+  test("renews member via action button", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("input[type=search]").fill("Giulia Rossi");
+    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const renewButton = memberRow.getByRole("button").nth(1);
+    await renewButton.click();
+
+    const confirmButton = page.getByRole("button", {
+      name: "Renew",
+    });
+    await confirmButton.click();
+
+    const toast = page.getByText("Update successful");
+    await expect(toast).toBeInViewport();
+    await expect(toast).not.toBeInViewport({ timeout: 10000 });
+  });
+});
