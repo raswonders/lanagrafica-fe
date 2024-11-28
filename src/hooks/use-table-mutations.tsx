@@ -28,12 +28,12 @@ export function useMembersMutations() {
     }) => renewMember(variables.id, variables.expirationDate),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["members"] });
-      toast.success(t("membersTable.renewSuccess", { name: variables.name }));
+      toast.success(t("membersTable.updateSuccess", { name: variables.name }));
     },
     onError: (error, variables) => {
-      console.error(t("membersTable.renewError"), error);
+      console.error(t("membersTable.updateError"), error);
       toast.error(
-        t("membersTable.renewError", {
+        t("membersTable.updateError", {
           name: variables.name,
         }),
       );
