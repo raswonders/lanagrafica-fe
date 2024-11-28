@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "server": "node test-server/server.cjs",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -74,6 +73,7 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "json2csv": "6.0.0-alpha.2",
     "postcss": "^8.4.49",
+    "postgres": "^3.4.5",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.7.2",

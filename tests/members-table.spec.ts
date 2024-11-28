@@ -1,4 +1,17 @@
 import { test, expect } from "@playwright/test";
+import { createSnapshot, restoreFromSnapshot } from "../test-server/table";
+
+test.beforeAll(async () => {
+  await createSnapshot();
+});
+
+test.afterAll(async () => {
+  await restoreFromSnapshot();
+});
+
+test.beforeEach(async () => {
+  await restoreFromSnapshot();
+});
 
 test("renders rows", async ({ page }) => {
   // renders rows on navigation
@@ -54,9 +67,9 @@ test("adds a member", async ({ page }) => {
   await page.getByLabel("Email").click();
   await page.getByLabel("Email").fill("test@example.com");
   await page.getByRole("button", { name: "Create member" }).click();
-  await expect(page.getByLabel("Add member")).not.toBeInViewport();
-  await expect(page.getByRole("status")).toBeInViewport();
-  await expect(page.getByRole("status")).not.toBeInViewport({ timeout: 10000 });
+  const toast = page.getByText("Creation successful");
+  await expect(toast).toBeInViewport();
+  await expect(toast).not.toBeInViewport({ timeout: 10000 });
 });
 
 test("shows errors for missing fields", async ({ page }) => {
@@ -80,7 +93,7 @@ test.describe("member details - personal tab", () => {
     await page.getByLabel("day").fill("11");
     await saveButton.click();
 
-    const toast = page.getByText('Update successful');
+    const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
 
@@ -121,14 +134,16 @@ test.describe("member details: membership tab", () => {
 
     await page.getByLabel("Reason for suspension").fill("just a test");
     await saveButton.click();
-    const toast = page.getByText('Update successful');
+    const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
 
   test("cancels suspension", async ({ page }) => {
     await page.goto("/");
-    const memberRow = page.getByRole("row", { name: "Fabio Barbieri" });
+    await page.locator("input[type=search]").click();
+    await page.locator("input[type=search]").fill("Bianchi");
+    const memberRow = page.getByRole("row", { name: "Luca Bianchi" });
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
     await page.getByRole("tab", { name: "Membership" }).click();
@@ -140,7 +155,7 @@ test.describe("member details: membership tab", () => {
     await cancelButton.click();
     const saveButton = page.getByRole("button", { name: "Save" });
     await saveButton.click();
-    const toast = page.getByText('Update successful');
+    const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
