@@ -1,10 +1,10 @@
-import { sql } from "./db";
+import { sql } from "../db";
 import {
   createMembersSnapshot,
   createMembersTable,
   insertMembersData,
   updateIsActive,
-} from "./table";
+} from "../table";
 
 await createMembersTable();
 await insertMembersData();
