@@ -1,22 +1,15 @@
+import path from "path";
 import { sql } from "./db";
 import fs from "fs";
+import { fileURLToPath } from "url";
 
-export async function createSnapshot(options?: { overwrite: boolean }) {
-  if (options?.overwrite) {
+export async function createMembersSnapshot() {
+  try {
     await sql`DROP TABLE IF EXISTS members_snapshot`;
     await sql`CREATE TABLE members_snapshot AS TABLE members`;
-    return;
-  }
-
-  const exists = await sql`
-    SELECT EXISTS (
-      SELECT FROM information_schema.tables 
-      WHERE table_name = 'members_snapshot'
-    )
-  `;
-
-  if (!exists[0].exists) {
-    await sql`CREATE TABLE members_snapshot AS TABLE members`;
+    console.log(`Table "members_snapshot" created`);
+  } catch (error) {
+    console.error("Error: creating snapshot:", error);
   }
 }
 
@@ -35,26 +28,24 @@ export async function exportMembersData() {
     console.log(`Members exported to ${filename}`);
   } catch (error) {
     console.error("Error exporting data:", error);
-  } finally {
-    await sql.end();
   }
 }
 
 export async function insertMembersData() {
   const filename = "members-dump.json";
-  try {
-    const data = JSON.parse(fs.readFileSync(filename, "utf-8"));
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+  try {
+    const data = JSON.parse(
+      fs.readFileSync(path.join(__dirname, filename), "utf-8"),
+    );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const { id, name_surname, ...row } of data) {
       await sql`INSERT INTO members ${sql(row)}`;
     }
-
     console.log("Members inserted");
   } catch (error) {
     console.error("Errors inserting members", error);
-  } finally {
-    await sql.end();
   }
 }
 
@@ -71,8 +62,6 @@ export async function updateIsActive() {
     console.log(`Updated ${result.count} rows in the 'members' table.`);
   } catch (error) {
     console.error("Error updating members", error);
-  } finally {
-    await sql.end();
   }
 }
 
@@ -105,15 +94,13 @@ export async function createMembersTable() {
         name_surname TEXT GENERATED ALWAYS AS (name || ' ' || surname) STORED
       );
     `;
-    console.log('Table "members" created successfully!');
+    console.log('Table "members" created');
 
     await sql`
       CREATE INDEX idx_name_surname ON members USING GIN (to_tsvector('italian', name_surname));
     `;
-    console.log('Index "idx_name_surname" created successfully!');
+    console.log('Index "idx_name_surname" created');
   } catch (error) {
     console.error("Error creating table or index:", error);
-  } finally {
-    await sql.end();
   }
 }
