@@ -57,3 +57,21 @@ export async function insertMembersData() {
     await sql.end();
   }
 }
+
+export async function updateIsActive() {
+  try {
+    const today = new Date();
+    const result = await sql`
+    UPDATE members
+    SET is_active = false 
+    WHERE is_deleted = true
+      OR expiration_date < ${today}
+      OR suspended_till > ${today};
+    `;
+    console.log(`Updated ${result.count} rows in the 'members' table.`);
+  } catch (error) {
+    console.error("Error updating members", error);
+  } finally {
+    await sql.end();
+  }
+}
