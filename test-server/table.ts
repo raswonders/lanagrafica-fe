@@ -2,6 +2,7 @@ import path from "path";
 import { sql } from "./db";
 import fs from "fs";
 import { fileURLToPath } from "url";
+const filename = "members-dump.json";
 
 export async function createMembersSnapshot() {
   try {
@@ -21,10 +22,14 @@ export async function restoreFromSnapshot() {
 }
 
 export async function exportMembersData() {
-  const filename = "members-dump.json";
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
   try {
     const rows = await sql`SELECT * FROM members`;
-    fs.writeFileSync(filename, JSON.stringify(rows, null, 2), "utf-8");
+    fs.writeFileSync(
+      path.join(__dirname, filename),
+      JSON.stringify(rows, null, 2),
+      "utf-8",
+    );
     console.log(`Members exported to ${filename}`);
   } catch (error) {
     console.error("Error exporting data:", error);
@@ -32,7 +37,6 @@ export async function exportMembersData() {
 }
 
 export async function insertMembersData() {
-  const filename = "members-dump.json";
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
   try {
