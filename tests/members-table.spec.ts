@@ -36,14 +36,19 @@ test("renders rows", async ({ page }) => {
   expect(afterScrollCount).toBeGreaterThan(initialRowCount);
 });
 
-test("returns a member on search", async ({ page }) => {
+test("finds a member", async ({ page }) => {
   await page.goto("/");
+
+  const supabaseUpdateResponse = page.waitForResponse((response) =>
+    response.url().includes("rest/v1/members"),
+  );
+  await page.locator("input[type=search]").fill("Giulia Rossi");
   await page.locator("input[type=search]").click();
-  await page.locator("input[type=search]").fill("giulia");
+  await supabaseUpdateResponse;
+
   const rows = page.locator('tr[data-row="true"]');
   await rows.first().waitFor();
-  const rowsCount = await rows.count();
-  expect(rowsCount).toBeGreaterThan(0);
+  expect(await rows.count()).toBe(1);
 });
 
 test("adds a member", async ({ page }) => {
