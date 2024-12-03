@@ -4,6 +4,8 @@ import {
   restoreFromSnapshot,
 } from "../test-server/table";
 
+const dateRE = /\d\d\/\d\d\/\d\d\d\d/;
+
 test.beforeAll(async () => {
   await createMembersSnapshot();
 });
@@ -129,6 +131,12 @@ test.describe("edits member", () => {
     const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
+
+    await editButton.click();
+    await membershipTab.click();
+    const suspendedField = page.getByLabel("Suspended till");
+    await expect(saveButton).toBeDisabled();
+    await expect(suspendedField).toHaveValue(dateRE);
   });
 
   test("cancels members suspension", async ({ page }) => {
