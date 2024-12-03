@@ -130,11 +130,10 @@ test.describe("edits member", () => {
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
 
-  test("cancels suspension", async ({ page }) => {
+  test("cancels members suspension", async ({ page }) => {
     await page.goto("/");
-    await page.locator("input[type=search]").click();
-    await page.locator("input[type=search]").fill("Bianchi");
-    const memberRow = page.getByRole("row", { name: "Luca Bianchi" });
+    const memberRow = await searchForMember(page, "Luca Bianchi");
+    await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
     await page.getByRole("tab", { name: "Membership" }).click();
@@ -142,7 +141,6 @@ test.describe("edits member", () => {
     const cancelButton = page.getByRole("button", {
       name: "Cancel suspension",
     });
-
     await cancelButton.click();
     const saveButton = page.getByRole("button", { name: "Save" });
     await saveButton.click();
