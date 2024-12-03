@@ -91,22 +91,26 @@ test.describe("edits member", () => {
     await expect(dayField).toHaveValue("11");
   });
 
-  test("shows error when name is missing", async ({ page }) => {
+  test("prevents save of personal tab when name is missing", async ({
+    page,
+  }) => {
     await page.goto("/");
-    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const memberRow = await searchForMember(page, "Giulia Rossi");
+    await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
+    const saveButton = page.getByRole("button", { name: "Save" });
 
     await page.getByLabel("First name").fill("");
-
-    const saveButton = page.getByRole("button", { name: "Save" });
     await saveButton.click();
+
     await expect(page.getByText("is required")).toBeVisible();
   });
 
   test("suspends member for a week", async ({ page }) => {
     await page.goto("/");
-    const memberRow = page.getByRole("row", { name: "Fabio Barbieri" });
+    const memberRow = await searchForMember(page, "Fabio Barbieri");
+    await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
     await page.getByRole("tab", { name: "Membership" }).click();
@@ -118,9 +122,9 @@ test.describe("edits member", () => {
     const saveButton = page.getByRole("button", { name: "Save" });
     await saveButton.click();
     await expect(page.getByText("is required")).toBeVisible();
-
     await page.getByLabel("Reason for suspension").fill("just a test");
     await saveButton.click();
+
     const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
@@ -213,5 +217,6 @@ async function searchForMember(page, name) {
   await page.locator("input[type=search]").fill(name);
   await page.locator("input[type=search]").click();
   const memberRow = await page.getByRole("row", { name });
+  await memberRow.first().waitFor();
   return memberRow;
 }
