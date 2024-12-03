@@ -157,6 +157,12 @@ test.describe("edits member", () => {
     const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
+
+    await editButton.click();
+    await membershipTab.click();
+    const suspendedField = page.getByLabel("Suspended till");
+    await expect(saveButton).toBeDisabled();
+    await expect(suspendedField).toHaveValue("");
   });
 
   test("renews member via member details", async ({ page }) => {
@@ -177,6 +183,12 @@ test.describe("edits member", () => {
     const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
+
+    await editButton.click();
+    await membershipTab.click();
+    const expiredField = page.getByLabel("Expires");
+    await expect(saveButton).toBeDisabled();
+    await expect(expiredField).toHaveValue(dateRE);
   });
 
   test("renews member via action button", async ({ page }) => {
@@ -194,12 +206,15 @@ test.describe("edits member", () => {
     const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
+    await expect(renewButton).toBeDisabled();
   });
 
   test("add note for a member", async ({ page }) => {
     await page.goto("/");
     const memberRow = await searchForMember(page, "Giulia Rossi");
     await expect(await memberRow.count()).toBeGreaterThan(0);
+    const noteButton = memberRow.getByRole("button").nth(2);
+    await expect(noteButton).toBeDisabled();
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
 
@@ -213,6 +228,7 @@ test.describe("edits member", () => {
     const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
+    await expect(noteButton).toBeEnabled();
 
     await editButton.click();
     await noteTab.click();
