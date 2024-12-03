@@ -151,8 +151,8 @@ test.describe("edits member", () => {
 
   test("renews member via member details", async ({ page }) => {
     await page.goto("/");
-    await page.locator("input[type=search]").fill("Giulia Rossi");
-    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const memberRow = await searchForMember(page, "Giulia Rossi");
+    await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
     await page.getByRole("tab", { name: "Membership" }).click();
@@ -160,7 +160,6 @@ test.describe("edits member", () => {
     const renewButton = page.getByRole("button", {
       name: "Renew",
     });
-
     await renewButton.click();
     const saveButton = page.getByRole("button", { name: "Save" });
     await saveButton.click();
