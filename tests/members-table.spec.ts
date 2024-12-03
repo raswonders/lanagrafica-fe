@@ -170,8 +170,8 @@ test.describe("edits member", () => {
 
   test("renews member via action button", async ({ page }) => {
     await page.goto("/");
-    await page.locator("input[type=search]").fill("Giulia Rossi");
-    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const memberRow = await searchForMember(page, "Giulia Rossi");
+    await expect(await memberRow.count()).toBeGreaterThan(0);
     const renewButton = memberRow.getByRole("button").nth(1);
     await renewButton.click();
 
