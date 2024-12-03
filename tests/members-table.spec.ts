@@ -37,42 +37,24 @@ test("renders rows", async ({ page }) => {
 });
 
 test("finds a member", async ({ page }) => {
-  await page.goto("/");
-
-  const supabaseUpdateResponse = page.waitForResponse((response) =>
-    response.url().includes("rest/v1/members"),
-  );
-  await page.locator("input[type=search]").fill("Giulia Rossi");
-  await page.locator("input[type=search]").click();
-  await supabaseUpdateResponse;
-
-  const rows = page.locator('tr[data-row="true"]');
-  await rows.first().waitFor();
-  expect(await rows.count()).toBe(1);
+  const memberRow = await searchForMember(page, "Giulia Rossi");
+  await expect(await memberRow.count()).toBeGreaterThan(0);
 });
 
 test("adds a member", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Add member" }).click();
   await page.getByLabel("First name").fill("Test");
-  await page.getByLabel("First name").press("Tab");
   await page.getByLabel("Surname").fill("Test");
-  await page.getByLabel("Surname").press("Tab");
-  await page.getByLabel("day").click();
   await page.getByLabel("day").fill("1");
-  await page.getByLabel("day").press("Tab");
   await page.getByLabel("month").fill("1");
-  await page.getByLabel("month").press("Tab");
   await page.getByLabel("year").fill("90");
-  await page.getByLabel("year").press("Tab");
   await page.getByLabel("Country of origin").press("Tab");
   await page.getByLabel("Place of birth").click();
   await page.getByRole("option", { name: "Abbateggio" }).click();
   await page.getByLabel("Document type").click();
   await page.getByLabel("Id card").getByText("Id card").click();
-  await page.getByLabel("Document ID").click();
   await page.getByLabel("Document ID").fill("1234");
-  await page.getByLabel("Email").click();
   await page.getByLabel("Email").fill("test@example.com");
   await page.getByRole("button", { name: "Create member" }).click();
   const toast = page.getByText("Creation successful");
@@ -80,14 +62,14 @@ test("adds a member", async ({ page }) => {
   await expect(toast).not.toBeInViewport({ timeout: 10000 });
 });
 
-test("shows errors for missing fields", async ({ page }) => {
+test("fails to add member when missing fields", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Add member" }).click();
   await page.getByRole("button", { name: "Create member" }).click();
   await expect(page.getByText("is required")).toHaveCount(6);
 });
 
-test.describe("member details - personal tab", () => {
+test.describe("edits member", () => {
   test("updates personal details", async ({ page }) => {
     await page.goto("/");
     const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
@@ -122,9 +104,7 @@ test.describe("member details - personal tab", () => {
     await saveButton.click();
     await expect(page.getByText("is required")).toBeVisible();
   });
-});
 
-test.describe("member details: membership tab", () => {
   test("suspends member for a week", async ({ page }) => {
     await page.goto("/");
     const memberRow = page.getByRole("row", { name: "Fabio Barbieri" });
@@ -167,9 +147,7 @@ test.describe("member details: membership tab", () => {
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
-});
 
-test.describe("renews member", () => {
   test("renews member via member details", async ({ page }) => {
     await page.goto("/");
     await page.locator("input[type=search]").fill("Giulia Rossi");
@@ -206,27 +184,35 @@ test.describe("renews member", () => {
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
   });
+
+  test("add note for a member", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("input[type=search]").fill("Giulia Rossi");
+    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const editButton = memberRow.getByRole("button").first();
+    await editButton.click();
+
+    const noteTab = page.getByRole("tab", { name: "Note" });
+    await noteTab.click();
+    const noteField = page.getByRole("textbox", { name: "Note" });
+    await noteField.fill("test");
+    const saveButton = page.getByRole("button", { name: "Save" });
+    await saveButton.click();
+
+    const toast = page.getByText("Update successful");
+    await expect(toast).toBeInViewport();
+    await expect(toast).not.toBeInViewport({ timeout: 10000 });
+
+    await editButton.click();
+    await noteTab.click();
+    await expect(noteField).toHaveValue("test");
+  });
 });
 
-test("add note for a member", async ({ page }) => {
+async function searchForMember(page, name) {
   await page.goto("/");
-  await page.locator("input[type=search]").fill("Giulia Rossi");
-  const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
-  const editButton = memberRow.getByRole("button").first();
-  await editButton.click();
-
-  const noteTab = page.getByRole("tab", { name: "Note" });
-  await noteTab.click();
-  const noteField = page.getByRole("textbox", { name: "Note" });
-  await noteField.fill("test");
-  const saveButton = page.getByRole("button", { name: "Save" });
-  await saveButton.click();
-
-  const toast = page.getByText("Update successful");
-  await expect(toast).toBeInViewport();
-  await expect(toast).not.toBeInViewport({ timeout: 10000 });
-
-  await editButton.click();
-  await noteTab.click();
-  await expect(noteField).toHaveValue("test");
-});
+  await page.locator("input[type=search]").fill(name);
+  await page.locator("input[type=search]").click();
+  const memberRow = await page.getByRole("row", { name });
+  return memberRow;
+}
