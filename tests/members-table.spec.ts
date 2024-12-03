@@ -187,8 +187,8 @@ test.describe("edits member", () => {
 
   test("add note for a member", async ({ page }) => {
     await page.goto("/");
-    await page.locator("input[type=search]").fill("Giulia Rossi");
-    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const memberRow = await searchForMember(page, "Giulia Rossi");
+    await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
 
