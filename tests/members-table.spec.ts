@@ -71,25 +71,24 @@ test("fails to add member when missing fields", async ({ page }) => {
 
 test.describe("edits member", () => {
   test("updates personal details", async ({ page }) => {
-    await page.goto("/");
-    const memberRow = page.getByRole("row", { name: "Giulia Rossi" });
+    const memberRow = await searchForMember(page, "Giulia Rossi");
+    await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
-
     const saveButton = page.getByRole("button", { name: "Save" });
     await expect(saveButton).toBeDisabled();
 
-    // Perform update
-    await page.getByLabel("day").fill("11");
+    const dayField = await page.getByLabel("day");
+    await dayField.fill("11");
     await saveButton.click();
 
     const toast = page.getByText("Update successful");
     await expect(toast).toBeInViewport();
     await expect(toast).not.toBeInViewport({ timeout: 10000 });
 
-    // Form was reset
     await editButton.click();
     await expect(saveButton).toBeDisabled();
+    await expect(dayField).toHaveValue("11");
   });
 
   test("shows error when name is missing", async ({ page }) => {
