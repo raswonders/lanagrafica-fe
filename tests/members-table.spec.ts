@@ -113,7 +113,8 @@ test.describe("edits member", () => {
     await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
-    await page.getByRole("tab", { name: "Membership" }).click();
+    const membershipTab = page.getByRole("tab", { name: "Membership" });
+    await membershipTab.click();
 
     const suspendButton = page.getByRole("button", { name: "Suspend" });
     await suspendButton.click();
@@ -136,7 +137,8 @@ test.describe("edits member", () => {
     await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
-    await page.getByRole("tab", { name: "Membership" }).click();
+    const membershipTab = page.getByRole("tab", { name: "Membership" });
+    await membershipTab.click();
 
     const cancelButton = page.getByRole("button", {
       name: "Cancel suspension",
@@ -155,7 +157,8 @@ test.describe("edits member", () => {
     await expect(await memberRow.count()).toBeGreaterThan(0);
     const editButton = memberRow.getByRole("button").first();
     await editButton.click();
-    await page.getByRole("tab", { name: "Membership" }).click();
+    const membershipTab = page.getByRole("tab", { name: "Membership" });
+    await membershipTab.click();
 
     const renewButton = page.getByRole("button", {
       name: "Renew",
