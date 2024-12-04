@@ -135,7 +135,7 @@ export function FilterPopover({
             <ul className="ml-8 space-y-2 list-disc marker:text-accent-6">
               <li>
                 <Button
-                  size="sm"
+                  size="xs"
                   variant="inactive"
                   onClick={() => handleFilterBadgeAddition("expired")}
                 >
@@ -144,7 +144,7 @@ export function FilterPopover({
               </li>
               <li>
                 <Button
-                  size="sm"
+                  size="xs"
                   variant="suspended"
                   onClick={() => handleFilterBadgeAddition("suspended")}
                 >
@@ -153,7 +153,7 @@ export function FilterPopover({
               </li>
               <li>
                 <Button
-                  size="sm"
+                  size="xs"
                   variant="deleted"
                   onClick={() => handleFilterBadgeAddition("deleted")}
                 >
