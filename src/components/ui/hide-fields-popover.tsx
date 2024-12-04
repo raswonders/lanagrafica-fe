@@ -33,7 +33,7 @@ export function HideFieldsPopover({
       </PopoverTrigger>
       <PopoverContent>
         {table.getAllColumns().map((col, index, self) => {
-          if (col.id === "isActive" || col.id === "isDeleted") return null;
+          if (col.id === "is_active" || col.id === "is_deleted") return null;
 
           return (
             <div
