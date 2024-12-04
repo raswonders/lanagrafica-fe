@@ -19,7 +19,6 @@ type HideFieldsPopoverProps = {
 
 export function HideFieldsPopover({
   table,
-  columnVisibility,
   setColumnVisibility,
 }: HideFieldsPopoverProps) {
   const { t } = useTranslation();
@@ -43,9 +42,8 @@ export function HideFieldsPopover({
             >
               <Checkbox
                 id={col.id}
-                checked={
-                  columnVisibility[col.id as keyof typeof columnVisibility]
-                }
+                checked={col.getIsVisible()}
+                disabled={!col.getCanHide()}
                 onCheckedChange={(checked) => {
                   setColumnVisibility((prev: VisibilityState) => ({
                     ...prev,
