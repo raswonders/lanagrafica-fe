@@ -16,6 +16,7 @@ export function useMembersColumns() {
       columnHelper.accessor((row) => `${row.name} ${row.surname}`, {
         id: "fullName",
         meta: t("membersTable.name"),
+        enableHiding: false,
         cell: (info) => info.getValue(),
         header: () => <span>{t("membersTable.name")}</span>,
       }),
