@@ -33,6 +33,7 @@ i18n
             username: "Username",
             password: "Password",
             submit: "Sign in",
+            defaultCredentials: "Use default credentials",
           },
           newMember: {
             trigger: "Add new member",
@@ -154,6 +155,7 @@ i18n
             username: "Nome utente",
             password: "Password",
             submit: "Accedi",
+            defaultCredentials: "Usa le credenziali predefinite",
           },
           newMember: {
             trigger: "Aggiungi nuovo membro",

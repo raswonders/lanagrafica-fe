@@ -77,13 +77,22 @@ export function Login() {
                   </FormItem>
                 )}
               />
-              <Button
-                type="submit"
-                className="sm:self-end"
-                disabled={form.formState.isSubmitting}
-              >
-                {t("login.submit")}
-              </Button>
+              <div className="w-full flex justify-between">
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={form.formState.isSubmitting}
+                  onClick={() => {
+                    form.setValue("username", "user");
+                    form.setValue("password", "user");
+                  }}
+                >
+                  {t("login.defaultCredentials")}
+                </Button>
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  {t("login.submit")}
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>
