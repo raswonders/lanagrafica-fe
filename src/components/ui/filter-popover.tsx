@@ -132,31 +132,35 @@ export function FilterPopover({
             </Button>
           </li>
           <li>
-            <Button
-              size="sm"
-              variant="inactive"
-              onClick={() => handleFilterBadgeAddition("expired")}
-            >
-              {t("membersTable.expired")}
-            </Button>
-          </li>
-          <li>
-            <Button
-              size="sm"
-              variant="suspended"
-              onClick={() => handleFilterBadgeAddition("suspended")}
-            >
-              {t("membersTable.suspended")}
-            </Button>
-          </li>
-          <li>
-            <Button
-              size="sm"
-              variant="deleted"
-              onClick={() => handleFilterBadgeAddition("deleted")}
-            >
-              {t("membersTable.deleted")}
-            </Button>
+            <ul className="ml-8 space-y-2 list-disc marker:text-accent-6">
+              <li>
+                <Button
+                  size="sm"
+                  variant="inactive"
+                  onClick={() => handleFilterBadgeAddition("expired")}
+                >
+                  {t("membersTable.expired")}
+                </Button>
+              </li>
+              <li>
+                <Button
+                  size="sm"
+                  variant="suspended"
+                  onClick={() => handleFilterBadgeAddition("suspended")}
+                >
+                  {t("membersTable.suspended")}
+                </Button>
+              </li>
+              <li>
+                <Button
+                  size="sm"
+                  variant="deleted"
+                  onClick={() => handleFilterBadgeAddition("deleted")}
+                >
+                  {t("membersTable.deleted")}
+                </Button>
+              </li>
+            </ul>
           </li>
           <li>
             <Button
