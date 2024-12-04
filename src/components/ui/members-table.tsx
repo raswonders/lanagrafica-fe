@@ -88,6 +88,11 @@ export function MembersTable() {
     onColumnFiltersChange: setColumnFilters,
   });
 
+  useEffect(() => {
+    const rowsCount = table.getRowModel().rows?.length;
+    if (hasNextPage && rowsCount < membersPerPage) fetchNextPage();
+  });
+
   return (
     <div className="w-full">
       <div className="flex flex-row items-end justify-between gap-6 mt-6">
