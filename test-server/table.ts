@@ -61,7 +61,7 @@ export async function updateIsActive() {
     SET is_active = false 
     WHERE is_deleted = true
       OR expiration_date < ${today}
-      OR suspended_till > ${today};
+      OR suspended_till >= ${today};
     `;
     console.log(`Updated ${result.count} rows in the 'members' table.`);
   } catch (error) {
