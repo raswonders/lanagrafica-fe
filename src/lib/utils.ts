@@ -66,7 +66,7 @@ export function isAdult(value: string) {
   return false;
 }
 
-export function getCustomDate(value: string | void) {
+export function getCustomDate(value?: string) {
   if (!value) return "";
 
   const date = new Date(value);
