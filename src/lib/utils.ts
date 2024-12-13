@@ -7,12 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise<void>((resolve) => setTimeout(resolve, ms));
 }
 
 export function createDateString(day: string, month: string, year: string) {
-  if (!year) return "year cannot be empty";
-
   const paddedDay = day.padStart(2, "0");
   const paddedMonth = month.padStart(2, "0");
   const paddedYear = year.padStart(2, "0");
@@ -51,21 +49,24 @@ export function isValidISODate(value: string) {
 export function isAdult(value: string) {
   const today = new Date();
   const birthDate = new Date(value);
-
   const ageDiff = today.getFullYear() - birthDate.getFullYear();
-  if (ageDiff > 18) return true;
-  if (ageDiff < 18) return false;
-
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  if (monthDiff > 0) return true;
-  if (monthDiff < 0) return false;
-
-  const dayDiff = today.getDate() - birthDate.getDate();
-  if (dayDiff > 0) return true;
-  if (dayDiff <= 0) return false;
+  if (ageDiff > 18) {
+    return true;
+  } else if (ageDiff === 18) {
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff > 0) {
+      return true;
+    } else if (monthDiff === 0) {
+      const dayDiff = today.getDate() - birthDate.getDate();
+      if (dayDiff > 0) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
-export function getCustomDate(value: string | void) {
+export function getCustomDate(value?: string) {
   if (!value) return "";
 
   const date = new Date(value);
