@@ -49,18 +49,21 @@ export function isValidISODate(value: string) {
 export function isAdult(value: string) {
   const today = new Date();
   const birthDate = new Date(value);
-
   const ageDiff = today.getFullYear() - birthDate.getFullYear();
-  if (ageDiff > 18) return true;
-  if (ageDiff < 18) return false;
-
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  if (monthDiff > 0) return true;
-  if (monthDiff < 0) return false;
-
-  const dayDiff = today.getDate() - birthDate.getDate();
-  if (dayDiff > 0) return true;
-  if (dayDiff <= 0) return false;
+  if (ageDiff > 18) {
+    return true;
+  } else if (ageDiff === 18) {
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff > 0) {
+      return true;
+    } else if (monthDiff === 0) {
+      const dayDiff = today.getDate() - birthDate.getDate();
+      if (dayDiff > 0) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 export function getCustomDate(value: string | void) {
