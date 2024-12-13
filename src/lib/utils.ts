@@ -11,8 +11,6 @@ export function delay(ms: number) {
 }
 
 export function createDateString(day: string, month: string, year: string) {
-  if (!year) return "year cannot be empty";
-
   const paddedDay = day.padStart(2, "0");
   const paddedMonth = month.padStart(2, "0");
   const paddedYear = year.padStart(2, "0");
