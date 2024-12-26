@@ -30,6 +30,7 @@ import { HideFieldsPopover } from "./hide-fields-popover";
 import { useMembersColumns } from "@/hooks/use-members-columns";
 import loadingAnimation from "@/assets/loading.json";
 import Lottie from "lottie-react";
+import { Card, CardContent, CardHeader } from "./card";
 
 const membersPerPage = 20;
 
@@ -94,107 +95,116 @@ export function MembersTable() {
   });
 
   return (
-    <div className="w-full">
-      <div className="flex flex-row items-end justify-between gap-6 mt-6">
-        <AddMember insertMutation={insertMutation} />
-        <SearchBar setDebouncedSearch={setDebouncedSearch} />
-      </div>
-      <Separator className="h-0.5 bg-neutral-6 my-6" />
-      <div className="flex justify-between">
-        <div className="flex flex-wrap items-baseline">
-          <div className="mr-2">
-            <FilterPopover
-              columnFilters={columnFilters}
-              setColumnFilters={setColumnFilters}
+    <Card>
+      <CardHeader>
+        <div className="w-full">
+          <div className="flex flex-row items-end justify-between gap-6 mt-6">
+            <AddMember insertMutation={insertMutation} />
+            <SearchBar setDebouncedSearch={setDebouncedSearch} />
+          </div>
+          <Separator className="h-0.5 bg-neutral-6 my-6" />
+          <div className="flex justify-between">
+            <div className="flex flex-wrap items-baseline">
+              <div className="mr-2">
+                <FilterPopover
+                  columnFilters={columnFilters}
+                  setColumnFilters={setColumnFilters}
+                />
+              </div>
+            </div>
+            <HideFieldsPopover
+              table={table}
+              columnVisibility={columnVisibility}
+              setColumnVisibility={setColumnVisibility}
             />
           </div>
         </div>
-        <HideFieldsPopover
-          table={table}
-          columnVisibility={columnVisibility}
-          setColumnVisibility={setColumnVisibility}
-        />
-      </div>
-      <div className="">
-        {/* TODO make error more nice */}
-        {error ? (
-          <div className="flex items-center justify-center">
-            <div>
-              {t("errors.membersDidNotLoad")}: {error.name}: {error.message}
+      </CardHeader>
+      <CardContent className="p-0 sm:p-6">
+        <div className="w-full">
+          {/* TODO make error more nice */}
+          {error ? (
+            <div className="flex items-center justify-center">
+              <div>
+                {t("errors.membersDidNotLoad")}: {error.name}: {error.message}
+              </div>
             </div>
-          </div>
-        ) : (
-          <InfiniteScroll
-            dataLength={rows ? rows.length : 0}
-            next={() => fetchNextPage()}
-            hasMore={hasNextPage}
-            loader={
-              <Lottie
-                animationData={loadingAnimation}
-                loop={true}
-                autoplay={true}
-                className="h-8 my-2"
-              />
-            }
-          >
-            <Table>
-              <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                      data-row="true"
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </TableCell>
-                      ))}
+          ) : (
+            <InfiniteScroll
+              dataLength={rows ? rows.length : 0}
+              next={() => fetchNextPage()}
+              hasMore={hasNextPage}
+              loader={
+                <Lottie
+                  animationData={loadingAnimation}
+                  loop={true}
+                  autoplay={true}
+                  className="h-8 my-2"
+                />
+              }
+            >
+              <Table>
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => {
+                        return (
+                          <TableHead key={header.id}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext(),
+                                )}
+                          </TableHead>
+                        );
+                      })}
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={columns.length} className="text-center">
-                      {isPending ? (
-                        <Lottie
-                          animationData={loadingAnimation}
-                          loop={true}
-                          autoplay={true}
-                          className="h-8"
-                        />
-                      ) : (
-                        t("membersTable.noResults")
-                      )}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </InfiniteScroll>
-        )}
-      </div>
-    </div>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                        data-row="true"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="text-center"
+                      >
+                        {isPending ? (
+                          <Lottie
+                            animationData={loadingAnimation}
+                            loop={true}
+                            autoplay={true}
+                            className="h-8"
+                          />
+                        ) : (
+                          t("membersTable.noResults")
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </InfiniteScroll>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
