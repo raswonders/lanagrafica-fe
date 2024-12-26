@@ -115,7 +115,7 @@ export function MembersTable() {
           setColumnVisibility={setColumnVisibility}
         />
       </div>
-      <div className="rounded-md border">
+      <div className="">
         {/* TODO make error more nice */}
         {error ? (
           <div className="flex items-center justify-center">
