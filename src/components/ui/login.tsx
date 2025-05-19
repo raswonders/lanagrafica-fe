@@ -35,7 +35,7 @@ export function Login() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await signIn(values);
+    await signIn(values.username, values.password);
     form.reset();
   }
 
