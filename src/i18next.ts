@@ -35,6 +35,8 @@ i18n
             password: "Password",
             submit: "Sign in",
             defaultCredentials: "Use default credentials",
+            forgotPassword: "Forgot password?",
+            invalidCredentials: "Invalid username or password.",
           },
           newMember: {
             trigger: "Add new member",
@@ -158,6 +160,8 @@ i18n
             password: "Password",
             submit: "Accedi",
             defaultCredentials: "Usa le credenziali predefinite",
+            forgotPassword: "Password dimenticata?",
+            invalidCredentials: "Credenziali non valide.",
           },
           newMember: {
             trigger: "Aggiungi nuovo membro",

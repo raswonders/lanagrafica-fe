@@ -1,4 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 import {
   Form,
@@ -16,9 +23,11 @@ import { z } from "zod";
 import { Button } from "./button";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 export function Login() {
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
+  const [hasTriedToLogin, setHasTriedToLogin] = useState(false);
   const { t } = useTranslation();
 
   const formSchema = z.object({
@@ -35,6 +44,7 @@ export function Login() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setHasTriedToLogin(true);
     await signIn(values.username, values.password);
     form.reset();
   }
@@ -96,6 +106,18 @@ export function Login() {
             </form>
           </Form>
         </CardContent>
+
+        {!user && hasTriedToLogin && (
+          <CardFooter>
+            <p>
+              {t("login.invalidCredentials")}
+              <span className="mx-1"></span>
+              <Link to="#" className="text-accent-11">
+                {t("login.forgotPassword")}
+              </Link>
+            </p>
+          </CardFooter>
+        )}
       </Card>
     </div>
   );
