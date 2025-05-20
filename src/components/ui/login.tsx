@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   Form,
@@ -29,6 +29,7 @@ export function Login() {
   const { signIn, user } = useAuth();
   const [hasTriedToLogin, setHasTriedToLogin] = useState(false);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const formSchema = z.object({
     username: z.string().min(1, { message: t("validation.required") }),
@@ -45,8 +46,12 @@ export function Login() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setHasTriedToLogin(true);
-    await signIn(values.username, values.password);
-    form.reset();
+    try {
+      await signIn(values.username, values.password);
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   }
 
   return (
