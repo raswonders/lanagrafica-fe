@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   Form,
@@ -26,10 +26,9 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
 export function Login() {
-  const { signIn, user } = useAuth();
-  const [hasTriedToLogin, setHasTriedToLogin] = useState(false);
+  const { signIn, session } = useAuth();
+  const [loginFailed, setLoginFailed] = useState(false);
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const formSchema = z.object({
     username: z.string().min(1, { message: t("validation.required") }),
@@ -45,11 +44,10 @@ export function Login() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setHasTriedToLogin(true);
     try {
       await signIn(values.username, values.password);
-      navigate("/");
     } catch (error) {
+      setLoginFailed(true);
       console.error("Login failed:", error);
     }
   }
@@ -112,7 +110,7 @@ export function Login() {
           </Form>
         </CardContent>
 
-        {!user && hasTriedToLogin && (
+        {!session && loginFailed && (
           <CardFooter>
             <p>
               {t("login.invalidCredentials")}
