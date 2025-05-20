@@ -31,6 +31,7 @@ i18n
           login: {
             title: "Sign in",
             username: "Username",
+            email: "Email",
             password: "Password",
             submit: "Sign in",
             defaultCredentials: "Use default credentials",
@@ -153,6 +154,7 @@ i18n
           login: {
             title: "Accedi",
             username: "Nome utente",
+            email: "Email",
             password: "Password",
             submit: "Accedi",
             defaultCredentials: "Usa le credenziali predefinite",

@@ -56,7 +56,7 @@ export function Login() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("login.username")}</FormLabel>
+                    <FormLabel>{t("login.email")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -83,8 +83,8 @@ export function Login() {
                   variant="outline"
                   disabled={form.formState.isSubmitting}
                   onClick={() => {
-                    form.setValue("username", "user");
-                    form.setValue("password", "user");
+                    form.setValue("username", "demo@example.com");
+                    form.setValue("password", "demo");
                   }}
                 >
                   {t("login.defaultCredentials")}
