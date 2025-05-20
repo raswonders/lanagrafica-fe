@@ -32,7 +32,7 @@ export function AccountDetails() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">#{user?.username}</Button>
+        <Button variant="ghost">#{user?.email}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         onCloseAutoFocus={(e) => {

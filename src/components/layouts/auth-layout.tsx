@@ -7,14 +7,20 @@ type Node = {
 };
 
 export function AuthLayout({ children }: Node) {
-  const { user } = useAuth();
+  const { session } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
+    if (!session && window.location.pathname !== "/login") {
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [session, navigate]);
+
+  useEffect(() => {
+    if (session && window.location.pathname === "/login") {
+      navigate("/");
+    }
+  }, [session, navigate]);
 
   return children;
 }
