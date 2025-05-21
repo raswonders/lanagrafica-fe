@@ -1,4 +1,4 @@
-import { Login } from "./ui/login";
+import { Login } from "./pages/login";
 import {
   Route,
   RouterProvider,
