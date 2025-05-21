@@ -39,6 +39,21 @@ export function Navbar() {
                 )}
               </NavLink>
             </li>
+            <li>
+              <NavLink to={"/cards"} tabIndex={-1}>
+                {({ isActive }) => (
+                  <Button
+                    variant="ghost"
+                    className={cn(
+                      "rounded-lg",
+                      isActive && "text-accent-foreground bg-accent",
+                    )}
+                  >
+                    {t("navbar.cards")}
+                  </Button>
+                )}
+              </NavLink>
+            </li>
           </ul>
         )}
       </nav>
