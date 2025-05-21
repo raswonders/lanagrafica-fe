@@ -1,17 +1,17 @@
-import { useLocalUser } from "@/hooks/use-local-user";
-import { delay } from "@/lib/utils";
-import { User } from "@/types/types";
-import { ReactNode, createContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { supabase } from "@/api/supabase";
+import { Session, User } from "@supabase/supabase-js";
+import { ReactNode, createContext, useEffect, useState } from "react";
 
 interface AuthContextType {
-  user: User;
-  signIn: (credentials: Credentials) => Promise<void>;
+  user: User | null;
+  session: Session | null;
+  signIn: (username: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
+  session: null,
   signIn: async () => {},
   signOut: async () => {},
 });
@@ -20,31 +20,54 @@ interface Node {
   children: ReactNode;
 }
 
-interface Credentials {
-  username: string;
-  password: string;
-}
-
 export const AuthProvider = ({ children }: Node) => {
-  const [user, setUser] = useLocalUser(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
 
-  const signIn = async ({ username, password }: Credentials): Promise<void> => {
-    await delay(1500); // TODO remove delay and naive login before production
-    if (username === "user" && password === "user") {
-      setUser({ username: "user", jwt: "user" });
-      navigate("/");
-    }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signIn = async (username: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: username,
+      password,
+    });
+
+    if (error) throw error;
+    setUser(data.user);
+    setSession(data.session);
   };
 
   const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw error;
     setUser(null);
-    navigate("/login");
+    setSession(null);
   };
 
+  if (loading) {
+    return null;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, session, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

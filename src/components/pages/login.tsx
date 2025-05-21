@@ -1,4 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 import {
   Form,
@@ -7,18 +14,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./form";
+} from "@/components/ui/form";
 
-import { Input } from "./input";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 export function Login() {
-  const { signIn } = useAuth();
+  const { signIn, session } = useAuth();
+  const [loginFailed, setLoginFailed] = useState(false);
   const { t } = useTranslation();
 
   const formSchema = z.object({
@@ -35,8 +44,12 @@ export function Login() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await signIn(values);
-    form.reset();
+    try {
+      await signIn(values.username, values.password);
+    } catch (error) {
+      setLoginFailed(true);
+      console.error("Login failed:", error);
+    }
   }
 
   return (
@@ -56,7 +69,7 @@ export function Login() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("login.username")}</FormLabel>
+                    <FormLabel>{t("login.email")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -83,8 +96,8 @@ export function Login() {
                   variant="outline"
                   disabled={form.formState.isSubmitting}
                   onClick={() => {
-                    form.setValue("username", "user");
-                    form.setValue("password", "user");
+                    form.setValue("username", "demo@example.com");
+                    form.setValue("password", "demo");
                   }}
                 >
                   {t("login.defaultCredentials")}
@@ -96,6 +109,18 @@ export function Login() {
             </form>
           </Form>
         </CardContent>
+
+        {!session && loginFailed && (
+          <CardFooter>
+            <p>
+              {t("login.invalidCredentials")}
+              <span className="mx-1"></span>
+              <Link to="#" className="text-accent-11">
+                {t("login.forgotPassword")}
+              </Link>
+            </p>
+          </CardFooter>
+        )}
       </Card>
     </div>
   );
