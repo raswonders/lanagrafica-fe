@@ -10,13 +10,35 @@ import { Background } from "./ui/background";
 import { Members } from "./pages/members";
 import { Toaster } from "./ui/sonner";
 import { Cards } from "./pages/cards";
+import { ProtectedRoute } from "./providers/protected-route";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-      <Route index element={<Members />} />
-      <Route path="login" element={<Login />} />
-      <Route path="cards" element={<Cards />} />
+      <Route
+        path="login"
+        element={
+          <ProtectedRoute publicOnly>
+            <Login />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        index
+        element={
+          <ProtectedRoute>
+            <Members />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="cards"
+        element={
+          <ProtectedRoute adminOnly>
+            <Cards />
+          </ProtectedRoute>
+        }
+      />
     </Route>,
   ),
 );
