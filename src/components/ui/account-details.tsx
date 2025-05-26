@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./button";
 import { Globe, LogOut, Moon, Sun } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/components/providers/auth-provider";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../providers/theme-provider";
@@ -32,7 +32,7 @@ export function AccountDetails() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">#{user?.email}</Button>
+        <Button variant="ghost">#{user?.email || user?.name}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         onCloseAutoFocus={(e) => {
@@ -71,11 +71,7 @@ export function AccountDetails() {
           <span>{t("account.theme")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => {
-            signOut();
-          }}
-        >
+        <DropdownMenuItem onClick={signOut}>
           <LogOut className="w-6 h-6 lg:w-4 lg:h-4 mr-2" />
           <span>{t("account.logout")}</span>
         </DropdownMenuItem>

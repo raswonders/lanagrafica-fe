@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/components/providers/auth-provider";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -13,16 +13,23 @@ export function ProtectedRoute({
   adminOnly = false,
   publicOnly = false,
 }: ProtectedRouteProps) {
-  const { session } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
   const location = useLocation();
-  const isAdmin = session?.user?.email === "admin@example.com";
 
-  if (publicOnly && session) {
+  const isAdmin =
+    user?.email === "admin@example.com" ||
+    user?.["https://your-namespace/roles"]?.includes("admin");
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (publicOnly && isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
   if (!publicOnly) {
-    if (!session) {
+    if (!isAuthenticated) {
       return <Navigate to="/login" replace state={{ from: location }} />;
     }
 

@@ -11,6 +11,7 @@ import { Members } from "./pages/members";
 import { Toaster } from "./ui/sonner";
 import { Cards } from "./pages/cards";
 import { ProtectedRoute } from "./providers/protected-route";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,11 +46,18 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <>
+    <Auth0Provider
+      domain={import.meta.env.VITE_AUTH0_DOMAIN}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+      }}
+    >
       <Background />
       <RouterProvider router={router} />
       <Toaster position="bottom-center" />
-    </>
+    </Auth0Provider>
   );
 }
 
